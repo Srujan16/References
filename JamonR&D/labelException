@@ -1,0 +1,54 @@
+
+/*
+
+    @Override
+    public List<LabelException> getExceptions(String label, String units) {
+
+        List<LabelException> labelExceptionList = new ArrayList();
+        Monitor monitor = getMonitor(label, units);
+        if (monitor != null) {
+            MonKey monKey = monitor.getMonKey();
+            return monKey.getDetails();
+            populateExceptionList(labelExceptionList, monKey, label);
+            return labelExceptionList;
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<LabelException> getAllExceptions() {
+        List<LabelException> labelExceptionList = new ArrayList<>();
+        Map map = getMap();
+        Set set = getKeySet(map);
+        for (Object key : set) {
+            Monitor monitor = (Monitor) map.get(key);
+            if (monitor != null) {
+                String label = monitor.getLabel();
+                MonKey monKey = monitor.getMonKey();
+                populateExceptionList(labelExceptionList, monKey, label);
+            }
+        }
+        return labelExceptionList;
+    }
+
+
+    private void populateExceptionList(List<LabelException> labelExceptionList, MonKey monKey, String label) {
+        if (!monKey.getDetails().getClass().equals(String.class)) {
+            List<ExceptionDetails> exceptionDetailsList = (List<ExceptionDetails>) monKey.getDetails();
+            for (ExceptionDetails exceptionDetails : exceptionDetailsList) {
+                labelExceptionList.add(getLabelException(exceptionDetails, label));
+            }
+        }
+    }
+
+    private LabelException getLabelException(ExceptionDetails exceptionDetails, String label) {
+        LabelException labelException = new LabelException();
+        labelException.setLabel(label);
+        labelException.setCount(exceptionDetails.getCount());
+        labelException.setStackTrace(exceptionDetails.getStackTrace());
+        return labelException;
+    }
+
+*/
+

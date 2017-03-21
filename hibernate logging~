@@ -1,0 +1,22 @@
+
+org.hibernate.SQL           Log all SQL DML statements as they are executed
+org.hibernate.type          Log all JDBC parameters
+org.hibernate.tool.hbm2ddl  Log all SQL DDL statements as they are executed
+org.hibernate.cache         Log all second-level cache activity
+org.hibernate.pretty        Log the state of all entities (max 20 entities) associated with the session at flush time
+org.hibernate.transaction   Log transaction related activity
+org.hibernate.jdbc          Log all JDBC resource acquisition
+org.hibernate.hql.ast.AST   Log HQL and SQL ASTs during query parsing
+org.hibernate.secure        Log all JAAS authorization requests
+org.hibernate               Log everything (a lot of information, but very useful for troubleshooting) 
+
+log4j.logger.org.hibernate.type.descriptor.sql=trace
+ The category for logging parameter binding as you already mentioned is org.hibernate.type at the TRACE log level.
+
+
+When developing applications with Hibernate, you should almost always work with debug enabled for the category org.hibernate.SQL, or, alternatively, the property hibernate.show_sql enabled.
+
+
+Most of the loggers use the DEBUG level, however org.hibernate.type uses TRACE. In previous versions of Hibernate org.hibernate.type also used DEBUG, but as of Hibernate 3 you must set the level to TRACE (or ALL) in order to see the JDBC parameter binding logging.
+
+The better way to activate the logging of executed SQL statements is to set the log level of the org.hibernate.SQL category to DEBUG (or the corresponding log level of your log framework). Hibernate will write the SQL statements without any information about the values bound to the JDBC parameters or extracted from the query result. If you also want to get this information, you have to set the log level of org.hibernate.type.descriptor.sql to DEBUG (see the development recommendation for an example).

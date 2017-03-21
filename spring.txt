@@ -1,0 +1,94 @@
+Annotation based cofiguration
+
+xmlns:context
+schema/context
+<context:annotation-config/>
+
+
+Every java based application has a few objects that work together to present what the end-user sees as a working application. 
+
+When writing a complex Java application, application classes should be as independent as possible of other Java classes to increase the possibility to reuse these classes and to test them independently of other classes while doing unit testing.
+
+
+
+public class TextEditor {
+   private SpellChecker spellChecker;
+   
+   public TextEditor() {
+      spellChecker = new SpellChecker();
+   }
+}
+
+
+
+public class TextEditor {
+   private SpellChecker spellChecker;
+   
+   public TextEditor(SpellChecker spellChecker) {
+      this.spellChecker = spellChecker;
+   }
+}
+
+
+<list>
+<set>
+<map>
+<entry key=" " value=" ">
+<prop key=" ">value</prop>
+
+<props>
+
+Annotations :
+	@Required : bean property setter methods.
+	@Autowired on setter Methods
+	@Autowired on properties
+		@Autowired
+  		 private SpellChecker spellChecker;
+	
+	@Autowired on Constructors
+		@Autowired
+		   public TextEditor(SpellChecker spellChecker){
+		      System.out.println("Inside TextEditor constructor." );
+		      this.spellChecker = spellChecker;
+  		   }		
+
+
+	@Autowire(required=false)
+		 @Autowired(required=false)
+		   public void setAge(Integer age) {
+			      this.age = age;
+  	 		}	
+   
+  		    public Integer getAge() {
+  			    return age;
+  		    }
+
+		   @Autowired
+  			 public void setName(String name) {
+   			   this.name = name;
+   			}
+
+	@Configuration
+	@Bean
+
+
+	@Configurationi
+	public class HelloWorldConfig {
+
+	@Bean 
+	   public HelloWorld helloWorld(){
+	      return new HelloWorld();
+	   }
+	}
+	
+	@Bean(initMethod,destroyMethod
+
+	<beans>
+	   <bean id="helloWorld" class="com.tutorialspoint.HelloWorld" />
+	</beans>
+
+	 ApplicationContext ctx =    new AnnotationConfigApplicationContext(HelloWorldConfig.class);
+	 ConfigurableApplicationContext
+
+	@Qualifier
+

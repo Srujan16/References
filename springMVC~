@@ -1,0 +1,27 @@
+The Spring Web MVC framework uses an implementation class of the interface
+called HandlerMapping to define the mapping between a request URL and the object that is going to handle that
+request (the handler). 
+
+Default UrlHandlerMapping : BeanNameUrlHandlerMapping
+	This class will use the bean name to map to the URL in the request so that the DispatcherServlet knows which controller must be invoked for handling different URLs.
+
+
+public clas BlahBlah extends AsbstractCotnroller (or) implements Controller
+
+	public ModelAndView handleRequest(servletRequest, servletResponse)
+	{
+		return new ModelAndView("hello.jsp")
+	}
+	
+	*Controller handles a request and returns a ModelAndView
+
+
+Model, which controller returned is resolved by a viewResolver. By default, spring MVC provides a view Resolver to handle models returned by controllers.
+
+
+	InternalResourceViewResolver - prefix ans suffix
+
+	ResourceBundleViewResolver
+	SimpleUrlHandlerMapping
+
+

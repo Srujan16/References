@@ -1,0 +1,10 @@
+https://goodwinwei.wordpress.com/2015/11/05/jackson-spring-multivaulemap-deserializer-issue/
+
+
+com.fasterxml.jackson.databind.JsonMappingException: Can not find a deserializer for non-concrete Map type [map type; class org.springframework.util.MultiValueMap, [simple type, class java.lang.String] -> [collection type; class java.util.List, contains [simple type, class java.lang.String]]]
+
+recently I got an error when pass a MultiValueMap object to the REST server. Jackson doesn’t know how to deserialize the MultiValueMap, which the implmenetation is a LinkedMultiValueMap.
+
+The error casued by I pass a interface of Map not a implementation of the Map. After I change the MultiValueMap to a concrete class LinkedMultiValueMap. The problem is resolved.
+
+

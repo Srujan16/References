@@ -1,0 +1,19 @@
+Java Architecture for XML Binding
+
+
+http://stackoverflow.com/questions/13399567/multiple-jaxbcontext-instances
+
+
+Types of annotations:
+	1)Marker annotation
+	2)Single-value annotation
+		eg: @ProjectAccess in wavemaker	
+	3)multi-value annotation
+	
+
+By default, annotations are not inherited to subclasses. 
+	@Inherited
+
+
+@Target -> class/method/field
+@RetentionType -> compile/runtime

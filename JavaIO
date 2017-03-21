@@ -1,0 +1,139 @@
+
+
+AtomicReferenceFieldUpdater
+bufferSize -- 8192
+max_skip_buffer_size -2048
+
+BufferedReader :
+
+	1)Reads text from a character-input stream, buffering characters so as to  provide for the efficient reading of characters, arrays, and lines.
+	2)As bytes  from the stream are read  or skipped, the internal buffer is refilledas necessary  from the contained input stream, many bytes at a time
+
+
+	mark and reset
+	String.getBytes()
+
+Flush :
+
+	Objects of a class that implements Flushable can force buffered output to be written
+	to the stream to which the object is attached. It defines the flush( ) method, shown here:
+	void flush( ) throws IOException
+	Flushing a stream typically causes buffered output to be physically written to the underlying
+	device.
+
+Converting String into InputReader :
+
+	InputStream ie=new ByteArrayInputStream(str.toByteArray());
+	BufferedReader br=new BufferedReader(new InputStreamReader(ie));
+
+Converting ByteArray to String :
+
+	String str= new String(byteArray);
+
+
+	read()
+	read(byte[])
+	read(byte[],off,len)
+	skip(n)
+	available()
+	close()
+	mark(readLimit)
+	reset()
+	markSupported()
+
+	
+
+
+
+ByteInputStreams And CharacterReaders :
+
+	SuperClass-- InputStream  implements Closeable [read,close and mark method of inputstream does nothing. they are abstract methods]
+
+	1)BufferedInputStream  --BufferedInputStream(InputStream obj)
+	2)ByteArrayInputStream  --ByteArrayInputStream(b[])
+	3)DataInputStream	--readUTF(),.available()
+	4)FileInputStream	--FileInputStream(File Obj)
+	5)FilterFileInputStream
+	6)InputStream
+	7)Object InputStream
+	8)Piped InputStream
+	9)PushBack InputStream
+	10)RandomAcessFile
+	11)Sequence InputStream
+
+	
+	1)BufferedReader -- throws IOException when EOF is reached
+	2)CharArrayReader	--toCharArray() and toString()
+	3)FileReader
+	4)FilterReader
+	5)InputStreamReader
+	6)LineNumberReader
+	7)PipedReader
+	8)PushBackReader
+	9)Reader
+	10)StringReader
+
+
+ByteOutputStreams And CharacterWriters :
+
+	1)BufferedOutPutStream  --BufferedOutputStream(OutputStream obj)
+	2)ByteArrayOutputStream --ByteArrayOutputStream(byte Array[])	--writeTo(file/ByteArrayObject), toByteArray, toString [internally implements bytearray buffer]
+	3)DataInputStream 	--writeUTF(),.available()
+	4)FileOutputStream	
+	5)FilterFileOutputStream
+	6)OutputStream
+	7)ObjectOutputStream
+	8)PipedOutputstream
+	9)PrintStream
+
+	1)BufferedWriter
+	2)CharArrayWriter	--internally implements charArray buffer, CharSequence, 
+	3)FilterWriter
+	4)FileWriter
+	5)PrintWriter
+	6)String Writer
+	7)Writer
+	8)OutputStreamWriter
+	9)PipedWriter
+		
+
+
+
+ 1)  BufferedInputStream(InputStream in, int size)
+     BufferedInputStream extends FilterInputStream  : [isavailable(), read()--returns byte value
+
+	A BufferedInputStream is used to read bytes[one byte at a time]. Reading a line involves reading characters.
+	You need a way to convert input bytes to characters which is defined by a charset. So you should use a Reader which converts bytes 		to  characters and from which you can read characters. BufferedReader also has a readLine() method which reads a whole line, use that:
+
+	BufferedInputStream bf = new BufferedInputStream(System.in)
+
+	BufferedReader r = new BufferedReader(
+	        new InputStreamReader(bf, StandardCharsets.UTF_8));
+
+ 2) ByteArrayInputStream extends InputStream [string.getBytes, .toByteArray, .toString ]
+	The ByteArrayInputStream class allows a buffer in the memory to be used as an InputStream. 
+	The input source is a byte array.
+
+
+ 3) DataInputStream extends FilterInputStream implements DataInput 
+
+	readUTF() and writeUTF()
+	InputStream in = DataInputStream(InputStream in);
+	The DataInputStream is used in the context of DataOutputStream and can be used to read primitives
+ 
+ 4) FileInputStream extends InputStream  [read,readBytes]
+
+       *) obtains input bytes from a file in a file system.
+       *) FileInputStream is meant for reading streams of raw bytes such as image data. 
+	 For reading streams of characters, consider using FileReader.
+	
+ 
+
+ 5)FilterInputStream
+	These streams are typicallyaccessed by methods that are expecting a generic stream, which is a superclass of the
+filtered streams. Typical extensions are buffering, character translation, and raw data
+translation. 
+
+ 6)ObjectInputStream
+
+	

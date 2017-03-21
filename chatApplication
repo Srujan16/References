@@ -1,0 +1,44 @@
+http://www.cs.duke.edu/courses/cps004/spring04/code/brackeen/ch06src/src/com/hypefiend/javagamebook/chatterbox/ChatterServer.java
+https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
+https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#deleteIfExists-java.nio.file.Path-
+https://www.javacodegeeks.com/2014/08/15-java-socket-programming-networking-interview-questions-and-answers.html?utm_content=buffer0de00&utm_medium=social&utm_source=facebook.com&utm_campaign=buffer
+
+read-write locks
+
+
+setSoTimeout for accept method in ServerSocket
+setSoTimeout for read method in Socket
+
+SocketTimeoutException
+Thread.interrupt() -->sets interrupted flag to true
+Thread.isInterrupted() -->check's state of interrupt flag
+Thread.interrupted() -->checks state of interrupt flag and resets state to default state
+
+ThreadLocal -->local variable unique to each thread
+
+
+simultaneous reads can happen
+cannot read when someone else is updating
+cannot update when someone else is updating/reading
+
+MessageReceivedEvent
+	senderInfo
+	message
+	receiverInfo
+
+MessageReceiver
+	publishEvent
+
+Listeners
+	onMessageReceivedEvent(MessageReceivedEvent messageReceivedEvent) {
+		
+	}
+
+ChatApplication(has 2 maven sub modules)
+	Common(if needed)
+	Client
+	Server
+
+
+Publish Subscribe pattern
+Observers Pattern

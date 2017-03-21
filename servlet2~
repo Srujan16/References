@@ -1,0 +1,32 @@
+Servlet : JavaObj that responds to http req.
+
+
+To give you access to the request body of an HTTP POST request, you can obtain an InputStream pointing to the HTTP request body. Here is how it is done:
+
+InputStream requestBodyInput = request.getInputStream();    
+NOTE: You will have to call this method before calling any getParameter() method, because calling the getParameter() method on an HTTP POST request will cause the servlet engine to parse the HTTP request body for parameters. Once parsed, you cannot access the body as a raw stream of bytes anymore.
+
+
+ServletContext context = request.getSession().getServletContext();  
+
+Reponse redirecting() :
+	You cannot send any data back to the browser when redirecting.
+
+
+
+Session attributes : Single User
+Contxt 	" 	   : whole application
+	The ServletContext attributes are still stored in the memory of the servlet container.
+	That means that the same problems exists as does with the session attributes, in server clusters.
+
+
+Context Parameters :
+request.getSession()
+               .getServletContext()
+               .getInitParameter("myParam");
+    
+
+If the browser already has a cookie stored with the name "uid", it will be deleted after receiving the cookie with the same name ("uid") with an expiration time of 0. If the browser did not already have the cookie stored, this new cookie is just thrown out immediately since its expiration time is 0.
+
+
+

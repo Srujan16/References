@@ -1,0 +1,31 @@
+https://blog.readme.io/what-is-swagger-and-why-it-matters/
+http://www.3pillarglobal.com/insights/restful-api-documentation-using-swagger-and-spring-mvc
+
+
+Specification for documenting RestApis.
+
+-------------------
+Resource Listing
+API declaration
+-------------------
+
+
+
+Swagger spec - descripiton about the api.
+
+Swagger is basically a set of rules (specification) and tooling for how to semantically describe APIs. Practically, it's a language-agnostic tool that gets everyone on the same page.
+
+Swagger is meant to enable the service producer to update the service documentation in real time so that client and documentation systems are moving at the same pace as the server. The methods, parameters, and models description are tightly integrated into the server code, thereby maintaining the synchronization in APIs and its documentation.
+
+Swagger (okay, now the "Open API Initiative"... more on that later!) is a framework for describing your API using a common language that everyone can understand.
+
+
+*The rise of design-first API
+
+Top-down approach, or design-first.
+Bottom-down approach, or Code-first.
+
+
+Advantages :
+---------------
+SDK generation, dynamic documentation, and server integrations

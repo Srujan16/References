@@ -1,0 +1,100 @@
+http://www.citationsoftware.com/faqxml.htm
+
+DTD :	 Is a series of expressions that define the logical structure of an XML document.
+
+XML is a set of rules that explain how to create languages. XML is a language that specifies how to create other languages.
+
+
+The syntax rules are basically the same fot most of xml languages, but some of the words are different, and the rules of grammar are different.
+
+
+
+Can two computers understand an XML-based language well enough so that they can use that language to exchange information?
+	
+	It turns out that are two methods for describing XML-based languages. They are:
+		The Document Type Definition (DTD)
+		The XML Schema
+
+
+
+DTD:
+---
+
+  * DTD specify the rules for a particular XML-based language.
+
+  A DTD is a series of expressions that define the logical structure of an XML document. In other words, the expressions in a DTD specify the 	rules for a particular XML-based language.
+
+  Humans and computers use DTDs to understand XML-based languages.
+
+
+"Well-formed" and "valid" XML
+
+	Well-formed" XML is simply XML that is structured according to XML syntax rules. Here is an XML file that is well formed.
+<?xml version = "1.0" ?>
+
+	<Name>
+	  <First>Sally</First>
+	  <Middle>Jessy</Middle>
+	  <Last>Raphael</Last>
+	</Name>
+	
+	Here is an XML file that is not well formed, because there is a syntax error in it (the ">" after "/Middle" is missing).
+	<?xml version = "1.0" ?>
+
+	<Name>
+	  <First>Sally</First>
+	  <Middle>Jessy</Middle
+	  <Last>Raphael</Last>
+	</Name>
+
+	When working with XML, it is essential to make sure that your XML is well-formed - otherwise, your XML won't work with computer 	programs that need to understand it.
+	
+
+XMLParser :
+	 software programs that will tell you whether or not your XML is well formed. Such a program is called an XML Parser.
+
+	 An XML Parser reads XML code, analyzes it, and puts it into computer memory. XMLwriter, which we'll talk about a little later, 	contains an XML Parser.
+
+Valid XML:
+	Valid XML is XML that adheres to a specific DTD (or a specific XML Schema).
+
+
+
+ HTML, the markup language used on the Web, is causing problems for programmers. HTML is pretty good at displaying text and graphics in different fonts and colors, etc., but HTML isn't good at describing the structure of a collection of information (the meanings of different pieces of information and the relationships among the different pieces of information).
+
+
+XML, on the other hand, is very good at describing the structure of a collection of information. You can also use XML technology to display information in different fonts and colors, etc. We'll talk about that a little later.
+
+
+
+There are many uses for XML, but mainly it is being used for three things:
+
+	to store and organize information that needs to be displayed in a Web browser
+	to store and organize information that needs to be printed on paper
+	to exchange information between computers.
+
+HTML is concerned more off how the information looks as opposed to being concerned with what the information means. 
+
+
+he thing that programmers really like about XML technology is that structure and presentation are separated. Separating structure from presentation is great from a programmer's perspective, because it makes it easy to present the data in many different formats.
+
+
+XSL:
+----
+	Programmers use a variety of technologies to present XML information. One of the most interesting and powerful XML-presentation technologies is Extensible Stylesheet Language (XSL).
+
+
+	This process of using an XSL Processor to "merge" XSL code with XML code is called "Extensible Stylesheet Language Transformation," or "XSLT" for short. 
+
+
+Xml xsl xmlParser and xslProcessor
+
+
+
+
+
+
+
+
+
+

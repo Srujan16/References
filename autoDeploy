@@ -1,0 +1,21 @@
+step -1
+	to maven settings.xml file,add server 
+		 <server>
+			<id>TomcatServer</id>
+			<username>manager</username>
+			<password>manager</password>
+       		</server>
+
+step-2 in build.xml 
+
+	add maven-tomcat plugin
+	<plugin>
+      <groupId>org.apache.tomcat.maven</groupId>
+      <artifactId>tomcat6-maven-plugin</artifactId>
+      <version>2.2</version>
+      <configuration>
+        <url>http://localhost:8080/manager</url>
+        <server>TomcatServer</server>
+        <path>/wordSearch</path>
+      </configuration>
+      </plugin>

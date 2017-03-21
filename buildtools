@@ -1,0 +1,6 @@
+Building usually means the conversion of source code and other artifacts, like images or configuration files, into another artifact.
+
+
+BUild tool for java : ApacheAnt [Another neat tool by apache]
+
+	It helps to automate build process of  java applications which includes compiling, packaging, deploying etc. 

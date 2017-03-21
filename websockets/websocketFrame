@@ -1,0 +1,33 @@
+Basics of onMessage handling:
+------------------------------
+https://javaee-spec.java.net/nonav/javadocs/javax/websocket/OnMessage.html
+
+http://buildnewgames.com/websockets/
+
+
+Debugging frame in chrome :
+https://blogs.oracle.com/arungupta/entry/logging_websocket_frames_using_chrome
+
+
+Debugging  WebSocket Frame :
+https://www.wireshark.org/docs/dfref/w/websocket.html
+
+Inspecting type of frame :
+http://stackoverflow.com/questions/9462879/how-do-i-tell-the-type-of-websocket-onmessages-parameter
+
+		e.data instanceof ArrayBuffer
+		e.data instanceof Blob
+		typeof e.data === "string"
+
+
+frame Inspection :
+	
+	http://www.notshabby.net/2012/09/wireshark-dissecting-websocket-conversations/
+
+
+BydeFault binary data{array Buffer] Is read as blob on clinet side of websocket.
+
+
+You can change the binaryType on the fly, but it only affects the datatype of received messages. To send binary data you must either send a blob or a typed array. If you send a string it will always be sent (and delivered) as a string. In the wire protocol, a message can be either 'text' meaning the sender sent data encoded as a string, or it can be 'binary' which means that the message contains a raw encoded byte stream. The binaryType indicates how that raw data should be delivered to the application.
+
+In other words, when you set binaryType it means that the next time the message handler fires for receipt of a binary message, that event data will be of type binaryType.

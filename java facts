@@ -1,0 +1,66 @@
+Java Default Behaviour :
+	
+1) java treats any number with a floating point as double by default.
+Inorder to specify it as float need to append "f" to the number.
+
+2) All objects live on garbage collectible heap.
+
+3) unless an object have atleast one reference pointing to it, it isn't eligible for garbage collection.
+
+4) arrays are always objects , whether they hold primitives or object references.
+
+5) java can return byte or short if its return type is set to int.
+You can return anything that can implicitly promoted to that type
+
+6) == can be used to compare bit patterns of anytype.
+	for example byte x= 3,int y=3 , x==y returns true. it neglects extra zeros on left side
+
+Inheritance :
+------------
+
+Lowest one wins!! It implies, when you are calling a method using object reference, JVM first starts searching from the class type instantiated and then moves up hierarically in the inheritance tree.
+
+ for example if Dog class extends Animal class and overides method of parent class, then when a method is called using Dog reference, JVM first looks for the method in dog class, and then moves up hirerically inheritance tree, untill it finds required method. 
+
+
+2) compiler gurantess that particular method is callable for specific reference type, but it doesn't say from which class that method actually comes from at runtime. But at runtime, the JVM always picks right one.
+
+3) IS-A and has-a
+
+	redefining of instance variables and over-writing methods.
+
+* you get to refer to a subclass object using a reference declared as supertype.
+
+
+4) with polymorphism, reference type can be superclass of actuall object type.
+
+
+Inheritance  prevention:
+	1) making class final
+	2) making method final
+	3) declaring private constructor
+Animal animal =new Dog();
+animal.eat();
+	at compile time, compiler looks for method in the reference variable.But, at runtime it invokes the method of actual object type.
+
+	So changing access specifier of overriden method to private may not cause exception at compile time but may lead to runtime exception.
+
+
+5) Compiler decides whether you can call a method based on reference type but not by object type.
+
+6) All methods get's executed on stack-frame. Generally, stack-frame keeps state of method which includes current-line getting executed and all local variables.
+
+
+7) state and behaviour of objects.
+
+8) In inheritance tree child may depend upon state of parent-class. Hence, constructor of parent class need's to be instantiated when child constructor gets invoked. Constructor chain-reaction along inheritance tree is mandatory.
+
+
+9) Although you can never say new on abstract class, an abstract class is still a super class, so its constructor runs when some one makes instance of a concrete subclass.
+
+10) can't have this and super in same constructor, since both of them should be the firstline inside constrcutors.
+
+
+
+
+

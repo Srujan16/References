@@ -1,0 +1,12 @@
+https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+
+
+The FileReader type has a single job: to read data from a file and store it in a JavaScript variable. The API is intentionally designed to be similar to XMLHttpRequest since both are loading data from an external (outside of the browser) resource. The read is done asynchronously so as not to block the browser.
+
+There are several formats that a FileReader can create to represent the file data, and the format must be requested when asking the file to be read. Reading is done through calling one of these methods:
+
+readAsText() – returns the file contents as plain text
+readAsBinaryString() – returns the file contents as a string of encoded binary data (deprecated – use readAsArrayBuffer() instead)
+readAsArrayBuffer() – returns the file contents as an ArrayBuffer (good for binary data such as images)
+readAsDataURL() – returns the file contents as a data URL
+Each of these methods initiates a file read similar to the XHR object’s send() method initiating an HTTP request. As such, you must listen for the load event before starting to read. The result of the read is always represented by event.target.result. For example:

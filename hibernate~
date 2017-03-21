@@ -1,0 +1,67 @@
+1)Why Hiberante ?? -- Hibernate overcomes RDMS limitations.
+2)Object-Relational Inspector Mismatch.
+3)ORM Scenario
+4)Hibernate WorkFlow : Application --> PersistentObject -->hibernate.cfg.xml +mapping.hbm.xml -->Db
+5)Hibernate Architecture :
+     Hibernate Layer
+	a)Configuration
+	b)SessionFactory
+	c)Session
+	d)Transaction	
+	e)Query
+	f)Criteria
+    Hibernate InnerLayer:
+	JNDI
+	JTA
+	JDBC
+	
+    * Hibernate provides Apis tp perform CRUD in persistant Classes.
+    * It provides Apis to specify queries, that refer to classes.
+
+6)Object States	
+	Transient,Persistant,Detacched
+
+7)*****hibernate proxies
+
+8)Storing collections and creating relations between classes [1to1,1tomany,manyTomany,manyTo1]
+	<key column=/>
+	<onetoone class=/>
+
+*)	session.get(class,id)
+	session.save(object)
+	session.delete(obj)
+	session.update(obj)
+
+9) Hql
+
+	Support :
+	1)select
+	2)from
+	3)where
+	4)alias
+	5)grouping and order
+	6)Named Parameters
+	7)executeUpdate
+	8)Aggregates Support
+	9)Pagination
+		.setFirstResult
+		.setMaxResult
+
+
+	 --> Take advantage of Hibernate's SQL generation and caching strategies.
+	 --> Keywords like SELECT , FROM and WHERE etc. are not case sensitive but properties like table and column names are case sensitive 		     in HQL.
+
+	Query query=session.createQuery("from Employee") -->creates QueryObject
+	query.list() --> [ 1)goesto EmployeeTable using config specified in hibernate.cfg.xml,
+			   2)uses dialect and converts hql to dbSpecified sql,
+			   3)fetches data,and converts into Object type specified in mapping attribute of configuration file
+			   4)returns list of objects
+			]
+
+10)Criterias
+11) id,genrator classes
+12)dialects
+13)Restriction && LogicalExpression
+
+
+

@@ -1,0 +1,40 @@
+https://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/
+
+compareTo:
+
+	This method compares two objects, in order to impose an order between them. Specifically, it returns a negative integer, zero, or a positive integer to indicate that the input object is less than, equal or greater than the existing object.
+
+
+Comparator:
+
+	compares its two input arguments and imposes an order between them. 
+
+ForAscending order:
+-------------------
+	It returns
+
+		 a negative integer --> first<second
+
+		 zero -->	first ==second
+		
+		 or a positive integer  -->  first>second
+
+		to indicate that the first argument is less than, equal to, or greater than the second. 
+
+ForDescendingOrder:
+-------------------
+	It returns
+
+		 a negative integer --> first > second
+
+		 zero -->	first ==second
+		
+		 or a positive integer  -->  second<first
+
+
+
+
+Diff  between Comparable and Comparator:
+
+
+	Note that you can do the equivalent thing by defining a comparator. The difference is that the comparator defines the ordering logic outside the object. Maybe in a separate process I need to order the same objects by zipcode - in that case the ordering isn't necessarily a property of the object, or differs from the objects natural ordering. You could use an external comparator to define a custom ordering on integers, 

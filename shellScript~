@@ -1,0 +1,70 @@
+https://www.youtube.com/user/madhurbhatia89
+https://www.youtube.com/playlist?list=PL18DF64CBBAEAAE77
+http://froghs.net/index.html
+
+
+Variables :
+	 A symbolic name for a chunk of memory to which we can assign values, read and manipulate its contents.
+
+	Example 1:
+	----------
+
+		#!/bin/sh
+		MY_MESSAGE="Hello World"
+		echo $MY_MESSAGE
+	
+	Setting Variables: [ read ]
+	------------------ 
+		#!/bin/sh
+		echo whats your name?
+		read MY_NAME
+		echo "Hello $MY_NAME"
+	*read command automatically places quotes around its input, so that spaces are treated correctly. 
+
+	Scope of Variables:
+	------------------
+	[ export, source ]
+	We need to export the variables for it to be inherited by another program - including a shell script.
+	
+	myvar2.sh
+		#!/bin/sh
+		echo "MYVAR is: $MYVAR"
+		MYVAR="hi there"
+		echo "MYVAR is: $MYVAR"
+
+		MYVAR=hello
+		export MYVAR
+		$ ./myvar2.sh
+		MYVAR is: hello
+		MYVAR is: hi there
+
+
+	In order to receive environment changes back from the script, we must source the script - this effectively runs the script within our 		own interactive shell, instead of spawning another shell to run it.
+
+		
+		$ MYVAR=hello
+		$ echo $MYVAR
+		hello
+		$ . ./myvar2.sh
+		MYVAR is: hello
+		MYVAR is: hi there
+		$ echo $MYVAR
+		hi there
+
+		#!/bin/sh
+		echo "What is your name?"
+		read USER_NAME
+		echo "Hello $USER_NAME"
+		echo "I will create you a file called ${USER_NAME}_file"
+		 -------
+		| touch | "${USER_NAME}_file"
+		 -------
+	
+	The shell now knows that we are referring to the variable USER_NAME and that we want it suffixed with "_file". This can be the 		downfall of many a new shell script programmer, as the source of the problem difficult can be to track down.
+
+
+
+
+$x1 && ${x}1
+
+

@@ -1,0 +1,11 @@
+enterPriseId		-entId,details
+role	       		-userRole
+authentication[f]	-true
+userSubject :com.wavemaker.commons.core.fwk.dataObject.usersubject.UserSubject@11720fe4 -userSubject-null
+	
+
+
+
+node-staging-wmonline.props
+
+

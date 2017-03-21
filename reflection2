@@ -1,0 +1,54 @@
+Reflection [java.lang / java.lang.reflection]:
+----------
+http://tutorials.jenkov.com/java-reflection/classes.html
+
+
+
+	get --> examine -->change 
+
+Process of examining modifying or runtime beahviour of class at runtime.
+
+Java.lang.Class contains methods to get metadata, examine and change runtime behaviourof class.
+
+
+
+Methods:
+-------
+
+1) getDeclatredMethod(methodName, array of classTypes of parameters ( Class[] parameterTypes ) 
+2) static Class forName(className) throws ClassNotFoundException
+3) getDeclaredFields
+4) getDeclaredMethods
+
+
+Getting "Class" class
+--------------------
+	Class.forName("clasName")
+	ClassName.class
+	object.getClass()
+
+
+
+Accessing privateFields:
+-----------------------
+
+	public class PrivateObject {
+	  private String privateString = null;
+	
+ 		 public PrivateObject(String privateString) {
+ 		   this.privateString = privateString;
+ 		 }
+	}	
+
+
+
+	PrivateObject privateObject = new PrivateObject("The Private Value");
+
+	Field privateStringField = PrivateObject.class.getDeclaredField("privateString");
+	privateStringField.setAccessible(true);
+
+	String fieldValue = (String) privateStringField.get(privateObject);
+	System.out.println("fieldValue = " + fieldValue);
+
+
+

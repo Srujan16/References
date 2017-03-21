@@ -1,0 +1,19 @@
+@RequestParam("userId") int userId
+
+@PathParam("projectId") int projectId
+
+
+@RequestBody Employee employee --> maps entire jsonstring sent int requestBody to Employeee object 
+	{"name":"srujan","age":1}
+
+
+@RequestPart 
+	Indicates each part thats being sent in multipartRequestBody
+
+
+if there are multiple paramaters to be sent in requestBody,
+		{"employee":{"name":"srujan","age":1},"student":{"name":"srujan","class":12}}
+then RequestBody should be a map	
+	@RequestBody Map<String,Object> inputData
+	
+	and then iterate over map and make use of objectMapper to parse it to required class type.

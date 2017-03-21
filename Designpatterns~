@@ -1,0 +1,24 @@
+http://www.oodesign.com/builder-pattern.html
+
+
+StrategyPattern	:
+-----------------
+
+	http://www.java67.com/2014/12/strategy-pattern-in-java-with-example.html
+	
+	JDK has couple of examples of this pattern, first is Collection.sort(List, Comparator) method, where Comparator is Strategy and 	Collections.sort() is Context. Because of this pattern your sort method can sort any object, the object which doesn't exists when this 		method was written. As long as, Object will implement Comparator interface (Strategy interface), Collections.sort() method will sort 		it.
+
+	Read more: http://www.java67.com/2014/12/strategy-pattern-in-java-with-example.html#ixzz4ZaCssiZW
+
+
+  **
+	1) Strategy pattern is based upon Open Closed design principle
+	2) Strategy is a behavioral pattern in GOF list.
+	3) It allows to add new algorithm without modifying existing algorithms or context class, which uses algorithm or strategies.
+	4) This pattern defines a set of related algorithm and encapsulate them in separated classes, and allows client to choose any 		   algorithm at run time.
+	5) Collections.sort() and Comparator interface is real world example of Strategy pattern.
+
+------------------------------------------------------------
+
+
+

@@ -1,0 +1,12 @@
+IoC -[Inversion of Control]
+	
+	 Software frameworks, callbacks, schedulers, event loops and dependency injection are examples of design patterns that follow the inversion of control principle.
+	Don't call us, we'll call you".
+
+
+1)Constructor based DI  --constructor-arg ref
+2)DI using setters
+3)Diff between ApplicationContext and BeanFactory
+	One difference between bean factory and application context is that former only instantiate bean when you call getBean() method while ApplicationContext instantiates Singleton bean when the container is started,  It doesn't wait for getBean to be called.
+
+

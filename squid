@@ -1,0 +1,15 @@
+https://help.ubuntu.com/lts/serverguide/squid.html#squid-references
+https://www.linode.com/docs/networking/squid/squid-http-proxy-ubuntu-12-04
+
+http://www.linofee.org/~jel/proxy/Squid/accesslog.shtml
+
+	 TCP_HIT happens when squid took the requested information from the 
+cache directories, ie, from the disk. 
+
+         TCP_MEM_HIT happens when squid took the requested information from 
+memory, ie, RAM memory. 
+
+http://wiki.squid-cache.org/SquidFaq/SquidLogs#Squid_result_codes
+
+http://www.deckle.co.uk/squid-users-guide/squid-configuration-basics.html
+**http://www.monitis.com/blog/how-to-monitor-squid-proxy-server/

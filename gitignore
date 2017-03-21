@@ -1,0 +1,22 @@
+doc -global --directory and files
+doc/ -global only directories
+
+
+
+/doc --rootLevel--both doc directoris and files
+/doc/-- rootLevel --only directoris
+
+
+
+
+doc --directory or file with name doc [at all levels of project]
+
+
+leading Slash :
+	/doc/ -- only at root level. Doesn't ignore sub directories with name doc.It excludes files.
+	/doc -- will include both directory and files with name doc at root level.
+
+trailing Slash:
+
+ doc/ -- will include only directories not files.
+

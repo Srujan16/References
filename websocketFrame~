@@ -1,0 +1,12 @@
+Debugging frame in chrome :
+https://blogs.oracle.com/arungupta/entry/logging_websocket_frames_using_chrome
+
+
+Debugging  WebSocket Frame :
+https://www.wireshark.org/docs/dfref/w/websocket.html
+
+
+frame Inspection :
+	
+	http://www.notshabby.net/2012/09/wireshark-dissecting-websocket-conversations/
+

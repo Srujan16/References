@@ -1,0 +1,109 @@
+1)Reflections
+2)RandomAccessfile
+3)Files.createTempDir
+4)@Before and @After annotation
+5)Generics
+
+
+
+/**
+ * Created by srujant on 22/6/16.
+ */
+
+import java.io.*;
+import java.util.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+public class Crud {
+
+    private static Logger logger = LoggerFactory.getLogger(Crud.class.getName());
+    private InputStream fileInputStream = null;
+    private OutputStream fileOutputStream = null;
+    private OutputStream objectOutputStream = null;
+    private InputStream objectInputStream = null;
+    private Map<String, Employee> objectMap = new LinkedHashMap();
+    private static int id=0;
+    private static int position=0;
+    private static int markPosition=-1;
+    private boolean flag=false;
+    Crud() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("db.txt");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            FileOutputStream fileOutputStream = new FileOutputStream("db.txt");
+            ObjectOutputStream objectOuputStream = new ObjectOutputStream(fileOutputStream);
+        } catch (FileNotFoundException e) {
+            logger.warn("File Not Found", e);
+        } catch (IOException e) {
+            logger.warn("IOException while writing data", e);
+        }
+    }
+
+    public  int getEmployeeId(Employee employee){
+        return employee.id;
+    }
+
+
+    public void createEmployee(String firstName, String lastName, String emailId, String linkedinId, int age) throws IOException {
+
+        Employee employee = new Employee(firstName, lastName, emailId, linkedinId, age,id);
+        id++;
+        objectOutputStream.writeObject(employee);
+    }
+
+
+    public Employee readEmployee(String firstName, String emailId) throws IOException, ClassNotFoundException {
+        int i = 0;
+
+        if (objectMap.keySet() == null) {
+            for (; i < 10; i++) {
+                if(objectInputStream.available()>0) {
+                    Employee employee = (Employee) objectInputStream.readObject();
+                    String hashKey = employee.getFirstName() + employee.getEmailId();
+                    if(employee.getId()==markPosition){
+                        markPosition=-1;
+                        flag=true;
+                        break;
+                    }
+                    objectMap.put(hashKey, employee);
+                }
+            }
+        }
+
+        List<String> listKeySet=new ArrayList<String>();
+        listKeySet.addAll(objectMap.keySet());
+
+        if (listKeySet.contains(firstName + emailId)) {
+            markPosition=getEmployeeId(objectMap.get(listKeySet.get(listKeySet.size()-1)));
+            return objectMap.get(firstName + emailId);
+        } else {
+            if (objectInputStream.available() > 0 && !flag) {
+                objectMap.keySet().removeAll(listKeySet);
+                return readEmployee(firstName, emailId);
+            }else {
+                fileInputStream.close();
+                fileInputStream=new FileInputStream("db.txt");
+                if(markPosition!=-1){
+                     return readEmployee(firstName, emailId);
+                }
+            }
+        }
+        return null;
+    }
+
+    public void updateEmployee(String firstName,String emailId) throws IOException, ClassNotFoundException {
+
+        Employee employee=readEmployee(firstName,emailId);
+        int id=employee.getId();
+
+    }
+
+    public void deleteEmployee() {
+
+    }
+
+}
+

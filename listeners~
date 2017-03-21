@@ -1,0 +1,13 @@
+http://www.journaldev.com/1945/servletcontextlistener-servlet-listener-example
+http://www.javatpoint.com/ServletContextEvent
+
+
+
+diff between namespace and contextConfigLocation :
+	http://www.jroller.com/latenightdev/entry/spring_mvc_context_loading
+
+Delegating Filter Prozy :
+--------------------------
+http://learningviacode.blogspot.in/2013/12/delegatingfilterproxy-and-spring.html
+
+GenericFilterBean

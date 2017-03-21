@@ -1,0 +1,116 @@
+----------------------
+Inversionof Control : |
+----------------------
+	--> flow of control has been "inverted" by Dependency Injection (DI) because you have effectively delegated dependances to some 	    external system.
+
+
+Spring [Spring Beans,configuration MetaData]:
+---------------------------------------------
+Pojo + metaData --> Ioc Containter[Spring Container] -->Spring Beans
+
+	non-invasive
+	It provides powerful abstraction to JavaEE specifications such as JMS, JDBC, JPA and JTA.
+
+
+The container will create the objects, wire them together, configure them, and manage their complete lifecycle from creation till destruction.
+
+The container gets its instructions on what objects to instantiate, configure, and assemble by reading configuration metadata provided.
+
+Beans :
+-------	The objects that form the backbone of your application and that are managed by the Spring IoC container are called beans.
+ 	The bean definition contains the information called configuration metadata 
+
+
+
+Bean :  A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container.
+------
+	class,name,scope,constructor-arg,properties,lazy-initialisation,[init-method]initialisation-method,[destroy-method]destruction-method
+
+LifeCycle : [init-method,destroy-method ]
+----------- 
+ApplicationContext.registerShutdownHook()
+default-init-method
+default-destroy-method
+
+
+Inheritance :
+-------------
+When a definition is abstract like this, it is usable only as a pure template bean definition that serves as a parent definition for child definitions.
+			 ---------	
+<bean id="beanTeamplate"|abstract | ="true">
+			 ---------
+      <property name="message1" value="Hello World!"/>
+      <property name="message2" value="Hello Second World!"/>
+      <property name="message3" value="Namaste India!"/>
+</bean>
+
+<bean id="helloIndia" class="com.tutorialspoint.HelloIndia" parent="beanTeamplate">
+      <property name="message1" value="Hello India!"/>
+      <property name="message3" value="Namaste India!"/>
+</bean>   
+
+* BeanPostProcessor interface [containerspecific information. postProcessBeforeInitialization,postProcessAfterInitialization]
+
+Dependencie Injection :
+-----------------------
+injecting primitive types and objects
+
+injecting collections --<set>,<list>,<map>,<props>
+
+<property name=" ">
+<list>/<set>/<map>/<props>
+
+</property>
+
+	 * configure primitive data type using value attribute and object references using ref attribute of the <property> tag in your Bean configuration fill.
+
+	<constrctor-arf ref="id of class to be injected">
+	<property name=" " ref="id of class to be injected">
+
+	constructor arguments for mandatory dependencies and setters for optional dependencies.
+
+       -->Code is cleaner with the DI principle and decoupling is more effective when objects are provided with their dependencies.
+       -->The object does not look up its dependencies, and does not know the location or class of the dependencies rather everything is taken 		  care by the Spring Framework.
+
+
+Annotation Injection:
+--------------------
+	Annotation injection is performed before XML injection, thus the latter configuration will override the former for properties wired through both approaches.
+
+
+ Config file for Annotation Injection :
+ -------------------------------------
+
+	<beans xmlns="http://www.springframework.org/schema/beans"
+  	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    	  xmlns:context="http://www.springframework.org/schema/context"
+    	  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  	  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   	  http://www.springframework.org/schema/context
+  	  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	  --------------------------------
+	 | * <context:annotation-config/> |
+	  --------------------------------
+
+
+ From Spring 2.5 it became possible to configure the dependency injection 
+
+  * Annotation injection is performed before XML injection, thus the latter configuration will override the former for properties wired       	  through both approaches.
+ 
+  Annotations :
+  -------------
+	@Required :				      --------------	
+	       	 Annotation applies to bean property |setter methods| and it indicates that the affected bean property must be populated  							      --------------				  -----------------------------		  
+ 		in XML configuration file at configuration time otherwise the container throws a | BeanInitializationException | exception.   
+                     										  -----------------------------		
+	 
+	@Autowired :
+	
+		 The @Autowired annotation can be used to autowire bean on the setter method just like @Required annotation, constructor, a 			 property or methods with arbitrary names and/or multiple arguments.
+
+
+	@Qualifier :
+	
+		There may be a situation when you create more than one bean of the same type and want to wire only one of them with a 			property, in such case you can use @Qualifier annotation along with @Autowired to remove the confusion by specifying which 			exact bean will be wired		
+

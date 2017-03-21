@@ -1,0 +1,34 @@
+consider 3 groups(group1, group2, group3)
+consider 4 clients(c1, c2, c3, c4)
+
+global map
+
+main
+	join group1
+
+	from thread2
+		randomly make join requests
+		randomly make leave requests
+		randomly send messages to the joined groups
+		for each activity he will register in global map
+
+
+c1.join in group1
+c1. check incoming requests
+int count=1000;
+
+global activity map
+
+while(true) {
+count--;
+select a client randomly(c2, c3, c4)
+select a random operation
+5% join
+5% leave
+90% message
+
+assert activity map with c1's console output
+
+
+
+	 

@@ -1,0 +1,48 @@
+ create table user_session(cookie varchar(50) not null,j_username varchar(50) not null,last_accesstime bigint not null,primary key(cookie));
+
+ http://localhost:9080/studio/index.html#/projects
+
+
+  /* RestRequestInfo restRequestInfo = new RestRequestInfo();
+        RestConnector restConnector = new RestConnector();
+        HttpHeaders requestBody = new HttpHeaders();
+
+        restRequestInfo.setContentType(httpServletRequest.getContentType());
+        restRequestInfo.setEndpointAddress("https://stage-studio.wavemakeronline.com/login"+httpServletRequest.getPathInfo());
+        restRequestInfo.setMethod(httpServletRequest.getMethod());
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Host", "stage-studio.wavemakeronline.com");
+        headers.put("Accept", "application/json");
+
+        if(httpServletRequest.getCookies()!=null){
+            Cookie cookies[]=httpServletRequest.getCookies();
+                StringBuffer sb = new StringBuffer();
+                for (Cookie cookie:cookies){
+                    sb.append(cookie.getName()+"="+cookie.getValue());
+                    headers.put(cookie.getName(),cookie.getValue());
+                }
+                headers.put("Cookie",sb.toString());
+        }
+        restRequestInfo.setHeaders(headers);
+
+        Enumeration parameters= httpServletRequest.getParameterNames();
+        while (parameters.hasMoreElements()){
+            String  paramName=parameters.nextElement().toString();
+            requestBody.add(paramName,httpServletRequest.getParameter(paramName));
+        }
+        restRequestInfo.setRequestBody(requestBody);
+
+
+        RestResponse response = restConnector.invokeRestCall(restRequestInfo);
+
+        httpServletResponse.setContentType(response.getContentType());
+        httpServletResponse.setStatus(response.getStatusCode());
+        Map<String, List<String>> responseHeaders = response.getResponseHeaders();
+        Set<String> keyset = responseHeaders.keySet();
+        for (String key : keyset) {
+            httpServletResponse.setHeader(key, responseHeaders.get(key).get(0));
+        }
+
+        if (response.getResponseBody() != null) {
+            IOUtils.copy(new ByteArrayInputStream(response.getResponseBody()), httpServletResponse.getOutputStream(), true, false);
+        }*/

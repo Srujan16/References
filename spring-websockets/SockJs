@@ -1,0 +1,43 @@
+	STOMP is Streaming Text Oriented Messaging Protocol. A STOMP client communicates to a message broker which supports STOMP protocol. STOMP uses different commands like connect, send, subscribe, disconnect etc to communicate.
+
+
+	SockJS is a java script library which provides websocket like object for browsers. SockJS provides cross browser compatibility and supports STOMP protocol to communicate with any message broker. SockJS works in the way that we need to provide URL to connect with message broker and then get the stomp client to communicate.
+
+
+
+	 SockJS works in the way that we need to provide URL to connect with message broker and then get the stomp client to communicate.
+ A STOMP client communicates to a message broker which supports STOMP protocol. STOMP uses different commands like connect, send, subscribe, disconnect etc to communicate.
+
+
+
+1) Create A MessageBroker	
+
+
+  @EnableWebSocketMessageBroker 
+	It enables WebSocket message handling, backed by a message broker.
+
+	MessageBrokeryRegistry and StompEndPointRegistry
+
+
+	MessageBrokeryRegistry:
+	-----------------------
+		config.enableSimpleBroker("/topic");
+	        config.setApplicationDestinationPrefixes("/app");
+	StompEndPointRegistry:
+	----------------------
+		registry.addEndpoint("/chat").withSockJS();
+	
+	@EnableWebSocketMessageBroker
+	public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+	 
+	    @Override
+	    public void configureMessageBroker(MessageBrokerRegistry config) {
+	        config.enableSimpleBroker("/topic");
+	        config.setApplicationDestinationPrefixes("/app");
+	    }
+	 
+	    @Override
+	    public void registerStompEndpoints(StompEndpointRegistry registry) {
+	         registry.addEndpoint("/chat").withSockJS();
+	    }
+	}

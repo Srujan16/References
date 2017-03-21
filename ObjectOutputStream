@@ -1,0 +1,17 @@
+Object stream data is preceded by a 4 byte 'magical' sequence AC ED 00 05. An ObjectInputStream will peek for this data at construction time rather than before the first read. And that's logical: one wants to be sure it is a proper stream before being too far in an application. The sequence is buffered by the ObjectOutputStream at construction time so that it is pushed on the stream at the first write. This method often leads to complexities in buffered situations or transferring via pipes or sockets. Fortunately there is a just as simple as effective solution to all these problems:
+
+Flush the ObjectOutputStream immediately after contruction !
+
+ObjectOutputStream myStream = new ObjectOutputStream ( anotherStream ); myStream.flush();
+
+In your case you will have to use an ObjectOutputStream if you want to read from an ObjectInputStream
+
+
+
+Creates an ObjectInputStream that reads from the specified InputStream. A serialization stream header is read from the stream and verified. This constructor will block until the corresponding ObjectOutputStream has written and flushed the header.
+
+In other words, the constructor doesn't just record the InputStream reference you give it, it also reads from that object. In this case, that's a stream of all 0s.
+
+You should defer creating the ObjectInputStream until you have the serialized data (or at least enough of it to read the header).
+
+(In the interest of "teach a person to fish," I'll also note that any time a method/constructor throws an exception you don't expect, that method's javadocs are a good place to start for understanding its behavior. The javadocs for the JDK classes are usually pretty good.)

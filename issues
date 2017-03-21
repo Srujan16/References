@@ -1,0 +1,78 @@
+Exception in thread "Thread-6" java.lang.RuntimeException: java.io.InvalidClassException: com..wwaavvemmkek.etru.tourtiarli.aclh.acthc; enum descriptor has non-zero serialVersionUID: 7010161748057652551
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:45)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.InvalidClassException: com..wwaavvemmkek.etru.tourtiarli.aclh.acthc; enum descriptor has non-zero serialVersionUID: 7010161748057652551
+	at java.io.ObjectStreamClass.readNonProxy(ObjectStreamClass.java:691)
+	at java.io.ObjectInputStream.readClassDescriptor(ObjectInputStream.java:830)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1601)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1517)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1771)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:370)
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:37)
+	... 1 more
+Exception in thread "Thread-7" java.lang.NullPointerException
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:1987)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:1915)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1798)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.skipCustomData(ObjectInputStream.java:1956)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1620)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1517)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1771)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:370)
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:37)
+	at java.lang.Thread.run(Thread.java:745)
+Exception in thread "Thread-8" java.lang.NullPointerException
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:1987)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:1915)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1798)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.skipCustomData(ObjectInputStream.java:1956)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1620)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1517)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1771)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.skipCustomData(ObjectInputStream.java:1956)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1620)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1517)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1771)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:370)
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:37)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+Exception in thread "Thread-7" java.lang.RuntimeException: java.io.StreamCorruptedException: invalid type code: 35
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:45)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.StreamCorruptedException: invalid type code: 35
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1377)
+
+Exception in thread "Thread-10" java.lang.ClassCastException: java.lang.String cannot be cast to java.io.ObjectStreamClass
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1511)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1771)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:370)
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:37)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+Exception in thread "Thread-6" java.lang.RuntimeException: Error in reading object for the useru2
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:45)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.UTFDataFormatException
+	at java.io.ObjectInputStream$BlockDataInputStream.readUTFSpan(ObjectInputStream.java:3126)
+	at java.io.ObjectInputStream$BlockDataInputStream.readUTFBody(ObjectInputStream.java:3051)
+	at java.io.ObjectInputStream$BlockDataInputStream.readUTF(ObjectInputStream.java:2864)
+	at java.io.ObjectInputStream.readUTF(ObjectInputStream.java:1072)
+	at java.io.ObjectStreamClass.readNonProxy(ObjectStreamClass.java:671)
+	at java.io.ObjectInputStream.readClassDescriptor(ObjectInputStream.java:830)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1601)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1517)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1771)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1350)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:370)
+	at com.wavemaker.tutorial.chat.server.ClientReaderThread.run(ClientReaderThread.java:37)
+	... 1 more

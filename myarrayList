@@ -1,0 +1,6 @@
+
+	1) every call to  remove() method of iterator should be called only after next(). or lese it throws new IllegalStateException(). 
+												 ---------------------------
+	2)indexPosition >=size then, NoSuchElementException
+
+

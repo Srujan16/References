@@ -1,0 +1,81 @@
+Config :
+-------
+ AppWebConfig
+ AppWebSocketConfig
+
+ WebSocketController
+
+ WebAppInitializer
+
+
+
+WebSocket Context:
+-----------------
+@EnableWebSocketMessageBroker
+
+	WebSocketConfigure extends AbstractWebSocketMessageBrokerConfigurer :
+
+		configureMessageBroker:	
+			.enableSimpleBroker("/topic")	
+
+			1) MessageBrokeryRegister.enableStompBrokeryRelay("topic/queue")
+
+				First, we enable an in-memory message broker to carry the messages back to the client on destinations prefixed 					with “/topic”.
+
+			We need to define an application destination name using which browser and server will communicate over WebSocket. 
+			2) MessageBrokeryRegister.setApplicationDestinationPrefix("/calcApp")
+
+			 we need to define an application destination name using which browser and server will communicate over WebSocket.
+		
+	
+		registertompEndPoints:
+
+			StompEndpointRegistry register an end point for the STOMP over WebSocket. Check the below codesnippet.		
+
+			StompEndpointRegistry adds end point for STOMP communication. And enables SockJS. In this way STOMP client will send the message via the URL /calcApp/add. [ applicationDestinationPrefix/StompEndPointRegistry ]	
+
+			This endpoint, when prefixed with “/calcApp”, is the endpoint that the ChatController.send() method is mapped to 				handle.
+				
+
+			** StompEndpointRegistry.add("/add").withSockJs();
+
+SpringMVC Context
+Controller for WebSocketCommunication :
+---------------------------------------			
+
+
+	@Controller
+	public class WebSocketController {
+	    @MessageMapping("/add" )
+	    @SendTo("/topic/showResult")
+		    public Result addNum(CalcInput input) throws Exception {
+		        Thread.sleep(2000);
+		        Result result = new Result(input.getNum1()+"+"+input.getNum2()+"="+(input.getNum1()+input.getNum2())); 
+		        return result;
+		    }
+	    @RequestMapping("/start")
+    		    return "start";
+    	    }
+    	    public String start() {
+	} 
+	@MessageMapping
+		The method annotated with @MessageMapping works for WebSocket protocol communication. This defines the URL mapping. 
+	@SendTo
+		@SendTo defines a URL pattern to send result. In our example we have URL pattern as /topic/showResult .	
+
+WebApplicationInitializer Class:
+-------------------------------
+
+	public class WebAppInitializer implements WebApplicationInitializer {
+
+		 public void onStartup(ServletContext servletContext) throws ServletException {  
+        		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();  
+        		ctx.register(AppWebConfig.class);  
+        		ctx.setServletContext(servletContext);    
+        		Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));  
+        		dynamic.addMapping("/");  
+        		dynamic.setLoadOnStartup(1);  
+		}
+	}
+
+

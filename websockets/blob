@@ -1,0 +1,14 @@
+ /*     if( event.data instanceof  Blob){
+          var reader = new window.FileReader();
+          reader.readAsDataURL(event.data);
+          window.alert(reader.result+"hello" + event.data);
+        }
+        */
+       
+
+Blob :
+
+It does represent type of file with specific encoding format.
+Data inside the blob could be read using FileReader.
+
+In short, ArrayBuffer is a fixed-length binary buffer with no format and no mechanism for accessing its contents. 

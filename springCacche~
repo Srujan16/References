@@ -1,0 +1,18 @@
+1) Caching declaration
+2) Caching configuration -> specify ehCache config details in ehcache.xml, which contains info related to diskStorage location of cacheData 	and memory allocated to cache.
+ 
+3) Enable caching
+
+
+
+
+http://javabeat.net/spring-cache/
+
+
+Finally, caching HttpClient includes support the Cache-Control extensions specified by RFC 5861.
+We believe HttpClient Cache is unconditionally compliant with RFC-2616.
+
+---------------------------------------------------------------------
+
+
+http://stackoverflow.com/questions/23255397/integrating-persistent-caching-into-apache-httpclient-with-ehcache

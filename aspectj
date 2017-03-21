@@ -1,0 +1,31 @@
+http://www.baeldung.com/spring-aop-pointcut-tutorial
+
+
+Aspect-oriented programming aims to encapsulate cross-cutting concerns into aspects to retain modularity. This allows for the clean isolation and reuse of code addressing the cross-cutting concern.
+
+Aspect basic building block of AOP.
+
+	Aspect    :	
+
+	JoinPoint : Join point is a step of the program execution, such as the execution of a method.
+
+	PointCut  : Is a predicate that matches the join points and a pointcut expression language is a way of describing pointcuts 			    programmatically.
+	
+	Advice 	:   Advice represents an action taken by an aspect at a particular join point. 
+
+	PointCutExpression :
+
+	PointCutDesignator : within, execution	
+			     Execute all methods which may have different signature,returnType
+			     execution(* com.wavemaker.tutorial.AspectjBasics.*(..));
+
+	this   : this limits matching to join points where the bean reference is an instance of the given type. [it works when springAop 			 creates CGLIB based proxy]
+
+	target : while target limits matching to join points where the target object is an instance of the given type.[it is used when 		        JDK-based proxy is used] 
+
+
+	@target : limits matching to join points where the class of the executing object has an annotation of the given type.
+
+       	@args :  This PCD limits matching to join points where the runtime type of the actual arguments passed have annotations of the given 			 type(s). Suppose that we want to trace all the methods accepting beans annotated with @Entity annotation:
+
+

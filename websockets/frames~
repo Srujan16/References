@@ -1,0 +1,34 @@
+MaxFrame Size :9,223,372,036,854,775,807
+
+
+Sending fragmented Frames:
+-----------------------------------------
+https://www.eclipse.org/jetty/documentation/9.3.x/jetty-websocket-api-send-message.html
+
+
+{"__type":"register","accountKey":"3vCaGRDlZbbiX5tJXSlIABEcEDu5cGAg","cookie_law":false,"dt":"desktop","mID":"ckfs0wgYkhXKu7","ref":"http://www.websocket.org/book.html","rev":"b3127be658c1a1399a725644dcea13dc8c1b808e","source":"widget_v2","theme":"simple","title":"About HTML5 WebSocket - Powered by Kaazing","ua":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36","url":"http://www.websocket.org/aboutwebsocket.html"}
+
+
+
+
+
+{"path":"connection","update":{"status$string":"connected","server$string":"sg08.zopim.com","server_retired$bool":false,"server_ready$bool":false}}
+
+
+
+
+{"path":"livechat","update":{"features":null},"seq":2}
+{"path":"livechat","update":{"features":{"agents_dept_view$bool":true,"monitor$bool":true,"file_sending_settings$bool":true,"agent_list$bool":true,"tagsv2$bool":true,"new_label":{"chat_tags":{"end$string":"2015-12-05","start$string":"2015-11-05"}},"analytics$bool":true,"timezone_migration_notice$bool":true,"testabc$bool":true,"skip_dept_online_validation$bool":true,"nps":{"start$string":"2016-04-25 00:00Z","end$string":"2016-05-01 23:59Z"},"test_feature":{"setA":{"when$string":"at_chat_end","cond$string":"visitor_id_divided_by_2"},"setB":{"when$string":"at_chat_end","cond$string":"visitor_id_not_divided_by_2"}},"transfer_department$bool":true,"request_rating$bool":true}},"seq":3}
+{"path":"livechat.settings.package","update":{"color_customization_enabled$int":1,"widget_customization_enabled$int":1},"seq":4}
+{"path":"livechat.settings.file_sending","update":{"allowed_extensions$string":"png,jpg,jpeg,gif,txt,pdf,zip,rar,html,java,class,exe,cs,xml,css,db,pw,ppk,pem,jar,dll,bat,js,m,h,framework","enabled$bool":true},"seq":5}
+{"path":"livechat.settings","update":{"sound":{"disabled$bool":false},"rating":{"enabled$bool":true},"language":{"language$string":"--"},"bubble":{"title$string":"Questions?","enabled$bool":true,"text$string":"Click here to chat with us."},"chat_window":{"mobile_mode$string":"overlay","title_bar":{"title$string":"Live Chat Support"}},"forms":{"pre_chat_form":{"message$string":"","required$bool":false,"profile_required$bool":false,"form":{"0":{"name$string":"name","required$bool":false},"1":{"name$string":"email","required$bool":false},"2":{"label$string":"Choose a Department","name$string":"department","required$bool":false,"type$string":"department"},"3":{"label$string":"Message","name$string":"message","required$bool":false,"type$string":"textarea"},"4":{"label$string":"Phone","hidden$bool":false,"type$string":"text","name$string":"phone","required$bool":false}}},"offline_form":{"message$string":"Sorry, we aren't online at the moment. Leave a message and we'll get back to you.","form":{"3":{"hidden$bool":false,"required$bool":false}}}},"theme":{"chat_button":{"position_mobile$string":"br","position$string":"br"},"colors":{"bubble$string":"#e59341","banner$string":"#fd8032","primary$string":"#fd8032"},"name$string":"simple","message_type$string":"bubble_avatar","chat_window":{"size$string":"medium","position$string":"br"}},"concierge":{"title$string":"Ask us anything.","avatar_path$string":"","display_name$string":"Kaazing Global Support"},"behavior":{"do_not_display$bool":false},"login":{"phone_display$bool":true,"restrict_profile$bool":false,"allowed_types":{"google$bool":true,"facebook$bool":true}},"banner":{"layout$string":"image_right","image_path$string":"","enabled$bool":true,"text$string":"Need Help?"},"chat_button":{"hide_when_offline$bool":false},"greetings":{"offline$string":"Leave a Message","online$string":"Live Chat Support"},"branding":{"hide_branding$bool":true}},"seq":6}
+
+
+
+{"__type":"instrumentation","metrics":[{"method":"histogram","name":"start_exec","sample_rate":0.25,"tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e"],"value":0.477},{"method":"histogram","name":"init_ui_components_cached","sample_rate":0.25,"tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e"],"value":0.031},{"method":"increment","name":"conn","tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e","tries:1"],"value":1},{"method":"histogram","name":"conn_open","sample_rate":0.25,"tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e","proxy:sg08.zopim.com"],"value":0.703},{"method":"histogram","name":"conn_status_connected","sample_rate":0.25,"tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e"],"value":0.734},{"method":"histogram","name":"theme_loaded_cached","sample_rate":0.25,"tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e"],"value":0.745}]}
+{"__type":"instrumentation","metrics":[{"method":"histogram","name":"conn_status_registered","sample_rate":0.25,"tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e"],"value":1.114}]}
+{"__type":"instrumentation","metrics":[{"method":"histogram","name":"conn_status_reattached","sample_rate":0.25,"tags":["browser:chrome","device:desktop","platform:other","rev:b3127be658c1a1399a725644dcea13dc8c1b808e"],"value":1.114}]}
+{"path":["root","livechat","profile"],"value":{"active$int":1474547253132}}
+{"path":["root","livechat","channel","tags"],"value":{"added$string":"websocket_org"}}
+{"path":["root","livechat","profile"],"value":{"disconnect_timeout$int":20}}
+

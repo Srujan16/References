@@ -1,0 +1,5 @@
+1) creating mutiple directories
+
+	file.mkdirs()
+	file.getParentFile.mkdirs()
+	file.createNewFile()

@@ -1,0 +1,85 @@
+//            MonKey decoKey = timeMonitor.getMonKey();
+//            Monitor mon = MonitorFactory.getTimeMonitor(label);
+
+//            List<ExceptionDetails> exceptionDetailsList = getExceptionDetailsList(monitor);
+
+
+
+            /*if(!mon.isEnabled()) {
+                mon.enable();
+            }*/
+
+
+//            MonKeyImp monKeyImp =getMonKeyImp(label,exceptionDetailsList,"ms.");
+//            mon = MonitorFactory.start(monKeyImp);
+//            MonKey monKey = mon.getMonKey();
+               /* RemoteRuntimeException remoteRuntimeException = (RemoteRuntimeException) t;
+                int statusCode = remoteRuntimeException.getRemoteStatusCode().value();
+                String reasonPhrase = remoteRuntimeException.getRemoteStatusCode().getReasonPhrase();
+                String exceptionDetails = getErrorMessage(remoteRuntimeException.getMessage());
+                exceptionDetails = statusCode + " - " + reasonPhrase + ", " + exceptionDetails;
+                key.setDetails(exceptionDetails);
+                trackException(t, exceptionDetails, keyHelper.getDetails(proceedingJoinPoint, t));
+                */
+
+
+
+
+
+https://sourceforge.net/p/jamonapi/jamonapi/ci/master/tree/jamon/src/test/resources/minimalApplicationContext.xml
+
+/*
+
+    private String getReport(){
+        String report = "";
+        Object[][] data = MonitorFactory.getData();
+         for(int i=0;i<data.length;i++){
+             report = generateReport(data[i]) + "\n";
+         }
+        return report;
+    }
+
+    private String generateReport(Object[] data){
+        String label = (String) data[LABEL_INDEX];
+        label = label.substring(0,label.lastIndexOf(","));
+        String className = getClassName(label);
+        String methodName = getMethodName(label);
+        Class classObject;
+        try {
+            classObject = Class.forName(className);
+            String basePath = getBasePath(classObject);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Class not found",e);
+        }
+        return null;
+    }
+
+
+
+    private String getClassName(String label){
+        return label.substring(label.indexOf("com"),label.lastIndexOf("."));
+    }
+
+    private String getMethodName(String label){
+        return label.substring(label.lastIndexOf("."+1),label.indexOf("("));
+    }
+
+    private String getBasePath(Class classObject){
+        Annotation[] annotations = classObject.getDeclaredAnnotations();
+        int i=0;
+        for(i=0;i<annotations.length;i++){
+           if(annotations[i].annotationType().getName().equalsIgnoreCase("org.springframework.web.bind.annotation.RequestMapping")) {
+               break;
+           }
+        }
+        return getBasePath(annotations[i].toString());
+    }
+
+    private String getBasePath(String requestMapping){
+        String  value = requestMapping.substring(requestMapping.indexOf("value"),requestMapping.indexOf(","));
+        return value.substring(value.indexOf("["),value.indexOf("]"));
+    }
+
+
+*/
+

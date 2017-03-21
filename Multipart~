@@ -1,0 +1,16 @@
+http://stackoverflow.com/questions/21329426/spring-mvc-multipart-request-with-json?answertab=active#tab-top
+
+
+
+
+[Reserved and] non-alphanumeric characters replaced are by `%HH', a percent sign and two hexadecimal digits representing the ASCII code of the character.
+
+
+That means that for each non-alphanumeric byte that exists in one of our values, it's going to take three bytes to represent it. 
+For large binary files, tripling the payload is going to be highly inefficient.
+
+MultiPart:
+	 With this method of transmitting name/value pairs, each pair is represented as a "part" in a MIME message.
+
+
+

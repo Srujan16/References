@@ -1,0 +1,81 @@
+ApplicationContext and Web-ApplicationContext :
+
+	ApplicationContext applicationContext.xml is the root context configuration for every web application. Spring loads applicationContext.xml file and creates the ApplicationContext for the whole application. There will be only one application context per web application. If you are not explicitly declaring the context configuration file name in web.xml using the contextConfigLocation param, Spring will search for the applicationContext.xml under WEB-INF folder and throw FileNotFoundException if it could not find this file.
+
+WebApplicationContext Apart from ApplicationContext, there can be multiple WebApplicationContext in a single web application. In simple words, each DispatcherServlet associated with single WebApplicationContext. xxx-servlet.xml file is specific to the DispatcherServlet and a web application can have more than one DispatcherServlet configured to handle the requests. In such scenrios, each DispatcherServlet would have a separate xxx-servlet.xml configured. But, applicationContext.xml will be common for all the servlet configuration files. Spring will by default load file named “xxx-servlet.xml” from your webapps WEB-INF folder where xxx is the servlet name in web.xml. If you want to change the name of that file name or change the location, add initi-param with contextConfigLocation as param name.
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Stereotype Component Injection 
+	@Component,@Controller&& @RequestBody,@Service,@RequestBody,@Service
+	@RestController,@Qualifier
+
+Security :
+	hasPermission(Object targetId, String targetType, Object permission)
+
+	Annotation in Configuration File :
+	<global-method-security pre-post-annotations="enabled"/>
+	http://howtodoinjava.com/spring/spring-security/spring-3-method-level-security-example-using-preauthorize-and-secured/
+
+	<authentication-manager alias="authenticationManager">
+	        <authentication-provider>
+	            <user-service>
+	                <user name="lokesh" password="password" authorities="ROLE_USER" />
+	                <user name="admin" password="password" authorities="ROLE_USER,ROLE_ADMIN" />
+	            </user-service>
+	        </authentication-provider>
+	</authentication-manager>
+     
+
+
+
+
+@preAuthorize
+@postAuthorize
+@security
+
+
+    <context:component-scan base-package="com.wavemaker" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="regex" expression="com.wavemaker.studio.prefab.*"/>
+        <context:exclude-filter type="regex" expression="com.wavemaker.studio.controller.StaticAppFileController"/>
+        <context:exclude-filter type="regex" expression="com.wavemaker.runtime.*"/>
+    </context:component-scan>
+
+
+
+stdui-editor :
+	web.xml
+	ApplicationContext
+		studio-springapp.xml
+	ServletContext	
+		dispatcher-servlet.xml
+
+
+
+
+
+com.wavemaker.studio.controller
+web-app--WEB-INF[classes/*.xml]-->web.xml
+
+
+DataBaseServiceController [Studio-editor] --> DataService[@AutoWired --DataServiceManager,DataBaseDesignManager, DataModelDesignManager ]
+
+*DataBasedesingManager --
+*DataModelDesignManager --Tables
+*DataServiceManager	--ConnectionConfiguration
+
+
+Base-MOdel-Service
+
+
+com.wavemaker.runtime.data.dao.query
+wm-app-runtime --> wm-app-runtime-core  -->Dao -->WmGenericDaoImpl.java
+
+
+RestController -- RestServiceService -->RestServicesManger.invokeRestCall -->restConnector.invokeRestCall
+
+WM-app-runtime
+	app-runtime-core
+	app-runtime-prefab
+	app-runtime-json	
+

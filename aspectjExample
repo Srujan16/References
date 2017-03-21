@@ -1,0 +1,20 @@
+Step-1: create an aspect
+
+Step-2: Setting aspect configuration:
+	
+		1) state pointCut expression
+		2) set pointCut to aspect created in firstStep;
+
+Example :
+
+	Step-1:	   
+	 <bean id="jamonAspect" class="com.wavemaker.studio.jamon.aspect.CustomJamonAspect"/>
+	    
+	Step-2:
+	    <aop:config>
+        	1) <aop:pointcut id="jamonMonitoringPointcut" expression="@within(org.springframework.web.bind.annotation.RestController)"/>
+	       	   <aop:aspect id="jamonSpringAspect2" ref="jamonAspect">
+			2) <aop:around pointcut-ref="jamonMonitoringPointcut" method="monitor"/>
+	           </aop:aspect>
+	     </aop:config>
+   

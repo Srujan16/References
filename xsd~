@@ -1,0 +1,5 @@
+mapping schema to class definition and document instacnce to obj instance
+
+	Facets :
+	   In XSD Schema, facets provide the flexibility to add restriction for a given base data type. In our examples above, the base data type specified is "string".	
+ 

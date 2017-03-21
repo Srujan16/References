@@ -1,0 +1,9 @@
+*Construction of the Filter Chain
+
+When you declare and map filters in web.xml, the servlet container determines which filters apply to each servlet or other resource (such as a JSP page or static page) in the Web application. Then, for each servlet or resource, the servlet container builds a chain of applicable filters, according to your web.xml configuration order, as follows:
+
+		1) First, any filters that match a servlet or resource according to a <url-pattern> element are placed in the chain, in the order in which the filters are declared in web.xml.
+
+		2) Next, any filters that match a servlet or resource according to a <servlet-name> element are placed in the chain, with the first <servlet-name> match following the last <url-pattern> match.
+
+		3) Finally, the target servlet or other resource is placed at the end of the chain, following the last filter with a <servlet-name> match.

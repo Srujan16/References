@@ -1,0 +1,22 @@
+"Java manipulates objects 'by reference,' but it passes object references to methods 'by value
+
+
+1)One of the benefits of the cooperative nature of interruption is that it provides more flexibility for safely constructing cancelable activities. We rarely want an activity to stop immediately; program data structures could be left in an inconsistent state if the activity were canceled mid-update. Interruption allows a cancelable activity to clean up any work in progress, restore invariants, notify other activities of the cancellation, and then terminate.
+
+
+2)ecause blocking methods can potentially take forever if the event they are waiting for never occurs, it is often useful for blocking operations to be cancelable. (It is often useful for long-running non-blocking methods to be cancelable as well.) A cancelable operation is one that can be externally moved to completion in advance of when it would ordinarily complete on its own. The interruption mechanism provided by Thread and supported by Thread.sleep() and Object.wait() is a cancellation mechanism; it allows one thread to request that another thread stop what it is doing early. When a method throws InterruptedException, it is telling you that if the thread executing the method is interrupted, it will make an attempt to stop what it is doing and return early and indicate its early return by throwing InterruptedException
+
+
+
+Noninterruptible blocking
+
+	The input and output stream classes may block waiting for an I/O to complete, but they do not throw InterruptedException, and they do not return early if they are interrupted. 
+
+
+	 However, in the case of socket I/O, if a thread closes the socket, blocking I/O operations on that socket in other threads will complete early with a SocketException
+
+The nonblocking I/O classes in java.nio also do not support interruptible I/O, but blocking operations can similarly be canceled by closing the channel or requesting a wakeup on the Selector.
+
+
+
+setSoTimeout

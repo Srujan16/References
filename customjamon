@@ -1,0 +1,92 @@
+ public Object monitor(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+
+        if (Boolean.valueOf(AdminService.isMonitorEnabled)) {
+            return null;
+        } else {
+            Object retVal = null;
+            Annotation[] classLevelAnnotation = proceedingJoinPoint.getSignature().getDeclaringType().getDeclaredAnnotations();
+            String requestMapping = getRequestMappinng(classLevelAnnotation);
+
+            String basePath = getValue(requestMapping);
+
+            if ("/".equalsIgnoreCase(basePath)) {
+                basePath = basePath + "services";
+            }
+
+            MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+            Method method = methodSignature.getMethod();
+
+            Annotation[] methodLevelAnnotation = method.getDeclaredAnnotations();
+            requestMapping = getRequestMappinng(methodLevelAnnotation);
+            String methodUrl = getValue(requestMapping);
+            String methodType = getMethod(requestMapping);
+            String label = basePath + methodUrl + ", " + methodType;
+//            String details = label;
+//            MonKeyImp key = new MonKeyImp(label, details, "ms.");
+            Monitor mon = MonitorFactory.start(label);
+            try {
+                retVal = proceedingJoinPoint.proceed();
+            } catch (Throwable t) {
+                StringWriter out = new StringWriter();
+                t.printStackTrace(new PrintWriter(out));
+                String exceptionStackTrace = out.toString();
+                RemoteRuntimeException remoteRuntimeException = (RemoteRuntimeException) t;
+                int statusCode = remoteRuntimeException.getRemoteStatusCode().value();
+                String reasonPhrase = remoteRuntimeException.getRemoteStatusCode().getReasonPhrase();
+                String exceptionDetails = getErrorMessage(remoteRuntimeException.getMessage());
+                exceptionDetails = statusCode + " - " + reasonPhrase + ", " + exceptionDetails;
+//                    key.setDetails(exceptionDetails);
+                trackException(t, exceptionDetails, keyHelper.getDetails(proceedingJoinPoint, t));
+                throw t;
+            } finally {
+                mon.stop();
+            }
+            return retVal;
+        }
+    }
+
+
+    private String getErrorMessage(String message) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String errorMessage = "";
+        try {
+            JSONObject jsonObject = objectMapper.readValue(message, JSONObject.class);
+            LinkedHashMap errors = (LinkedHashMap) jsonObject.get("errors");
+            List error = (List) errors.get("error");
+            for (int i = 0; i < error.size(); i++) {
+                LinkedHashMap errorData = (LinkedHashMap) error.get(i);
+                errorMessage += errorData.get("messageKey") + ", ";
+            }
+            return errorMessage;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private String getRequestMappinng(Annotation[] annotations) {
+        for (int i = 0; i < annotations.length; i++) {
+            if (REQUEST_MAPPING.equalsIgnoreCase(annotations[i].annotationType().getName())) {
+                return annotations[i].toString();
+            }
+        }
+        return null;
+    }
+
+    private String getMethod(String requestMapping) {
+        String method = requestMapping.substring(requestMapping.indexOf("method"));
+        return method.substring(method.indexOf("[") + 1, method.indexOf("]"));
+    }
+
+    private String getValue(String requestMapping) {
+        String value = requestMapping.substring(requestMapping.indexOf("value"));
+        return value.substring(value.indexOf("[") + 1, value.indexOf("]"));
+    }
+
+
+    // add monitors for the thrown exception and also put the stack trace in the details portion of the key
+    private void trackException(Throwable t, String exception, String exceptionDetails) {
+//        MonitorFactory.add(new MonKeyImp(keyHelper.getExceptionLabel(t), exceptionDetails,EXCEPTION), 1);
+        MonitorFactory.add(new MonKeyImp(exception, exceptionDetails, EXCEPTION), 1);
+        MonitorFactory.add(new MonKeyImp(MonitorFactory.EXCEPTIONS_LABEL, exceptionDetails, EXCEPTION), 1);
+    }

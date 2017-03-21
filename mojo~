@@ -1,0 +1,10 @@
+1) maven plugin descriptor issues in 3.0 version
+
+https://books.sonatype.com/mvnref-book/reference/writing-plugins-sect-mojo-params.html
+
+
+Concepts:
+	
+	Loading resources into jar
+	reading resources from jar in another project which uses the jar
+	classLoader

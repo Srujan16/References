@@ -1,0 +1,43 @@
+1) HttpClient implementations are expected to be thread safe. It is recommended that the same instance of this class is reused for multiple request executions.
+
+ Need for httpContext:
+ ---------------------
+	Originally HTTP has been designed as a stateless, response-request oriented protocol. However, real world applications often need to be able to persist state information through several logically related request-response exchanges. In order to enable applications to maintain a processing state HttpClient allows HTTP requests to be executed within a particular execution context, referred to as HTTP context. Multiple logically related requests can participate in a logical session if the same context is reused between consecutive requests. HTTP context functions similarly to a java.util.Map<String, Object>. It is simply a collection of arbitrary named values. An application can populate context attributes prior to request execution or examine the context after the execution has been completed.
+
+
+**HttpContext can contain arbitrary objects and therefore may be unsafe to share between multiple threads. It is recommended that each thread of execution maintains its own context.
+
+HttpClient:
+	Api to make httpRequests.
+
+ HttpClients
+ HttpClientContext
+ BasicHttpClientContext
+ HttpClientBuilder
+ HttpClients.custom()
+ CloseableHttpClient
+ HttpEntity	
+
+ httpClientBuilder.setSSLSocketFactory
+
+
+ ResponseEntity
+ RequestConfig 
+
+ WMRestTemplate.setRequestFactory()
+
+
+ RestTemplate
+ 
+	public <T> T execute(String url,
+                     HttpMethod method,
+                     RequestCallback requestCallback,
+                     ResponseExtractor<T> responseExtractor,
+                     Object... urlVariables)
+
+	RestTemplate.execute()
+	 	Execute the HTTP method to the given URI template, preparing the request with the RequestCallback, and reading the response 		with a ResponseExtractor.
+	
+	RestTemplate.exchange()
+		Execute the HTTP method to the given URI template, writing the given request entity to the request, and returns the response 		as ResponseEntity.
+	URI Template variables are expanded using the given URI variables, if any.

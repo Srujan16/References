@@ -1,0 +1,41 @@
+*AtomicReferenceFieldUpdater & compareAndSet
+
+
+Default BUff-Size =8192
+
+IllegalArgumentException
+
+
+byte buf[]
+count --   The index one greater than the index of the last valid byte in
+      	   the buffer.
+pos  -- Current position in byte buffer.
+markedPosition -- [pos-markPosition< markLimit]
+
+	retain contets from markPosition to position in array until length of(pos-markPos <readLimit)
+		*they may not be discarded unless and until the difference between <code>pos</code> and <code>markpos</code>
+      exceeds <code>marklimit</code>.
+      
+
+
+
+
+1)   markLimit ==-1 [then just update whole array]
+   else
+     buffer full
+	{
+		markPosition >0
+			copy from markPosition to pos into same buffer,and update markPossition to 0 and pos to [bufferSize-markPosition]
+		bufferLength >markLimit[ markInvalidated]
+			markLimit=-1
+			pos=0
+		else
+		create a new buff of length either pos*2 / markLimit
+		copy data from 0 to pos ,get new data into pos to bufferLength
+	}
+
+2) read(b,offset,len)
+
+ copy data from pos to avilable length  [ internal buff len=5 and pos=2, b.length=8 what is output of b.read(0,length) --[ number of 																	  characters read.]
+
+		what if EOF has reached in middle of reading data

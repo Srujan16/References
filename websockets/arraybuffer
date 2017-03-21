@@ -1,0 +1,8 @@
+ArrayBuffers are used to transport raw data .
+ 
+An ArrayBuffer is simply an array of bytes viewed through a specific mask. This mask, an instance of ArrayBufferView, defines how bytes are aligned to match the expected structure of the content. 
+
+
+ArrayBuffer to String :
+---------------------
+https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String

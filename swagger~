@@ -1,0 +1,16 @@
+https://blog.readme.io/what-is-swagger-and-why-it-matters/
+
+Specification for documenting RestApis.
+
+Resource Listing
+
+API declaration
+
+
+
+Swagger spec - descripiton about the api.
+
+Swagger is basically a set of rules (specification) and tooling for how to semantically describe APIs. Practically, it's a language-agnostic tool that gets everyone on the same page.
+
+
+Swagger (okay, now the "Open API Initiative"... more on that later!) is a framework for describing your API using a common language that everyone can understand.

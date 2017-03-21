@@ -1,0 +1,21 @@
+http://stackoverflow.com/questions/4140448/difference-between-and-in-servlet-mapping-url-pattern
+Cross-Site Request Forgery in spring security
+
+
+/admin/* -->
+
+	 /admin/a valid
+	/admin/a/b invalid
+
+
+/admin/** 
+
+	 /admin/a  valid
+	/admin/a/b valid
+
+
+
+<input name="_csrf" type="hidden" value="f0f67de4-f971-41ef-b096-92a6d88b53c8" 
+					 f0f67de4-f971-41ef-b096-92a6d88b53c8
+
+

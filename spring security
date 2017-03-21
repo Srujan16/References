@@ -1,0 +1,34 @@
+https://www.javacodegeeks.com/2013/11/spring-security-behind-the-scenes.html
+
+
+org.springframework.security.core.userdetails.memory.InMemoryDaoImpl
+org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl. 
+
+
+
+Permission Evaluator (hasPermission) :
+
+	https://dzone.com/articles/writing-your-spring-security
+	
+    <bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+        <property name="permissionEvaluator" ref="wMPermissionEvaluator"/>
+    </bean>
+
+
+
+<http>
+
+
+SecurityContextPersistentFilter
+FilterSecurityInterceptor
+ExceptionTranslationFilter
+
+logoutFilter
+BasicAuthencticationFilter
+UserNamePAsswordAuthenticationFilter
+
+
+authenticationProvider contains implementation of userdetailsService
+
+
+DaoAuthenticationProvider invokes UserDetialsService

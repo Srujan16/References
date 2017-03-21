@@ -1,0 +1,39 @@
+Volatile Variables 
+http://tutorials.jenkov.com/java-concurrency/volatile.html
+
+Producer-Consumer [Blocking queue]
+
+
+Abstract Queue,
+
+BlockingQueue methods come in four forms, with different ways of handling operations that cannot be satisfied immediately, but may be
+satisfied at some point in the future:
+
+
+POISON_PILL Concept :
+
+
+https://dzone.com/articles/producers-and-consumers-part-3
+Blocking Queue Types :
+
+	ArrayBlockingQueue, 
+	DelayQueue,
+	LinkedBlockingDeque,
+	LinkedBlockingQueue, 
+	LinkedTransferQueue, 
+	PriorityBlockingQueue, 
+	SynchronousQueue
+
+
+1)throws Exception --add(ele),remove,element
+2)return Special Value --offer(ele),poll,peek
+3)blocking --put(ele),take
+4)waiting until given timeLimit --offer(Object, Timeunit),poll(timeunit)
+
+
+
+
+
+
+
+

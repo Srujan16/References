@@ -1,0 +1,56 @@
+**http://nfarina.com/post/9868516270/git-is-simpler
+**https://maryrosecook.com/blog/post/git-from-the-inside-out
+**http://gitlet.maryrosecook.com/docs/gitlet.html
+
+ git cat-file -p 81c545efebe5f57d4cab2ba9ec294c4b0cadf672
+
+
+https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control
+
+https://www.atlassian.com/git/tutorials/resetting-checking-out-and-reverting/
+http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1/
+http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-2/
+
+
+"origin/master" Vs "origin master"
+----------------------------------
+	http://stackoverflow.com/questions/18137175/in-git-what-is-the-difference-between-origin-master-vs-origin-master
+	http://stackoverflow.com/questions/5617211/what-is-git-remote-add-and-git-push-origin-master
+	https://longair.net/blog/2009/04/16/git-fetch-and-merge/
+
+
+ref/head/branch Vs ref/remote/branch
+------------------------------------
+	http://stackoverflow.com/questions/7541040/is-refs-heads-master-same-as-refs-remotes-origin-master-in-git
+
+
+on branch x--
+git rebase master ---implies go and attach to master
+on master
+	git rebase x
+  		moves x to mater
+
+
+git branch -f <master> HEAD~3
+
+git checkout HEAD^
+git checkout master^ --HEAD points to parent of master
+git checkout HEAD~4
+
+
+git cherry-pick commit hash
+
+git checkout 
+
+HEAD is the symbolic name for the currently checked out commit 
+
+In order to reverse changes and share those reversed changes with others, we need to use git revert
+
+
+git reset and git revert
+
+
+git rebase -i HEAD~4/branch
+
+
+HEAD -- local branch -- commit

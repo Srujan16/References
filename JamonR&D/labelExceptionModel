@@ -1,0 +1,39 @@
+public class LabelException implements Serializable {
+    private String label;
+    private int count;
+    private String stackTrace;
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getStackTrace() {
+        return stackTrace;
+    }
+
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
+    }
+
+    @Override
+    public String toString() {
+        return "LabelException{" +
+                "label='" + label + '\'' +
+                ", count='" + count + '\'' +
+                ", stackTrace='" + stackTrace + '\'' +
+                '}';
+    }
+}

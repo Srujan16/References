@@ -1,0 +1,3 @@
+Serializing with Jackson (JSON) - getting “No serializer found”?
+	
+	As already described, the default configuration of an ObjectMapper instance is to only access properties that are public fields or have public getters/setters. An alternative to changing the class definition to make a field public or to provide a public getter/setter is to specify (to the underlying VisibilityChecker) a different property visibility rule.Jackson 1.9 provides the ObjectMapper.setVisibility() convenience method for doing so. For the example in the original question, I'd likely configure this as

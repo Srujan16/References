@@ -1,0 +1,5 @@
+1)java.lang.IllegalArgumentException: node to traverse cannot be null!
+	
+	remedy : proper spacing inside query
+
+2)org.hibernate.InstantiationException: No default constructor for entity:  : com.wavemaker.tutorial.hibernateBasics.User

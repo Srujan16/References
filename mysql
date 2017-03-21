@@ -1,0 +1,11 @@
+Access denied for user 'root'@'localhost' (using password: NO)
+
+
+Solution :
+
+login as root and stop mysql server
+
+	sudo etc/init.d/msql stop
+	sudo dpkg-reconfigure mysql-server-5.6 -- This wil prompt to re-enter password twice.
+
+

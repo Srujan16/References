@@ -1,0 +1,7 @@
+if two objects are equal, it implies their hashcode are equal. but not vice versa.
+
+Read more: http://javarevisited.blogspot.com/2011/10/override-hashcode-in-java-example.html#ixzz4P6JxUHEv
+
+
+(this.symbol == other.symbol)|| (this.symbol != null && this.symbol.equals(other.symbol)))
+

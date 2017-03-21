@@ -1,0 +1,16 @@
+LogManager
+Logger
+LogFactory
+
+
+
+log4j.rootLogger object = Info,x
+
+
+log4j.appender.x = file/consoleAppender
+
+
+log4j.appender.x.layout = PatternLayout
+
+log4j.appender.x.conversionPattern=%m%n
+

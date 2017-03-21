@@ -1,0 +1,31 @@
+1)jdbc
+2)filters
+3)httpRequest.getsession
+4)redirect
+5)forward and include
+6) Listeners and filters
+
+
+** no-cache header
+
+@Valid
+@RestController
+@RequestBody
+
+
+
+ContextLoaderListener :
+
+	 The ApplicationContext is where your Spring beans live. The purpose of the ContextLoaderListener is two-fold:
+
+	1) To tie the lifecycle of the ApplicationContext to the lifecycle of the ServletContext and
+	2) To automate the creation of the ApplicationContext, so you don't have to write explicit code to do create it - it's a convenience function.
+
+	Another convenient thing about the ContextLoaderListener is that it creates a WebApplicationContext and WebApplicationContext provides access to the ServletContext via ServletContextAware beans and the getServletContext method.
+
+
+ContextLoaderListener : looks for applicationContext.xml file by default. User specific location can be assigned using 
+			<context-param>
+				 <param-name>contextConfigLocation</param-name>
+				 <param-value> **Location **</param-value>
+			</context-param>

@@ -1,0 +1,19 @@
+Monitor Listeners are specific to each monitor. Then enable us to track events realted to particular monitor.
+For example, we can monitor all the exceptions that occured while serving given monitor label using ExceptionBufferListener.
+
+
+Events can be value/max/min. Value-Event get's invoked for every call made to monitor. Internally each listener make use of bufferarray to store data specific to that listener.
+
+	Multiple listeners can be added to single Monitor. In generall, a monitor can have ExceptionBufferListener to track all the exceptions, at the same time it can have "NLargestValueBuffer7Days" to  perform  it's corresponding functionality [ "When buffer is full the oldest data in buffer that is over 7 days is removed.  If no data is older than 7 days then the smallest is removed]
+
+
+
+
+1) Api to add exceptionListener to each monitor. AddListener api expects label name as requestParam.
+2) If exceptionListeners are not required for a particular monitor, we can directly display it as a part of whole report, with label specifying errorstatus and cause for exception.
+
+
+ Key :MonKey ->label, details, units
+ Value :MonitorImp [ mondata]
+
+

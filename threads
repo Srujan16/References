@@ -1,0 +1,67 @@
+
+java.utils.concurrent.Executors
+-------------------------------
+
+Executor Service :
+	An Executor that provides methods to manage termination and methods that can produce a Future for tracking progress of one or more asynchronous tasks.
+
+CALLABLE AND FUTURES :
+
+In addition to Runnable executors support another kind of task named Callable. Callables are functional interfaces just like runnables but instead of being void they return a value
+
+
+FUTURE : <T> Future<T> submit(Callable<T> task);
+	 <T> Future<T> submit(Runnable task, T result);
+	Future<?> submit(Runnable task);	
+
+Submits a value-returning task for execution and returns a
+Future representing the pending results of the task.
+TheFuture's <tt>get</tt> method will return the task's result upon
+uccessful completion.
+
+Method submit extends base method Executor.execute(java.lang.Runnable)
+
+Methods invokeAny and invokeAll perform the most commonly useful forms of bulk execution, 
+executing a collection of tasks and then waiting for at least one, or all, to complete. 
+
+-------------------------------------------------------------
+
+Most of the executor implementations in java.util.concurrent use 
+			1)Thread pools [ consists of WORKER THREADS ]
+
+This kind of thread exists separately from the Runnable and Callable tasks it executes 
+
+
+Fixed Thread Pool :
+internalQueue -- internal pool --threads
+
+[Tasks are submitted to the pool via an internal queue, which holds extra tasks whenever there are more active tasks than threads]
+
+
+A simple way to create an executor that uses a fixed thread pool is to invoke the newFixedThreadPool factory method.
+
+
+newFixedThreadPool
+newCachedThreadPool factory method.
+newSingleThreadExecutor factory method --executor that executes a single task at a time.
+
+
+**
+ java.util.Arrays class for its parallelSort() --for parallel sorting of large arrays using fork join method.
+
+
+executor.execute(new RunnableTask1());
+executor.execute(new RunnableTask2());
+
+-----------------------------------------------------------------
+
+interface Executor [ abstract execute method ]
+interface ExecutorService extends Executor [
+
+ --------------------------------------------------------------------------------------------------
+
+
+
+ logger Object -->Layout object -->appender Object
+
+

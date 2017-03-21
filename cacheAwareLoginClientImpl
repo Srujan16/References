@@ -1,0 +1,469 @@
+/**
+ * Copyright (c) 2013 - 2014 WaveMaker Inc. All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of WaveMaker Inc.
+ * You shall not disclose such Confidential Information and shall use it only in accordance
+ * with the terms of the source code license agreement you entered into with WaveMaker Inc.
+ */
+package com.wavemaker.login.client.cache;
+
+
+import java.io.IOException;
+import java.util.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.LinkedNode;
+import com.wavemaker.commons.core.fwk.dataObject.account.AccountMode;
+import com.wavemaker.commons.core.fwk.dataObject.usersubject.Action;
+import com.wavemaker.commons.core.fwk.dataObject.usersubject.PermissionDTO;
+import com.wavemaker.commons.core.fwk.dataObject.usersubject.UserSubject;
+import com.wavemaker.commons.core.fwk.utils.FrameworkContextUtil;
+import com.wavemaker.login.api.dataObject.*;
+import com.wavemaker.login.integration.manager.LocalUserAccountManager;
+import com.wavemaker.login.integration.manager.impl.LocalUserAccountManagerImpl;
+import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.Query;
+import org.json.JSONObject;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+import com.wavemaker.commons.core.fwk.dataObject.LoginAccount;
+import com.wavemaker.commons.core.fwk.dataObject.WMList;
+import com.wavemaker.commons.core.fwk.web.WMPageable;
+import com.wavemaker.login.client.LoginClient;
+import com.wavemaker.login.client.cache.helper.LoginAccountCacheHelper;
+
+/**
+ * @author <a href="mailto:krishna.chintu@wavemaker.com">Krishna Rao</a>
+ * @Date: 9/6/14 11:31 AM $
+ */
+public class CacheAwareLoginClientImpl implements LoginClient {
+
+    private static Logger logger = LoggerFactory.getLogger(CacheAwareLoginClientImpl.class);
+    private static final int SESSION_TIMEOUT_MINUTES = Integer.getInteger("sas.login.session.timeout", 30);
+    private static final long SESSION_TIMEOUT_MILLIS = SESSION_TIMEOUT_MINUTES * 60 * 1000;
+    private LoginClient loginClient;
+    private static LoginAccountCacheHelper loginAccountCacheHelper;
+    private ObjectMapper mapper = new ObjectMapper();
+    private SessionFactory sessionFactory;
+
+    private LocalUserAccountManager localUserAccountManager;
+
+    public CacheAwareLoginClientImpl(LoginClient loginClient) {
+        this.loginClient = loginClient;
+        loginAccountCacheHelper = LoginAccountCacheHelper.getInstance();
+        try {
+            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+
+    }
+
+    @Override
+    public LoginAccount getAuthUserByCookie(String authCookie) {
+
+        LoginAccount loginAccount;
+        if(isKnownUser(authCookie)){
+            try {
+                loginAccount = getLoginAccountByAuthCookie(authCookie);
+            }catch (IOException e){
+                throw new RuntimeException("Failed to create LoginAccount Object");
+            }
+        }else {
+            loginAccount = loginAccountCacheHelper.getLoginAccountByAuthCookie(authCookie);
+        }
+        final long now = System.currentTimeMillis();
+        boolean localSessionExpired = false;
+
+
+        if (loginAccount != null && ((now - loginAccount.getLastSeen()) > SESSION_TIMEOUT_MILLIS)) {
+            localSessionExpired = true;
+        }
+        if (loginAccount == null || loginAccount.getId() == null || localSessionExpired) {
+            loginAccount = loginClient.getAuthUserByCookie(authCookie);
+            if (loginAccount != null && loginAccount.getId() != null) {
+                // Call to update USER_ACCOUNT update table.
+                if (localUserAccountManager == null) {
+                    localUserAccountManager = FrameworkContextUtil.getSpringBeanNullIfNotExists(LocalUserAccountManagerImpl.class);
+                }
+                if (localUserAccountManager != null) {
+                    localUserAccountManager.insertOrUpdateUser(loginAccount);
+                }
+                loginAccountCacheHelper.updateLoginAccountCache(authCookie, loginAccount);
+            }
+        }
+        loginAccountCacheHelper.updateLoginAccountLastSeenByCookie(authCookie, loginAccount);
+        return loginAccount;
+    }
+
+    @Override
+    public String generateOrGetAltAuthKey(String authCookie) {
+        return loginClient.generateOrGetAltAuthKey(authCookie);
+    }
+
+    @Override
+    public boolean unblockUser(String accountId, String authCookie) {
+        return loginClient.unblockUser(accountId, authCookie);
+    }
+
+    @Override
+    public boolean blockUser(String accountId, String authCookie) {
+        return loginClient.blockUser(accountId, authCookie);
+    }
+
+    @Override
+    public LoginAccount getAccountByTenantDomainName(String domainName) {
+        LoginAccount loginAccount = loginAccountCacheHelper.getLoginAccountByTenantDomainName(domainName);
+        if (loginAccount == null) {
+            loginAccount = loginClient.getAccountByTenantDomainName(domainName);
+            loginAccountCacheHelper.updateLoginAccountCache(null, loginAccount);
+        }
+        return loginAccount;
+    }
+
+    @Override
+    public LoginAccount getAccountByTenantId(String tenantId) {
+        LoginAccount loginAccount = loginAccountCacheHelper.getLoginAccountByTenantID(tenantId);
+        if (loginAccount == null) {
+            loginAccount = loginClient.getAccountByTenantId(tenantId);
+            loginAccountCacheHelper.updateLoginAccountCache(null, loginAccount);
+        }
+        return loginAccount;
+    }
+
+    @Override
+    public String getTenantIdByTenantDomainName(String tenantName) {
+        String tenantId = loginAccountCacheHelper.getTenantIdByTenantDomainName(tenantName);
+        LoginAccount loginAccount = null;
+        if (tenantId == null) {
+            loginAccount = getAccountByTenantId(tenantId);
+            if (loginAccount != null) {
+                tenantId = loginAccount.getAccountId();
+            }
+            loginAccountCacheHelper.updateLoginAccountCache(null, loginAccount);
+        }
+        return tenantId;
+    }
+
+    @Override
+    public boolean isProjectOwner(String projectName, String userId) {
+        return loginClient.isProjectOwner(projectName, userId);
+    }
+
+    @Override
+    public Boolean unDeployProject(String projectName, String userId, String authCookie) {
+        return loginClient.unDeployProject(projectName, userId, authCookie);
+    }
+
+    @Override
+    public Boolean updateEdnUser(String userId, String firstName, String lastName, String authCookie) {
+        return loginClient.updateEdnUser(userId, firstName, lastName, authCookie);
+    }
+
+    @Override
+    public Boolean deployProject(String appName, String enterpriseId, String appUrl, String authCookie) {
+        return loginClient.deployProject(appName, enterpriseId, appUrl, authCookie);
+    }
+
+    @Override
+    public LoginAccount updateEDNStatus(String userId, boolean status) {
+        return loginClient.updateEDNStatus(userId, status);
+    }
+
+    public UnconfirmedAccount inviteUser(String inviteeEmailId, String inviterEmailId, String serverName, String subscriptionId) {
+        return loginClient.inviteUser(inviteeEmailId, inviterEmailId, serverName, subscriptionId);
+    }
+
+    @Override
+    public void updateLastSeen(WMList authCookieList) {
+        loginClient.updateLastSeen(authCookieList);
+    }
+
+    @Override
+    public Map<String, Boolean> getEdnConfigs() {
+        return loginClient.getEdnConfigs();
+    }
+
+    @Override
+    public HashMap<String, LoginAccount> getAccountsByTenantIds(String... tenantIds) {
+        HashMap<String, LoginAccount> loginAccountHashMap = new HashMap<String, LoginAccount>();
+        if (tenantIds == null || tenantIds.length == 0) {
+            return loginAccountHashMap;
+        }
+        ArrayList<String> remainingTenantIds = new ArrayList<String>();
+        for (String tenantId : tenantIds) {
+            LoginAccount loginAccount = loginAccountCacheHelper.getLoginAccountByTenantID(tenantId);
+            if (loginAccount != null && loginAccount.getAccountId() != null) {
+                loginAccountHashMap.put(tenantId, loginAccount);
+            } else {
+                remainingTenantIds.add(tenantId);
+            }
+        }
+        if (remainingTenantIds != null && remainingTenantIds.size() > 0) {
+            String[] remainingTenantIdsArray = remainingTenantIds.toArray(new String[remainingTenantIds.size()]);
+            Map<String, LoginAccount> loginAccountsFromRest = loginClient.getAccountsByTenantIds(remainingTenantIdsArray);
+            if (loginAccountsFromRest != null) {
+                loginAccountHashMap.putAll(loginAccountsFromRest);
+                Set keys = loginAccountsFromRest.keySet();
+                for (Iterator<String> iterator = keys.iterator(); iterator.hasNext(); ) {
+                    String tenantId = iterator.next();
+                    LoginAccount loginAccount = loginAccountsFromRest.get(tenantId);
+                    if (loginAccount != null) {
+                        loginAccountCacheHelper.updateLoginAccountCache(null, loginAccount);
+                    }
+                }
+            }
+        }
+        return loginAccountHashMap;
+    }
+
+    @Override
+    public HashMap<String, LoginAccount> getLoginAccountsByDomainNames(String... tenantDomainNames) {
+        HashMap<String, LoginAccount> loginAccountHashMap = new HashMap<String, LoginAccount>();
+        if (tenantDomainNames == null || tenantDomainNames.length == 0) {
+            return loginAccountHashMap;
+        }
+        ArrayList<String> remainingtenantDomainNames = new ArrayList<String>();
+        for (String tenantDomainName : tenantDomainNames) {
+            LoginAccount loginAccount = loginAccountCacheHelper.getLoginAccountByTenantDomainName(tenantDomainName);
+            if (loginAccount != null) {
+                loginAccountHashMap.put(tenantDomainName, loginAccount);
+            } else {
+                remainingtenantDomainNames.add(tenantDomainName);
+            }
+        }
+        if (remainingtenantDomainNames != null && remainingtenantDomainNames.size() > 0) {
+            String[] remainingtenantDomainNamesArray = remainingtenantDomainNames.toArray(new String[remainingtenantDomainNames.size()]);
+            Map<String, LoginAccount> loginAccountHashMapRest = loginClient.getLoginAccountsByDomainNames(remainingtenantDomainNamesArray);
+            if (loginAccountHashMapRest != null) {
+                loginAccountHashMap.putAll(loginAccountHashMapRest);
+                Set keys = loginAccountHashMapRest.keySet();
+                for (Iterator<String> iterator = keys.iterator(); iterator.hasNext(); ) {
+                    String tenantDomainName = iterator.next();
+                    LoginAccount loginAccount = loginAccountHashMapRest.get(tenantDomainName);
+                    if (loginAccount != null) {
+                        loginAccountCacheHelper.updateLoginAccountCache(null, loginAccount);
+                    }
+                }
+            }
+        }
+        return loginAccountHashMap;
+    }
+
+    @Override
+    public HashMap<String, String> getTenantIdsByDomainNames(String... tenantDomainNames) {
+        HashMap<String, String> domainVsId = new HashMap<String, String>();
+        if (tenantDomainNames == null || tenantDomainNames.length == 0) {
+            return domainVsId;
+        }
+        ArrayList<String> remainingtenantDomainNames = new ArrayList<String>();
+        for (String tenantDomainName : tenantDomainNames) {
+            String tenantId = loginAccountCacheHelper.getTenantIdByTenantDomainName(tenantDomainName);
+            if (tenantId != null) {
+                domainVsId.put(tenantDomainName, tenantId);
+            } else {
+                remainingtenantDomainNames.add(tenantId);
+            }
+        }
+        if (remainingtenantDomainNames != null && remainingtenantDomainNames.size() > 0) {
+            String[] remainingtenantDomainNamesArray = remainingtenantDomainNames.toArray(new String[remainingtenantDomainNames.size()]);
+            Map<String, LoginAccount> loginAccountHashMapRest = loginClient.getLoginAccountsByDomainNames(remainingtenantDomainNamesArray);
+            if (loginAccountHashMapRest != null) {
+                Set keys = loginAccountHashMapRest.keySet();
+                for (Iterator<String> iterator = keys.iterator(); iterator.hasNext(); ) {
+                    String tenantDomainName = iterator.next();
+                    LoginAccount loginAccount = loginAccountHashMapRest.get(tenantDomainName);
+                    if (loginAccount != null) {
+                        domainVsId.put(tenantDomainName, loginAccount.getAccountId());
+                        loginAccountCacheHelper.updateLoginAccountCache(null, loginAccount);
+                    }
+                }
+            }
+        }
+        return domainVsId;
+    }
+
+    @Override
+    public EnterpriseAccount getEnterpriseAccount(String entName) {
+        return loginClient.getEnterpriseAccount(entName);
+    }
+
+    @Override
+    public EnterpriseAccount getEnterpriseAccountById(String entId) {
+        return loginClient.getEnterpriseAccountById(entId);
+    }
+
+    @Override
+    public EnterpriseAccountProperties getEnterpriseAccountPropertiesByEntId(String entId, String authCookie) {
+        return loginClient.getEnterpriseAccountPropertiesByEntId(entId, authCookie);
+    }
+
+    @Override
+    public List<EnterpriseAccount> listEnterpriseAccountsByIds(
+            final List<String> entIds) {
+        return loginClient.listEnterpriseAccountsByIds(entIds);
+    }
+
+    @Override
+    public List<InvitationVO> getInvitationDetails(WMPageable wmPageable) {
+        return loginClient.getInvitationDetails(wmPageable);
+    }
+
+    @Override
+    public int getInvitationsCount() {
+        return loginClient.getInvitationsCount();
+    }
+
+    @Override
+    public List<EmailDomainResponseVO> validateDomains(List<String> domainsList) {
+        return loginClient.validateDomains(domainsList);
+    }
+
+    @Override
+    public List<String> getUserOwnerApps(String userId, String cookieValue) {
+        return loginClient.getUserOwnerApps(userId, cookieValue);
+    }
+
+    @Override
+    public LoginAccount getLoginAccount(String emailID) {
+        return loginClient.getLoginAccount(emailID);
+    }
+
+    @Override
+    public int getDeveloperInUseCount() {
+        return loginClient.getDeveloperInUseCount();
+    }
+
+    public EmailDomainResponseVO validateEmailDomain(String emailId) {
+        return loginClient.validateEmailDomain(emailId);
+    }
+
+    public Map<String, PermissionDTO> getPermissions() {
+        Map permissionMap = loginAccountCacheHelper.getPermissions("permissions_map");
+        if (permissionMap == null || permissionMap.isEmpty()) {
+            permissionMap = loginClient.getPermissions();
+            loginAccountCacheHelper.updatePermissionsCache("permissions_map", permissionMap);
+        }
+        return permissionMap;
+    }
+
+    @Override
+    public String registerAccount(String emailId, String firstName, String lastName, String password, String wm_captchaAnswer, String wm_captchaId, RequestMeta requestMeta) {
+        return loginClient.registerAccount(emailId, firstName, lastName, password, wm_captchaAnswer, wm_captchaId, requestMeta);
+    }
+
+    @Override
+    public LoginAccount confirmAccount(String registrationKey) {
+        return loginClient.confirmAccount(registrationKey);
+    }
+
+    @Override
+    public LoginAccount updateAccountMode(String accountId, AccountMode accountMode, long extendedTo, String authCookie) {
+        return loginClient.updateAccountMode(accountId, accountMode, extendedTo, authCookie);
+    }
+
+    @Override
+    public LoginAccount checkLogin(String emailId, String password) {
+        return loginClient.checkLogin(emailId, password);
+    }
+
+    @Override
+    public String sendforgotPasswordLink(String emailId, String remoteIpAddress, String desktop, String wm_captchaAnswer, String wm_captchaId) {
+        return loginClient.sendforgotPasswordLink(emailId, remoteIpAddress, desktop, wm_captchaAnswer, wm_captchaId);
+    }
+
+    @Override
+    public String changePassword(String key, String emailId, String newPassword) {
+        return loginClient.changePassword(key, emailId, newPassword);
+    }
+
+    @Override
+    public LoginAccount validateForgotPasswordKey(String emailId, String forgotPasswordKey) {
+        return loginClient.validateForgotPasswordKey(emailId, forgotPasswordKey);
+    }
+
+    @Override
+    public boolean deploymentTargetAllowed(String deploymentTargetId, String appName, String authCookie) {
+        return loginClient.deploymentTargetAllowed(deploymentTargetId, appName, authCookie);
+    }
+
+    @Override
+    public String removeContributors(String user_id, List<String> excludeAccounts, String authCookie) {
+        return loginClient.removeContributors(user_id, excludeAccounts, authCookie);
+    }
+
+    @Override
+    public boolean enableOrDisableProjects(String user_id, String authCookie) {
+        return loginClient.enableOrDisableProjects(user_id, authCookie);
+    }
+
+    @Override
+    public boolean updateLastAccessTimeForAccount(String authKey, String accountId) {
+        return loginClient.updateLastAccessTimeForAccount(authKey, accountId);
+    }
+
+
+    private LoginAccount getLoginAccountByAuthCookie(String cookie) throws IOException {
+        String response = null;
+        Map<String,Object> temp;
+        Map<String,Object> userSubject=new LinkedHashMap();
+        Map<String,Object> account=new LinkedHashMap();
+        Map<String,Object>  action=new LinkedHashMap();
+        List<Map<String,Object>> actionList=new ArrayList();
+        Map<String,Object> responsebody;
+        action.put("actionName","login");
+        action.put("objectId",null);
+        actionList.add(action);
+        account.put("account",actionList);
+        userSubject.put("resources",account);
+        response = getResponse(cookie);
+        responsebody=mapper.readValue(response, LinkedHashMap.class);
+        if(responsebody.get("success")!=null){
+          temp=(LinkedHashMap)responsebody.get("success");
+            if(temp.get("body")!=null){
+                temp=(LinkedHashMap)temp.get("body");
+                temp.put(new UserSubject().toString(),userSubject.toString());
+                Object object = mapper.convertValue(temp, LoginAccount.class);
+                return (LoginAccount) object;
+            }
+
+        }
+        return null;
+      }
+
+    private String getResponse(String cookie) {
+        Query query;
+        List<String> result;
+        Session session = null;
+        session = sessionFactory.openSession();
+        String hq = "Select session.j_username From UserSession  session where session.cookie = :cookie";
+        query = session.createQuery(hq);
+        query.setParameter("cookie", cookie);
+        result = query.list();
+        hq = "Select user.profile from UserProfile user where user.j_username = :j_username";
+        query = session.createQuery(hq);
+        query.setParameter("j_username", result.get(0));
+        result = query.list();
+        session.close();
+        return result.get(0);
+    }
+
+    private boolean isKnownUser(String cookie){
+        Query query;
+        List<String> result;
+        Session session=null;
+        session=sessionFactory.openSession();
+        String hq="select *from UserSession where cookie = :cookie";
+        query=session.createQuery(hq);
+        query.setParameter("cookie",cookie);
+        result=query.list();
+        return result.size()!=0;
+    }
+
+}
+

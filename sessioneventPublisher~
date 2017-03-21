@@ -1,0 +1,3 @@
+The HttpSessionEventPublisher listens to the servlet container for sessions being created or destroyed and publishes corresponding Spring Security events.
+
+Next is injecting a ConcurrentSessionControlAuthenticationStrategy

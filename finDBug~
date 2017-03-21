@@ -1,0 +1,7 @@
+An Object instance is basically a region of memory. You can have multiple different instances with the same value, but not the other way round.
+The cache will return different instances for different values; it just ensures that you always get the same instance for the same value
+
+com.wavemaker.studio.core.data.model.query
+
+
+

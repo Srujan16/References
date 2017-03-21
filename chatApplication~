@@ -1,0 +1,30 @@
+http://www.cs.duke.edu/courses/cps004/spring04/code/brackeen/ch06src/src/com/hypefiend/javagamebook/chatterbox/ChatterServer.java
+https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
+https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#deleteIfExists-java.nio.file.Path-
+read-write locks
+
+simultaneous reads can happen
+cannot read when someone else is updating
+cannot update when someone else is updating/reading
+
+MessageReceivedEvent
+	senderInfo
+	message
+	receiverInfo
+
+MessageReceiver
+	publishEvent
+
+Listeners
+	onMessageReceivedEvent(MessageReceivedEvent messageReceivedEvent) {
+		
+	}
+
+ChatApplication(has 2 maven sub modules)
+	Common(if needed)
+	Client
+	Server
+
+
+Publish Subscribe pattern
+Observers Pattern

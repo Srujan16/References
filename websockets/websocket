@@ -1,0 +1,102 @@
+
+Closing WebSocket:
+	http://stackoverflow.com/questions/4812686/closing-websocket-correctly-html5-javascript
+
+Good explanation:
+-------------------------
+https://hpbn.co/websocket/
+https://tyrus.java.net/documentation/1.4/index/websocket-api.html
+
+http://stackoverflow.com/questions/14703627/websockets-protocol-vs-http
+http://stackoverflow.com/questions/17301269/can-websocket-addresses-carry-parameters
+
+
+Frames can't be interpreted:
+----------------------------
+http://www.codeproject.com/Articles/716148/Using-Sec-Websocket-Protocol
+
+Headers:
+-------
+https://hpbn.co/websocket/
+
+Closing COnnection with refreshing Browser:
+	http://stackoverflow.com/questions/4812686/closing-websocket-correctly-html5-javascript
+
+
+https://os.alfajango.com/websockets-slides/#/10/1
+
+frames:
+-------
+https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#Format
+
+HandShake:
+---------
+https://os.alfajango.com/websockets-slides/#/10/1
+
+
+HandShake And DataTransfer 
+
+
+DataTransfer Part :
+	This is a two-way communication channel where each side can,independently from the other, send data at will.
+
+
+
+
+Message :
+
+A frame has an associated type.  Each frame belonging to the same  message contains the same type of data.
+
+
+http://www.html5rocks.com/en/tutorials/websockets/basics/
+http://tavendo.com/blog/post/websocket-why-what-can-i-use-it/
+
+
+
+
+ Comet-based push is generally implemented in JavaScript and uses connection strategies such as long-polling or streaming.
+
+
+
+
+
+----------------------------------------------------------------------------------------------------
+websocketHttpRequestHandler
+DefaultHandlerInterceptor
+
+---------------------------------------------------------
+
+Full duplex and bi-directional
+
+	**Standardized way for the server to send content to the browser without being solicited by the client, and allowing for messages to be passed back and forth while keeping the connection open.
+
+
+
+WebSocket handShakeRequest :
+	Client request (just like in HTTP, each line ends with \r\n and there must be an extra blank line at the end).
+	
+	* Once the connection is established, communication switches to a bidirectional binary protocol that does not conform to the HTTP 		  protocol.
+	HeaderParams 
+
+
+
+Sec-WebSocket-Protocol   : request-header field can be used to indicate what subprotocols (application-level protocols layered over the 			   WebSocket Protocol) are acceptable to the client.
+Sec-WebSocket-Extensions
+Origin
+
+
+
+
+Request Line : [method,requestUri,protocolVersion]
+StatusLinep : [protocol , statusCode, textualPhrase ]
+
+Request Line :  method token, followed by the Request-URI and the protocol version
+Status Line :  protocol numeric status code and its associated textual phrase, with each element separated by SP characters
+
+
+Hashing Function :
+	 appends 258EAFA5-E914-47DA-95CA-C5AB0DC85B11 (a GUID) to the value from Sec-WebSocket-Key header (which is not decoded from base64), applies the SHA-1 hashing function, and encodes the result using base64.
+
+EndOfMessage :
+	 (it sends one data frame after another until the end is reached and marked with the FIN bit.
+

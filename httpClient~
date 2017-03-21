@@ -1,0 +1,34 @@
+HttpClient:
+	Api to make httpRequests.
+
+ HttpClients
+ HttpClientContext
+ BasicHttpClientContext
+ HttpClientBuilder
+ HttpClients.custom()
+ CloseableHttpClient
+ HttpEntity	
+
+ httpClientBuilder.setSSLSocketFactory
+
+
+ ResponseEntity
+ RequestConfig 
+
+ WMRestTemplate.setRequestFactory()
+
+
+ RestTemplate
+ 
+	public <T> T execute(String url,
+                     HttpMethod method,
+                     RequestCallback requestCallback,
+                     ResponseExtractor<T> responseExtractor,
+                     Object... urlVariables)
+
+	RestTemplate.execute()
+	 	Execute the HTTP method to the given URI template, preparing the request with the RequestCallback, and reading the response 		with a ResponseExtractor.
+	
+	RestTemplate.exchange()
+		Execute the HTTP method to the given URI template, writing the given request entity to the request, and returns the response 		as ResponseEntity.
+	URI Template variables are expanded using the given URI variables, if any.

@@ -1,0 +1,28 @@
+1) Exception sending context destroyed event to listener instance of class org.springframework.web.context.ContextLoaderListener
+java.lang.IllegalStateException: BeanFactory not initialized or already closed - call 'refresh' before accessing beans via the ApplicationContext
+	at org.springframework.context.support.AbstractRefreshableApplicationCon
+
+
+2) Aug 03, 2016 6:25:14 AM org.apache.catalina.core.StandardContext start
+SEVERE: Error listenerStart
+Aug 03, 2016 6:25:14 AM org.apache.catalina.core.StandardContext start
+SEVERE: Context [/leaveManagement] startup failed due to previous errors
+Aug 03, 2016 6:25:14 AM org.apache.catalina.core.ApplicationContext log
+INFO: Closing Spring root WebApplicationContext
+Aug 03, 2016 6:25:14 AM org.apache.catalina.core.StandardContext listenerStop
+
+
+
+3) SEVERE: Exception sending context destroyed event to listener instance of class org.springframework.web.context.ContextLoaderListener
+java.lang.IllegalStateException: 
+	BeanFactory not initialized or already closed - call 'refresh' before accessing beans via the ApplicationContext
+	at org.springframework.context.support.AbstractRefreshableApplicationContext.getBeanFactory(AbstractRefreshableApplicationContext.java:170)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1028)
+
+
+
+4) Exception sending context destroyed event to listener instance of class org.springframework.web.context.ContextLoaderListener
+
+
+
+

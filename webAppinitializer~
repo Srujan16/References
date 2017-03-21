@@ -1,0 +1,2 @@
+Find the web application initializer class that supports servlet web.xml configuration and no need to use web.xml. 
+WebAppInitializer.java

@@ -1,0 +1,5 @@
+1) Encapsulate the behaviour that gets updated frquently.
+2) Favour composition over inheritacne.
+3) Programm to an interface not to its implimentation.
+4) Prefer HAS-A relations instead of IS-A relation between classes.
+ 

@@ -1,0 +1,230 @@
+ModelAndView 
+ModelMap
+
+
+@RestController :
+
+	The RESTful web service controller simply returns the object and the object data is written directly to the HTTP response as JSON/XML.
+------------------------------------------------------------------------------------------------------------------------------------------
+
+1)The first step will be preparing the request: In the JSP case, this would mean setting model objects as request attributes.
+2)The second step will be the actual rendering of the view,for example including the JSP via a RequestDispatcher.
+
+
+ Spring MVC in this introductory article by Steven Haines
+
+ Agenda :
+	1)brief history of javaWebApplications
+	2)spring framework
+	3)spring mvc
+
+ Servlet :
+	The Servlet API provided a standard on which vendors could build Web containers and developers could implement a simple programming model for constructing Web pages.
+	
+ DispatcherServlet in SpringMVC
+
+ ConentManagementSystem
+	1)Basic Controller
+	2)Command Controller
+	3)form Controller
+
+ Spring MVC Architecture :
+	1)Dispatcher Servlet [  gets entry of handler mapping from the xml file and forwards the request to the controller ]
+		a) Handler Mapping
+	2)ModelAndView Object
+	3)Controller [ The controller returns an object of ModelAndView ]
+	4)View Resolver [ The DispatcherServlet checks the entry of view resolver in the xml file and invokes the specified view component ]
+		a) View
+
+ModelAndView Object :
+	Container that hosts model into view.Provides insight to Spring's view resolver.
+	Tells SPring viewResolver about type of view to be loaded.
+
+	Dispatcher --> server-servlet.xml
+ 	 ----------------
+ 	|  Controller	 |
+	   --------------
+	  | ServiceBean | 	
+	
+		
+ *)  ByDefault Spring looks for your Spring beans in a file whose name starts with the servlet name followed by -servlet.xml
+
+		
+	a)urlMapping
+	   org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[pojo]
+	   1)it uses collection to store,controllers and their repective urlPattern.	
+		<property name="mappings">
+         		 <props>
+        		      <prop key="/home.htm">homePageController[bean id]</prop>
+           		 </props>
+          	</property>
+
+       b) Creating controller Instances[Beans] .
+	
+       c) ViewResolver
+		org.springframework.web.servlet.view.InternalResourceViewResolver
+
+			*)inject values to prefix and suffix attributes of InternalResourceResolver
+					[view Resolver ->providing address location to viewResolver]  	
+
+
+contextConfigLocation
+ContextLoaderListener	
+
+----------------------------------------------------------------------------------------------------------	
+	HomePage Controller extends AbstractController
+		handleRequestInternal -->translates webRequest to MOdelAndViewObject
+		ModelAndView("View",key,value)
+
+
+Handler --> ModelAndViewObject -->DispatcherServlet -->render-->AbstractView -->InternalResourceView-->renderMergedOutPutModel
+-->RequestDispatcher                 
+
+
+
+ViewResolver[Abstract View && internalResourceView(prepare viewObject) ]
+
+2)Represents a model and view returned by a handler, to be resolved by a DispatcherServlet.
+3)The view can take the form of a String view name which will need to be resolved by a ViewResolver object; 
+	alternatively a View object can be specified directly
+
+
+Dispacther Servlet :
+	render
+	Step1 :The first step will be preparing the request: In the JSP case,this would mean setting model objects as request attributes.
+	Step2 :The second step will be the actual rendering of the view,for example including the JSP via a RequestDispatcher.
+
+AbstractView && InternalResourceView
+
+ abstract class AbstractView extends WebApplicationObjectSupport implements View, BeanNameAware 
+
+ renderMergedOutputModel
+
+InternalResourceView extends AbstractUrlBasedView 
+	InternalResourceView
+		 renderMergedOutputModel
+-----------------------------------------------------------------------------------------------------
+ServletContext#addServlet
+
+
+ The {@code @RequestMapping} annotation will only be processed if a
+ * corresponding {@code HandlerMapping} (for type-level annotations) and/or
+ * {@code HandlerAdapter} (for method-level annotations) is present in the dispatcher.</b>
+ * This is the case by default. However, if you are defining custom {@code HandlerMappings}
+ * or {@code HandlerAdapters}, then you need to make sure that a corresponding custom
+ * {@code DefaultAnnotationHandlerMapping} and/or {@code AnnotationMethodHandlerAdapter}
+ * is defined as well - provided that you intend to use {@code @RequestMapping}.
+
+
+A web application can define any number of DispatcherServlets.</b>
+ * Each servlet will operate in its own namespace, loading its own application context
+ * with mappings, handlers, etc.
+
+
+DispatcherServlet invokes controllers through HandlerAdapter strategy objects.
+
+
+
+Default HandlerMappingStrategies : BeanNameUrlHandlerMapping, mvc.annotation.DefaultAnnotationHandlerMapping
+
+
+Default HandlerAdapters :
+	1)mvc.HttpRequestHandlerAdapter
+	2)mvc.SimpleControllerHandlerAdapter
+	3)web.HttpRequestHandler
+	4)mvc.Controller
+	5)RequestMappingHandlerAdapter
+	
+	handler.SimpleServletHandlerAdapter
+
+
+HandlerExceptionResolver :
+
+HandlerMapping : 
+	 HandlerMappingselects a controller, but not a specific method, then the HandlerAdapter also selects the handler method.
+	 ***HandlerMapping objects can be defined as beans in the servlet's application context,implementing the HandlerMapping interface, 	 overriding the default HandlerMapping
+
+	eg:SimpleUrlHandlerMapping Bean implemens HandlerMapping. we dynamically inject controller beans by settin value to propertie 		"mapping".
+
+
+		<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+   		  <property name="mappings">
+          		<props>
+              		<prop key="/home.htm">homePageController</prop>
+           		</props>
+         	 </property>
+    		</bean>
+
+HandlerAdapter : implements HandlerInterface
+	 HandlerAdapter takes the role of invoking handler methods selected by some HandlerMapping.
+	 HandlerAdapter objects can be added as beans in the  	application context, overriding the default HandlerAdapters.
+	
+InternalResourceViewResolver -->InternalResourceView -->view
+
+Types Of Resolvers: 
+	1)xmlviewResolver
+	2)InternalResourceViewResolver
+	3)ResourceBundleViewResolver
+
+	MultipartView Resolver
+
+View Resolvers:
+
+
+	1)ViewResolver interface
+	2)AbstractCachingViewResolver implements viewResolver
+	3)UrlBasedViewResolver extends AbstractCachingViewResolver
+
+	xmlviewresolver extends abstarctcachingviewResolvre
+	InternalresourceviewResolver extends urlbasedviewresolvre
+	resourcebundleiewResolver exteds abstractviewresolver
+
+
+  	 Once you've added this to your web.xml, you're ready to start editing your application context file.
+	 Web security services are configured using the <http> element.
+-----------------------------------------------------------------------------
+PathVariable is part of URL.
+www.pramati.com/order/111
+
+In above URL 111 is pathVariable to be accessed in requestMapping.
+
+ @PathVariable && @RequestParam
+
+	@RequestMapping(value = " /order/{orderId}", method=RequestMethod.GET)
+		public String getOrder(@PathVariable String orderId){
+		//fetch order	
+	}		
+	
+-------------------------------------------------------------------------------------
+Spring lets you define multiple contexts in a parent-child hierarchy.
+
+The applicationContext.xml defines the beans for the "root webapp context", i.e. the context associated with the webapp.
+
+The spring-servlet.xml (or whatever else you call it) defines the beans for one servlet's app context. There can be many of these in a webapp, one per Spring servlet (e.g. spring1-servlet.xml for servlet spring1, spring2-servlet.xml for servlet spring2).
+
+Beans in spring-servlet.xml can reference beans in applicationContext.xml, but not vice versa.
+
+All Spring MVC controllers must go in the spring-servlet.xml context.
+
+In most simple cases, the applicationContext.xml context is unnecessary. It is generally used to contain beans that are shared between all servlets in a webapp. If you only have one servlet, then there's not really much point, unless you have a specific use for it.
+
+------------------------------------------------------------------------------------------------------------------
+Stereotype Annotations :
+	@Repositorie,@Service, @Controller,@Component
+	http://howtodoinjava.com/spring/spring-core/how-to-use-spring-component-repository-service-and-controller-annotations/
+
+-----------------------------------------------------------------------------------------------------------------------------
+<context :annotation-congig/> Vs <context : component-scan base packager/>
+http://stackoverflow.com/questions/7414794/difference-between-contextannotation-config-vs-contextcomponent-scan
+
+
+<auto-config ="true">
+These other elements are responsible for setting up form-login, basic authentication and logout handling services respectively [4] . They each have attributes which can be used to alter their behaviour.
+
+These other elements are responsible for setting up form-login, basic authentication and logout handling services respectively [4] . They each have attributes which can be used to alter their behaviour.
+
+
+
+
+
+

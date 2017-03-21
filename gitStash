@@ -1,0 +1,9 @@
+http://stackoverflow.com/questions/7751555/how-to-resolve-git-stash-conflict-without-commit
+
+$ git stash pop
+
+# ...manually resolve conflict(s)
+
+$ git reset
+
+$ git stash drop

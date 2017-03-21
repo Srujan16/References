@@ -1,0 +1,62 @@
+https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html
+Difference between application/x-www-urlencoded and multipart/[from-data/mixed]
+
+
+Spring handling of multiPart requests:
+--------------------------------------
+	1) checkMultipart -> multipartResolver.resolveMultiPart 
+	2) parse request 
+	3) create new DefaultMultipartHttpServletRequest with multipartFiles, multipartParams and multipartParamsContentType as input params
+	FileItem:
+	---------
+		File/form-data which is sent is multipart request is treated as a fileItem.
+	FileUpload:
+	-----------
+		This class handles multiple files per single HTML widget, sent using multipart/mixed encoding type.
+
+DefaultMultiPartHttpServletRequest
+
+
+
+MultiPart ContentType:
+---------------------
+	https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html
+
+ Body content of multiPart request may contain one or more body parts preceeded by a encapsulationBoundary.
+
+	BodyPart structure:
+		FirstLine is a encapsulation boundary that differentiates each body part.
+		and then contains a body part consisting of header area, a blank line, and a body area.
+
+
+
+
+Sample Example:
+---------------
+	POST /run-gvg44x89yh/multipartDemo/services/localhost/invoke/app2/services/file/uploadFile HTTP/1.1
+	Host: localhost:10080
+	Cache-Control: no-cache
+	Postman-Token: ec1e8f73-2110-4517-7067-624c9e06b386
+	Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+	------WebKitFormBoundary7MA4YWxkTrZu0gW
+	Content-Disposition: form-data; name="files2"; filename=""
+	Content-Type: 
+
+
+	------WebKitFormBoundary7MA4YWxkTrZu0gW
+	Content-Disposition: form-data; name="1"
+** Absence of contentType header field implies that the encapsulation is plain US-ASCII text.
+	2
+	------WebKitFormBoundary7MA4YWxkTrZu0gW
+	Content-Disposition: form-data; name="1"
+		
+	3
+	------WebKitFormBoundary7MA4YWxkTrZu0gW
+	Content-Disposition: form-data; name="1"
+
+	4
+	------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+

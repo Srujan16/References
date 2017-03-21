@@ -1,0 +1,9 @@
+Private constructors prevent a class from being explicitly instantiated by its callers.
+There are some common cases where a private constructor can be useful:
+
+classes containing only static utility methods
+classes containing only constants
+type safe enumerations
+singletons
+
+No objects can be constructed, either by the caller or by the native class. This is only suitable for classes that offer only static members to the caller.

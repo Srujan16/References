@@ -1,0 +1,116 @@
+TypeInference:
+--------------
+This feature, known as type inference, allows you to invoke a generic method as an ordinary method, without specifying a type between angle brackets
+----------------------------------
+You cannot use the > operator to compare objects. To fix the problem, use a type parameter bounded by the Comparable<T> interface:
+	
+	public static <T extends Comparable<T>> int countGreaterThan(T[] anArray, T elem) {
+	    int count = 0;
+	    for (T e : anArray)
+	        if (e.compareTo(elem) > 0)
+	            ++count;
+	    return count;
+	}
+----------------------------------------
+
+
+
+
+
+	
+
+
+Generics doesn't work on primitives.
+	http://www.angelikalanger.com/GenericsFAQ/FAQSections/TypeParameters.html#What%20is%20a%20type%20parameter%20bound?
+
+
+ **Remember, type parameter bounds are needed to give the compiler access to the type parameters non-static methods
+
+ * compiler does not permit lower bounds on type parameters we need a work-around. 
+
+Typeparam <T>:
+
+	placeholder for type argument.
+
+---------------
+Eg. :
+
+	All classes, interfaces and enum types including parameterized types, but no primitive types and no array types.
+
+	class X0 <T extends int > { ... }      // error 
+	class X1 <T extends Object[] > { ... } // error 
+	class X2 <T extends Number > { ... } 
+		class X2 <Integer/Double/Float> -isTrue
+		class X2 <String>		-isFalse
+
+	class X3 <T extends String > { ... } 
+				
+
+	class X4 <T extends Runnable > { ... } 
+	class X5 <T extends Thread.State > { ... } 
+	class X6 <T extends List > { ... }
+		 
+	class X7 <T extends List<String> > { ... } 
+
+		class X7 <ArrayList<String> extends List<String> > -isTrue
+		class X7 <ArrayList<Integer> extends List<String> > isFalse
+	
+	class X8 <T extends List<? extends Number> > { ... } 
+
+		class x8 <ArrayList<String> extends List<? extends Number>> -isFalse
+		class x8 <ArrayList<Integer> extends List<? extends Number>> -istrue
+		class x8 <ArrayList<Float> extends List<? extends Number>> -istrue
+		class x8 <ArrayList<DOuble> extends List<? extends Number>> -istrue
+
+	**class X9 <T extends Comparable<? super Number> > { ... }
+
+		Note, that even types that do not have subtypes, such as final classes and enum types, can be used as upper bound.  In this 			case there is only one type that can be used as type argument, namely the type parameter bound itself. Basically, the 			parameterization is pointless then. 		
+		class X9<
+
+		 
+	class X10<T extends Map.Entry<?,?> > { ... }
+		class X10<HashMap extends Map.Entry<Integer,String>> -isTrue
+		class X10<HashMap extends Map.Entry<Integer,Integer>> -isTrue
+		class X10<HashMap extends Map.Entry<Float/Double/String,String/Double/Float>> -isTrue		
+
+
+wildCards Vs typeParam 
+----------------------
+http://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card
+
+
+
+
+
+
+Erasure :
+	It is true that generics aren't generally known at runtime in Java, because they are implemented with Type Erasure.
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+Need for WildCards:
+	
+	class Pair<X,Y> { 
+   		private X first; 
+  		private Y second; 
+  		public < A super X , B super Y > B addToMap(Map<A,B> map) {  // error: type parameter cannot have lower bound 
+  			    return map.put(first, second); 
+  		 } 
+	}
+ 
+	class Test {  
+	   public static void main(String[] args) {  
+	     Pair<String,Long> pair = new Pair<>("ABC",42L); 
+	     Map<CharSequence, Number> map = HashMap<CharSequence, Number>(); 
+	     Number number = pair.addToMap(map); 
+	   } 
+	}
+
+	**One work-around that comes to mind is use of a wildcard, because wildcards can have a lower bound.  Here is a work-around using a 	  wildcard.
+
+
+
+
+

@@ -1,0 +1,33 @@
+ProjectManager, ProjectResourceManager
+
+SystemProperties
+	System.getProperties(key, value)
+	
+Linux Command to know list Of System Properties Set:
+	java -XshowSettings:properties -version
+
+StringUtils.cleanPath :
+	Normalize the path by suppressing sequences like "path/.." and inner simple dots.
+	
+Resource
+ProjectResource
+
+file
+-----------------------------------------------------------------------------------------------------
+FileSystemResource
+	Creates a new File and stores cleanPath of Url.
+
+CleanPath :
+
+	For example, if URL of file is "/home/srujant/Installations/../File2"
+	then StringUtils.cleanPath returns ->/home/srujant//File2
+
+
+What's the return value of -
+	StringUtils.cleanPath(/home/srujant/Installations/.)  		-> /home/srujant/Installations
+	StringUtils.cleanPath(/home/srujant/Installations/..) 		-> /home/srujant
+	StringUtils.cleanPath(/home/srujant/Installations/..) 		-> /home/srujant/
+	StringUtils.cleanPath(/home/srujant/Installations/../File2) 	-> /home/srujant/File2	
+	StringUtils.cleanPath(/home/srujant/Installations/../File2/..)  -> /home/srujant
+------------------------------------------------------------------------------------------------------
+ToStringBuilder.build

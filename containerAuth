@@ -1,0 +1,12 @@
+http://wiki.metawerx.net/wiki/SecuringYourSiteWithContainerManagedSecurity
+
+WebSphere 
+  http://www.ibm.com/support/knowledgecenter/SSNW2F_4.5.1/com.ibm.p8.install.doc/p8pup291.htm
+  http://www.ibm.com/developerworks/websphere/library/techarticles/0709_vamsi/0709_vamsi.html#sec3a
+  http://www-01.ibm.com/support/docview.wss?uid=swg27017734
+
+
+ContainerManaged Security:
+
+	1) Context Realm
+	2) 

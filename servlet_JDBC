@@ -1,0 +1,324 @@
+Apache Tomcat is used to deploy your Java Servlets and JSPs. So in your Java project you can build your WAR (short for Web ARchive) file, and just drop it in the deploy directory in Tomcat.
+
+So basically Apache is an HTTP Server, serving HTTP. Tomcat is a Servlet and JSP Server serving Java technologies.
+
+Tomcat is a servlet container. A servlet, at the end, is a Java class. JSP files (which are similar to PHP, and older ASP files) are generated into Java code (HttpServlet), which is then compiled to .class files by the server and executed by the Java virtual machine.
+
+
+
+ Coyote is the module in Tomcat responsible for web serving. Catalina is the module that does Servlets. Jasper is the module that handles JSPs. 
+
+  --> A web container is responsible for managing the lifecycle of servlets, mapping a URL to a particular servlet and ensuring that the URL requester has the correct access rights.
+
+
+	DeploymentDiscriptor --
+
+Class.forName()--classLoaddderSubsystem -- load class file into JVM if it's not loaded previously --invoke static block
+
+
+Jvm keeps track of previously loaded class files.
+
+
+A call to Class.forName("X") causes the class named X to be dynamically loaded (at runtime). A call to forName("X") causes the class named X to be initialized (i.e., JVM executes all its static block after class loading). Class.forName("X") returns the Class object associated with the "X" class. The returned Class object is not an instance of the "x" class itself.
+
+Class.forName("X") loads the class if it not already loaded. The JVM keeps track of all the classes that have been previously loaded. This method uses the classloader of the class that invokes it. The "X" is the fully qualified name of the desired class.
+
+Example :
+---------------------------------------------------------
+package com.xyzws;
+class AClass {
+  public AClass() {
+    System.out.println("AClass's Constructor");
+  }
+  static { 
+    System.out.println("static block in AClass");
+  }
+}
+
+public class Program { 
+  public static void main(String[] args) {
+    try { 
+      System.out.println("The first time calls forName:");
+      Class c   = Class.forName("com.xyzws.AClass"); 
+
+      getting object from class object -- Classobj.newInstance()
+
+
+      AClass a = (AClass)c.newInstance();
+
+      System.out.println("The second time calls forName:");
+      Class c1 = Class.forName("com.xyzws.AClass");
+
+    } catch (ClassNotFoundException e) {
+            ...
+    } catch (InstantiationException e) {
+            ...
+    } catch (IllegalAccessException e) {
+            ...
+    }
+        
+  }
+}
+-------------------------------------------------------------
+JDBC Example :
+
+
+Class.forName()
+	Class.forName("org.gjt.mm.mysql.Driver");
+	Connection con = DriverManager.getConnection(url,?myLogin", "myPassword");
+
+-> All JDBC Drivers have a static block that registers itself with DriverManager and DriverManager has static an initializer only.
+   The MySQL JDBC Driver has a static initializer looks like this:
+
+	static {
+   	 try {
+        	java.sql.DriverManaer.registerDriver(new Driver());
+    	} catch (SQLException E) {
+        	throw new RuntimeException("Can't register driver!");
+    		}
+	}
+-> JVM executes the static block and the Driver registers itself with the DriverManager.	
+	
+
+
+-----------------------------------------------------------------------------------------------
+
+Hisory :
+
+servlet container -configuration.xml file 
+
+
+Then for each and every request, the servlet container will construct an instance of javax.servlet.ServletRequest and an instance of javax.servlet.ServletResponse. 
+Then the servlet container will invoke the servlet’s service method by passing the ServletRequest and ServletResponse objects
+
+*http://stackoverflow.com/questions/3106452/how-do-servlets-work-instantiation-shared-variables-and-multithreading
+
+*server gets the input stream on the socket where it was listening. From here it delegates the input to servlet container by wrapping it in a new thread
+
+*A Servlet Container is a part of a Web Server. A Servlet Container is a separate module; it may run within the web server as a single standalone program (tomcat is one example of it).
+
+* ServletContext defines a set of methods that a servlet uses to communicate with its servlet container
+
+*sends a HTTP request, the servlet container will create new HttpServletRequest and HttpServletResponse objects and pass it through the methods of the already-created Filter and Servlet instances whose URL-pattern matches the request URL, all in the same thread.
+
+httpd is the Apache HyperText Transfer Protocol (HTTP) server program. It is designed to be run as a standalone daemon process. When used like this it will create a pool of child processes or threads to handle requests.
+
+
+   Http Connector architecture is what used by Apache Tomcat internally.
+
+
+ Web server is nothing but a Java application which opens socket on a port and keeps listening on that port over HTTP protocol + Some other facilities. These some other facilities consist of things like components lifecycle management etc. Basic task of a web server is to listen for requests on a port number over http protocol and then respond to that. So in most common server available today they keep polling on port 80 over http protocol. When you send some http request on port 80 to the host where the program is listening then program listening responds to that. Now on receiving the request the server program (which is listening on port 80 here) will get a new thread from its thread pool and in that thread will call a servlet's service method (a servlet instance will be created if its the first request see here for more details).
+In most cases servlet container runs in a single JVM, but there are solutions when container need multiple JVMs.
+
+The key to stopping a Web server from trying to serve up JSPs or Servlets, is to install something called the "application server plug-in" on the Web server.
+
+
+The special XML file also provides the IP address/port combination of listening application servers. The Web server, using the http protocol, then sends the request to the Application server JVM listening on the appropriate port.
+
+Web-server handles the incoming request, and matches that request to the application server set up to handle the given Servlet or JSP.
+
+
+In a single-thread case, the servlet container prevents multiple simultaneous service() calls from being dispatched to a single servlet instance--it may spawn multiple separate servlet instances instead. In a multiple-thread model, the container can make multiple simultaneous service() calls to a single servlet instance, using a separate thread for each call, but the servlet developer is responsible for managing synchronization.
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+Apache --WebServer
+Tomcat --Container
+
+
+Servlet Config -- exists per Servlet
+Servlet Context -- exists per application
+
+config.getInitParameter("name")
+config.getInitParameterNames()
+
+	<init-param></init-param> --Servlet Config
+	<context-param></context-param> --Servlet Context
+
+Advantages of Servlet Context :
+
+	--> The object of ServletContext provides an interface between the container and servlet.
+	--> The ServletContext object can be used to get configuration information from the web.xml file.	
+	--> The ServletContext object can be used to set, get or remove attribute from the web.xml file.
+	--> The ServletContext object can be used to provide inter-application communication.
+
+	Methods of ServletContext :
+	--> public void setAttribute(String name,Object object):sets the given object in the application scope.
+	--> public Object getAttribute(String name):Returns the attribute for the specified name.
+	--> public void removeAttribute(String name)
+
+	//We can get the ServletContext object from ServletConfig object  
+		ServletContext application=getServletConfig().getServletContext();  
+	//Another convenient way to get the ServletContext object  
+		ServletContext application=getServletContext();  
+
+
+	  <context-param>  
+	    <param-name>parametername</param-name>  
+	    <param-value>parametervalue</param-value>  
+  	  </context-param>  
+
+WebServer -- Each war/application is provided with a webContainer. WebContainer handles incoming request to that particular servlet.
+Servlet :
+
+
+-->idempotent : It means second request will be ignored until response of first request is delivered.
+
+
+Container:
+
+	It provides runtime environment for JavaEE (j2ee) applications.
+
+	It performs many operations that are given below:
+
+	  Life Cycle Management
+	  Multithreaded support
+	  Object Pooling
+	  Security etc.
+
+
+Web server contains only web or servlet container. It can be used for servlet, jsp, struts, jsf etc. It can't be used for EJB.
+Application server contains Web and EJB containers. It can be used for servlet, jsp, struts, jsf, ejb etc.
+
+	WebServer : Apache Tomcat and Resin.
+	Application Server : Weblogic, WebSphere,
+
+
+
+Servlet API :
+
+	The javax.servlet package contains many interfaces and classes that are used by the servlet or web container. 
+
+	Servlet LifeCycle :
+	-------------------
+	1)initialise
+	2)service
+	3)destroy
+        non-lifecycle Methods:
+   	-----------------------
+	1)getServletConfig
+	2)getServletInfo
+
+Servlet interface --contains 3LifeCycle abstract methods and 2 non-lifecycle abstract methods.
+
+GenericServlet class 
+
+	abstract class GenericServlet implements Servlet, ServletConfig and Serializable.
+	HttpServlet extends GenericServlet
+
+
+
+Servlet LifeCycle :
+	new,ready,init
+
+	1,2,3 --Invoked only once by webcontainer.
+	4- for each request of servlet is recieved service method is called.
+	5- invoked before removing Servlet instance.
+
+	1) Servlet class is loaded.
+	2) Servlet instance is created.
+	3) init method is invoked.
+	4) service method is invoked.
+	5) destroy method is invoked.
+
+Directory Structure :
+	The directory structure defines that where to put the different types of files so that web container may get the information and respond to the client.
+
+Deployment Descriptor :
+	 deployment descriptor is an xml file, from which Web Container gets the information about the servet to be invoked.
+	
+	 Parsers Used -SAX, DOM, pull.
+
+	 webContainer --> parser --> deployment descriptor[web.xml]
+
+
+Thread Loop inside webContainer :
+
+	--> maps the request with the servlet in the web.xml file.
+	--> creates request and response objects for this request
+	--> calls the service method on the thread
+	--> The public service method internally calls the protected service method
+	--> The protected service method calls the doGet method depending on the type of request.
+	--> The doGet method generates the response and it is passed to the client.
+	--> After sending the response, the web container deletes the request and response objects. 
+	--> The thread is contained in the thread pool or deleted depends on the server implementation.
+
+welcome-file-list element of web-app
+	By default server looks for the welcome file in following order:
+		1) welcome-file-list in web.xml
+		2) index.html
+		3) index.htm
+		4) index.jsp
+	If you have specified welcome-file in web.xml, and all the files index.html, index.htm and index.jsp exists, priority goes to welcome-file.
+
+
+
+load-on-startup
+
+	The load-on-startup element of web-app loads the servlet at the time of deployment or server start if value is positive. It is also known as pre initialization of servlet.
+
+
+RequestDispatcher 
+	Provision to forward/dispatch request to another html/servlet/jsp file.
+
+	1)forward(ServletRequest,ServletResponse)
+	2)include(ServletRequest,ServletResponse) 
+
+
+Step-1 :
+
+	1)Get rqst Dispatcher
+		RequestDispatcher requestDispatcher=request.getRequestDispatcher("/index.html" /servler/jsp )
+		requestDispatcher.include(request,response)
+		  	   or
+		requestDispatcher.forward(request,response)
+
+	2) sendRedirect
+		response.sendRedirect(servlet/jsp/html/url)
+
+
+Session Tracking :
+	
+	javax.servlet.http.Cookie 	
+	public void addCookie(Cookie ck): method of HttpServletResponse interface is used to add cookie in response object.
+	public Cookie[] getCookies():     method of HttpServletRequest interface is used to return all the cookies from the browser.
+
+
+	Cookie ck=new Cookie("user","sonoo jaiswal");//creating cookie object  
+	response.addCookie(ck);//
+
+
+type="hidden"
+
+Filter API :
+--------------
+
+init(FilterConfig)throws ServletException
+doFilter(ServletRequest,ServletResponse,FilterChain)throws IOException,ServletException
+destroy()
+
+	1) Filter
+	2) FilterChain
+	3) FilterConfig
+
+Implement the Filter interface. Filter interface provides the life cycle methods for a filter.
+
+Filter Chain :
+
+	The object of FilterChain is responsible to invoke the next filter or resource in the chain
+	filterChain.doFilter(req,res) ->forwards the request to servlet
+
+
+request -->Filter[init(),doFilter() ]-->Servlet
+
+reponse<--Filter[After doFilter()] <--servlet
+
+FilterConfig object is created by container.
+															

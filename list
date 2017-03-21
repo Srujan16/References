@@ -1,0 +1,661 @@
+Creates an ObjectInputStream that reads from the specified InputStream. A serialization stream header is read from the stream and verified. This constructor will block until the corresponding ObjectOutputStream has written and flushed the header.
+
+...
+
+throws
+
+    StreamCorruptedException - if the stream header is incorrect
+
+ackage com.wavemaker.tutorial;
+
+import java.lang.System;
+import java.util.*;
+import java.lang.*;
+
+
+public class MyArrayList<E> implements List<E> {
+
+    private int size;
+    private int capacity;
+    private Object[] backingArray;
+    private int current_index = 0;
+
+
+
+    MyArrayList() {
+        this(10);
+    }
+
+    MyArrayList(int capacity) {
+        this.capacity = capacity;
+        backingArray = new Object[this.capacity];
+    }
+
+    public void validate() {
+        //validates size of backingArray
+        if (current_index > capacity - 1) {
+            size *= 2;
+        }
+
+        //checks presence of any element at the current position
+        if (backingArray[current_index] != null) {
+            current_index++;
+        }
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+
+    public boolean contains(Object o)
+    {
+
+
+        try {
+            if(o==null)
+                throw new NullPointerException();
+            else {
+
+                Class oClass = o.getClass();
+                Class eClass = backingArray[0].getClass();
+
+                if (oClass.equals(eClass))
+                {
+                        for (int i = 0; i < size; i++)
+                        {
+
+                            if (o.equals(backingArray[i]))
+                                return true;
+                        }
+                }
+                else
+                {
+                    throw new ClassCastException();
+                }
+            }
+        }
+        catch (NullPointerException i)
+        {
+                System.out.println("NullPointerException");
+        }
+        catch (ClassCastException i) {
+            System.out.println("ClassCastException");
+
+        }
+        return false;
+
+    }
+
+
+
+	public Iterator iterator() {
+
+		class TempIterator implements Iterator
+        {
+
+            private  int indexPosition = 0;
+            private  boolean flag=false;
+
+            public boolean hasNext() {
+
+                if (indexPosition == size)
+                    return false;
+
+                for (int i = indexPosition; i < size; i++) {
+                    if (backingArray[i] != null) {
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+
+            public Object next()
+            {
+                flag=true;
+                try {
+                    if (indexPosition >= size)
+                          throw new NoSuchElementException();
+                    return backingArray[indexPosition++];
+                }
+                catch (NoSuchElementException i)
+                {
+                    System.out.println("NoSuchElementException");
+                }
+                return null;
+            }
+
+            public void remove()
+            {
+                try {
+                    if (flag) {
+
+                        flag=false;
+                        for(int i = indexPosition-1; i< size -1; i++)
+                        {
+                            backingArray[i]= backingArray[i+1];
+                        }
+                        size -=1;
+                    }
+                    else
+                    {
+                        throw new IllegalStateException();
+                    }
+                }
+                catch(IllegalStateException i)
+                {
+                    System.out.println("IllegalStateException");
+                }
+
+            }
+
+        }
+        return new TempIterator();
+	}
+
+	public Object[] toArray() {
+
+        return backingArray;
+	}
+
+	public Object[] toArray(Object[] a) {
+
+        Class aClass= a.getClass();
+        try{
+
+            if(a==null)
+            {
+                throw new NullPointerException();
+            }
+            else if(!getMyType().equals(aClass))
+            {
+                throw new ArrayStoreException();
+            }
+            else
+            {
+                return backingArray;
+            }
+
+        }
+        catch(NullPointerException i)
+        {
+            System.out.println("NUllPointerException");
+        }
+        catch(ArrayStoreException i)
+        {
+            System.out.println("ArrayStoreException");
+        }
+        return null;
+	}
+
+	//method to append object to backingArray
+	public boolean add(E x)
+	{
+
+        Class aClass= x.getClass();
+        try {
+
+            if(x==null) {
+                throw new NullPointerException();
+            }
+            else if(!getMyType().equals(aClass)) {
+
+                throw new ClassCastException();
+            }
+            else {
+                validate();
+                backingArray[current_index] = x;
+                current_index++;
+                return true;
+            }
+        }
+        catch(NullPointerException i)
+        {
+            System.out.println("NullPointer Exception");
+        }
+        catch(ClassCastException i)
+        {
+            System.out.println("ClassCastException");
+        }
+
+        return false;
+	}
+
+
+
+    public boolean remove(Object o)
+    {
+        int i=0;
+        boolean flag=false;
+        Class aClass= o.getClass();
+        try {
+            if (o == null)
+                throw new NullPointerException();
+            else if(!getMyType().equals(aClass))
+            {
+                throw new ClassCastException();
+            }
+            else
+            {
+                while(i < size)
+                {
+                    if (o.equals(backingArray[i])) {
+                        flag=true;
+                        break;
+                    }
+                    i++;
+                }
+
+                 if(flag) {
+                     //if object to be removed is last element just reduce size else shift elements to left
+
+                     if (i != size -1) {
+                         while (i < size - 1) {
+                             backingArray[i] = backingArray[i + 1];
+                             i++;
+                         }
+                     }
+                     size -=1;
+                 }
+
+            }
+            return true;
+        }
+        catch(NullPointerException ex)
+        {
+            System.out.println("NullPointerException");
+        }
+        catch(ClassCastException ex)
+        {
+            System.out.println("ClassCastException");
+        }
+        return false;
+    }
+
+    public boolean find(Object x)
+    {
+        for(int i = 0; i< size; i++)
+        {
+            if(x.equals(backingArray[i]))
+                return true;
+        }
+        return false;
+    }
+
+
+    public boolean containsAll(Collection<?> c)
+    {
+
+        // is this valid??
+        Object[] x =  c.toArray(new Object[c.size()]);
+        try
+        {
+
+            for (int i = 0; i < x.length; i++)
+            {
+                if(x[i]==null)
+                {
+                    throw new NullPointerException();
+                }
+                else if (!find(x[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        catch(NullPointerException ex)
+        {
+             System.out.println("NUllPointerException");
+        }
+        return false;
+    }
+
+
+	public boolean addAll(Collection c) {
+            return false;
+	}
+
+	public boolean addAll(int index, Collection c) {
+		return false;
+	}
+
+	public void clear() {
+        for(int i = 0; i< size; i++)
+        {
+            backingArray[i]=null;
+        }
+        size =10;
+	}
+
+	public E get(int index) {
+
+        try
+        {
+            if(index>= size)
+                throw new IndexOutOfBoundsException();
+            else
+            {
+                return (E) backingArray[index];
+            }
+        }
+        catch(IndexOutOfBoundsException ie)
+        {
+            System.out.println("IndexOutOfBoundsException");
+        }
+        return null;
+	}
+
+	public E set(int index, E element) {
+
+        Class aClass= element.getClass();
+
+        try{
+            if(index>= size)
+            {
+                throw new IndexOutOfBoundsException();
+            }
+            else if(element==null)
+            {
+                throw new NullPointerException();
+
+            }
+            else if(!getMyType().equals(aClass))
+            {
+                throw new ClassCastException();
+            }
+            else
+            {
+                backingArray[index]=element;
+            }
+
+        }
+        catch(IndexOutOfBoundsException ie)
+        {
+            System.out.println("IndexOutOfBoundsException");
+        }
+        catch(NullPointerException ie)
+        {
+            System.out.println("NullPointerException");
+        }
+        catch(ClassCastException ie)
+        {
+            System.out.println("ClassCastException");
+        }
+
+		return null;
+	}
+
+	public boolean retainAll(Collection c) {
+		return false;
+	}
+
+	public boolean removeAll(Collection c) {
+		return false;
+	}
+
+
+	public void add(int index,E x)
+	{
+
+        Class xClass= x.getClass();
+        int nullIndex;
+		try{
+
+            if(x==null) {
+
+                throw new NullPointerException();
+            }
+			else if((index> size -1) || index<0)
+			{
+				throw new IndexOutOfBoundsException();
+			}
+            else if(!getMyType().equals(xClass))
+            {
+                throw new ClassCastException();
+            }
+			else
+            {
+                validate();
+                if ((index > current_index) && (index <= size - 1))
+                {
+                    if( (backingArray[index]==null))
+                    {
+                        backingArray[index] = x;
+                    }
+                    else
+                    {
+                        if(backingArray[index+1]==null)
+                        {
+                            backingArray[index+1]= backingArray[index];
+                            backingArray[index]=x;
+                        }
+                        else
+                        {
+                            for(nullIndex=index+1; nullIndex< size; nullIndex++)
+                            {
+                                if(backingArray[nullIndex]==null)
+                                    break;
+                            }
+
+                            while(nullIndex>=index)
+                            {
+                                backingArray[nullIndex]= backingArray[nullIndex-1];
+                                nullIndex--;
+                            }
+
+                            backingArray[index]=x;
+                        }
+                    }
+
+                }
+                else
+                {
+                    for (int i = current_index; i > index; i--) {
+                        backingArray[i] = backingArray[i - 1];
+
+                    }
+                    backingArray[index] = x;
+                    current_index++;
+                }
+            }
+
+		}
+		catch(IndexOutOfBoundsException i)
+		{
+			System.out.println("Index out Of Bound");
+
+		}
+        catch(NullPointerException i)
+        {
+
+            System.out.println("Null Pointer Exception");
+        }
+        catch(ClassCastException ie)
+        {
+            System.out.println("ClassCastException");
+        }
+	}
+
+
+    public E remove(int index)
+    {
+        try
+        {
+            if(index>= size)
+            {
+                throw new IndexOutOfBoundsException();
+            }
+            else
+            {
+                if(index== size -1)
+                {
+                    size -=1;
+                    return (E) backingArray[size];
+                }
+                else
+                {
+                    Object x = backingArray[index];
+                    for (int i = index; i < size -1; i++)
+                    {
+                        backingArray[i] = backingArray[i + 1];
+                    }
+                    size -= 1;
+
+                    return (E)x;
+                }
+            }
+        }
+        catch(IndexOutOfBoundsException ie)
+        {
+            System.out.println("IndexOutOfBoudn Exception");
+        }
+    }
+
+
+	public void removeRange(int fromIndex,int toIndex)
+	{
+		
+		try{
+		
+			if( (fromIndex>toIndex) || (fromIndex<0 || toIndex<0) || ( fromIndex> size || toIndex> size))
+			{
+			
+				throw new IndexOutOfBoundsException();
+			}
+			else
+			{ 
+				if((fromIndex>=current_index))
+				{
+					while(fromIndex<toIndex)
+					{
+						backingArray[fromIndex++]=null;
+					}
+					
+				}
+				else
+				{
+			    	while(toIndex< size)
+					{			
+						backingArray[fromIndex++]= backingArray[toIndex++];
+					}	
+					current_index=fromIndex;
+					
+					while(fromIndex<toIndex)
+					{
+						backingArray[fromIndex++]=null;
+					}
+				}
+			}
+		 }
+		catch(IndexOutOfBoundsException i)
+		{
+			System.out.println("Index out Of Bound");
+		}
+	}
+
+
+	public int indexOf(Object x)
+	{
+
+        Class xClass=x.getClass();
+        try
+        {
+            if(x==null)
+            {
+             throw new NullPointerException();
+            }
+            else if(!getMyType().equals(xClass))
+            {
+                throw new ClassCastException();
+
+            }
+            else {
+                for (int i = 0; i < size; i++) {
+                    if (x.equals(backingArray[i]))
+                        return i;
+                }
+            }
+        }
+        catch(ClassCastException ex)
+        {
+            System.out.println("ClassCastException");
+        }
+        catch(NullPointerException ie)
+        {
+            System.out.println("NullPointerException");
+        }
+        return -1;
+    }
+
+	public int lastIndexOf(Object x) {
+
+        Class xClass=x.getClass();
+        int lastindex=-1;
+        try
+        {
+            if(x==null)
+            {
+                throw new NullPointerException();
+            }
+            else if(!getMyType().equals(xClass))
+            {
+                throw new ClassCastException();
+
+            }
+            else
+            {
+                for (int i = 0; i < size; i++) {
+                    if (x.equals(backingArray[i]))
+                    {
+                        lastindex=i;
+                    }
+                }
+                return lastindex;
+            }
+        }
+        catch(ClassCastException ex)
+        {
+            System.out.println("ClassCastException");
+        }
+        catch(NullPointerException ie)
+        {
+            System.out.println("NullPointerException");
+        }
+        return -1;
+	}
+
+	public ListIterator listIterator() {
+		return null;
+	}
+
+	public ListIterator listIterator(int index) {
+		return null;
+	}
+
+	public List subList(int fromIndex, int toIndex) {
+		return null;
+	}
+
+	@Override
+	public String toString()
+	{
+		for(int i = 0; i< size; i++)
+		{
+			if(backingArray[i]!=null)
+			{
+				System.out.print(backingArray[i].toString());
+			}
+		}
+		
+	}
+}
+
+
+
+
+
