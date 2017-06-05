@@ -1,0 +1,35 @@
+Test Call:
+---------
+
+http://localhost:8080/wavemaker/services/projects/WMPRJff808181596da02c01596da6ae13000a/restservice/invoke
+POST
+
+{"contentType": "text/plain","endpointAddress":"http://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false","headers": {},"method": "GET","requestBody":{"requestBody":"srujan","category":"text/plain"}}
+
+
+
+
+Settings Call:
+-------------
+
+http://localhost:8080/wavemaker/services/projects/WMPRJff808181596da02c01596da6ae13000a/restservice/settings
+POST
+
+{
+  "contentType": "multipart/form-data",
+  "endpointAddress": "http://localhost:8080/app2/services/file/uploadFile",
+  "headers": {},
+  "method": "POST",
+  "requestBody":"{"requestBody":"srujan","category":"text/plain"}",
+  "sampleRestResponse":{"responseBody":"[]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Thu, 05 Jan 2017 10:55:07 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]},
+}
+
+
+
+
+createService
+------------
+http://localhost:8080/wavemaker/services/projects/WMPRJff808181596da02c01596da6ae13000a/restservice
+POST
+
+{"serviceId":"localhost2","swagger":{"swagger":"2.0","info":{"version":"2.0","x-WM-SERVICE_TYPE":"RestService","x-WM-API_ID":"85eee88c-e244-4d7e-b008-db1e1b8707b3","x-WM-SERVICE_ID":"localhost2"},"host":"localhost:8080","basePath":"","tags":[{"name":"RestServiceVirtualController","description":"Rest service swagger documentation"}],"schemes":["http"],"paths":{"/app2/services/file/uploadFile":{"post":{"tags":["RestServiceVirtualController"],"operationId":"RestServiceVirtualController-invoke","consumes":["multipart/form-data"],"produces":["application/json"],"parameters":[{"in":"body","name":"RequestBody","description":"RequestBody","required":false,"schema":{"$ref":"#/definitions/RootRequest"},"x-WM-FULLY_QUALIFIED_TYPE":"java.lang.Object"}],"responses":{"200":{"description":"Success","schema":{"type":"array","items":{"$ref":"#/definitions/java.lang.Object"},"x-WM-IS_LIST":true}}},"x-WM-METHOD_NAME":"invoke","x-WM-ACCESS_SPECIFIER":"APP_ONLY"},"x-WM-BASE_PATH":"/app2/services/file/uploadFile","x-WM-TAG":"RestServiceVirtualController","x-WM-RELATIVE_PATH":""}},"definitions":{"RootRequest":{"x-WM-FULLY_QUALIFIED_NAME":"RootRequest","x-WM-TAGS":["RestServiceVirtualController"]},"RootResponse":{"required":["RootResponseROOT"],"properties":{"RootResponseROOT":{"type":"array","items":{"$ref":"#/definitions/java.lang.Object"},"x-WM-IS_LIST":true}},"x-WM-FULLY_QUALIFIED_NAME":"RootResponse","x-WM-TAGS":["RestServiceVirtualController"]},"java.lang.Object":{"x-WM-FULLY_QUALIFIED_NAME":"java.lang.Object","x-WM-TAGS":["RestServiceVirtualController"]}}},"filteredOperationId":null,"filteredEndPointId":null,"prependServiceIdInModelsFullyQualifiedType":true,"proxySettings":null,"restRequestInfo":{"endpointAddress":"http://localhost:8080/app2/services/file/uploadFile","method":"POST","contentType":"multipart/form-data","requestBody":{"category":"text/plain","requestBody":"srujan"},"authType":"NONE","headers":{},"queryParams":null,"sampleRestResponse":{"responseBody":"[]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Thu, 05 Jan 2017 10:55:07 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]},"redirectEnabled":true,"proxy":null}}

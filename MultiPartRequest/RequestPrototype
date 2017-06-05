@@ -1,0 +1,21 @@
+request should be sent either as multipart/form-url-encoded
+
+
+{"endpointAddress":"http://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false","method":"GET","contentType":"text/xml","requestBody":"","headers":{},"authType":"NONE"}
+
+
+
+{"contentType": "multipart/form-data",   "endpointAddress": "http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile",   "headers": {},   "method": "POST",   "requestBody": "","multiParamInfoList":[{"type":"File" ,"name":"file1","list":"false"},{"type":"File" ,"name":"file2","list":"false"},{"type":"string" ,"name":"1","list":"false"}],"sampleRestResponse":{"responseBody":"[]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Thu, 05 Jan 2017 10:55:07 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]}}
+
+
+
+ {"contentType": "multipart/form-data",   "endpointAddress": "http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile",   "headers": {},   "method": "POST",   "requestBody": "","multiParamInfoList":[{"type":"File" ,"name":"file1","list":"false"},{"type":"File" ,"name":"file2","list":"true"},{"type":"string" ,"name":"1","list":"false"}],"sampleRestResponse":{"responseBody":"[]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Thu, 05 Jan 2017 10:55:07 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]}}
+
+
+ {"contentType": "multipart/form-data",   "endpointAddress": "http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile",   "headers": {},   "method": "POST",   "requestBody": "","multiParamInfoList":[{"type":"File" ,"name":"file1","list":"false"},{"type":"File" ,"name":"file2","list":"true"},{"type":"string" ,"name":"1","list":"false"}]},"sampleRestResponse":{"responseBody":"[]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Thu, 05 Jan 2017 10:55:07 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]}}
+
+
+
+1) for testCall send multiparts
+
+2) for settings call just send requestInfo and exclude files

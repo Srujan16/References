@@ -1,0 +1,19 @@
+http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile
+
+Content-Type:multipart/form-data; boundary=----WebKitFormBoundarywvw04Pza6lKUM1G5
+
+------WebKitFormBoundarywvw04Pza6lKUM1G5
+Content-Disposition: form-data; name="files"; filename="calculatorLayout.css"
+Content-Type: text/css
+
+------WebKitFormBoundarywvw04Pza6lKUM1G5--
+
+
+
+1) Content-Type =multipart/formData
+
+
+
+	http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile
+
+encapsulation boundary

@@ -1,0 +1,23 @@
+Existing functionality with browser:
+
+	1) when name=ab&&&&&cd is sent as queryParam 
+ 			queryParamMap contains {'name':'ab','cd':null}
+			request.getQueryString - ab&&&&&cd
+
+ 	2)when name=ab%26%26cd is sent as queryParam 
+ 			queryParamMap contains {'name':'ab&&cd'}
+			request.getQueryString - ab%26%26cd
+
+
+Expected functionality with restService
+	1) when name=ab&&&&&cd is sent as queryParam 
+ 			queryParamMap contains {'name':'ab','cd':null}
+			request.getQueryString - ab&&&&&cd
+	
+	2)when name=ab%26%26cd is sent as queryParam 
+ 			queryParamMap contains {'name':'ab%26%26cd'}
+			request.getQueryString - ab%2526%2526cd
+	
+	
+
+

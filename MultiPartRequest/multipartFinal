@@ -1,0 +1,15 @@
+http://localhost:8080/wavemaker/services/projects/WMPRJff808181596da02c01596da6ae13000a/restservice/settings
+** 
+just send requestInfo
+
+{"endpointAddress":"http://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false","method":"GET","contentType":"text/xml","requestBody":"","headers":{},"authType":"NONE",  "sampleRestResponse":{"responseBody":"[]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Thu, 05 Jan 2017 10:55:07 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]}}
+
+
+
+	"wm_data_json" :	{"endpointAddress":"http://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false","method":"GET","contentType":"text/xml","requestBody":"","headers":{},"authType":"NONE"}
+	"file1":gfg
+
+
+
+for test call
+send files along with requestInfo

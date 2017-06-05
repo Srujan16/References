@@ -1,0 +1,25 @@
+Step-1 : build queryParamMap
+		name=ab&&&&cd   	name=ab,cd=null
+		name=ab%26%26cd 	name=ab%26%26cd
+
+Step-2 : hierarichalUriComponents.encodeQueryParams
+	 	name=ab,cd=null
+		name=ab%2526%2526cd
+	
+Step-3 buildQueryString from uriComponents
+		Scheme://host:port/path?name=ab&cd
+		Schem://host:port/path?name=ab%2526%2526cd
+
+
+
+	OriginalRequest:				   HierarichalUriComponents
+
+Scheme://host:port/path?name=ab&&&&&&&&cd		Scheme://host:port/path?name=ab&cd
+Scheme://host:port/path?name=ab%26%26cd			Schem://host:port/path?name=ab%2526%2526cd
+
+
+
+1) PathParams need to be encoded until it finds last '?'.
+
+2) QueryStrings need to be encoded
+

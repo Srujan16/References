@@ -1,0 +1,17 @@
+
+
+name=ab%26cd&id=%261
+
+Existing workflow :
+	
+		name=ab%26cd&id=%261 ->	name=ab%26cd,id=%261 -> name=ab%2526cd,id=%25261 
+
+		request.getParam("name"):ab%26cd 
+		request.getParam("id"):%261
+
+New workflow:
+		name=ab%20cd&id=%261 -> name=ab cd,id=&1 -> name=ab%26cd,id=%261
+
+		request.getParam("name"):ab&cd 
+		request.getParam("id"):&1
+	

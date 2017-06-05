@@ -1,0 +1,34 @@
+Case-1:
+
+	ab%26%26cd%26%26ef without WM encoding on '%'
+	Name = ab&&cd&&ef
+
+	ab%26%26cd%26%26ef with WM encoding on '%'
+	Name = ab%26%26cd%26%26ef
+
+http://localhost:10080/run-gvg44x89yh/urlEncodingIssue/services/myJava/sampleJavaOperation
+http://localhost:10080/run-gvg44x89yh/urlEncodingIssue/services/myJava/sampleJavaOperation/assd?name=ab%26cd
+
+
+http://stage-studio.wavemakeronline.com/run-gvg44x89yh/urlEncoder/services/myJava/sampleJavaOperation/assd?name=ab%26cd
+
+
+
+
+
+
+encode  -  CustomUriComponentBuilder[decode] - buildUrl[encode]
+
+http://localhost:10080/run-gvg44x89yh/urlEncodingIssue/services/myJava/sampleJavaOperation/as???sd???name=ab%26cd
+http://localhost:10080/run-gvg44x89yh/urlEncodingIssue/services/myJava/sampleJavaOperation/as%3F%3F%3Fsd%3F%3F?name=ab%26cd
+
+
+%26->%2526->%26->%2526->%26
+&->%26->&-> %26
+%2->%252->%2->%252
+?->%25->%2525                
+
+
+
+
+

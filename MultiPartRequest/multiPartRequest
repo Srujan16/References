@@ -1,0 +1,52 @@
+http://localhost:8080/multiPart/services/file/uploadFile
+http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile
+
+{"contentType": "multipart/form-data",   "endpointAddress": "http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile",   "headers": {},   "method": "POST",   "requestBody": {"multipartParamInfoList":[{"type":"File" ,"name":"file1","list":"false"},{"type":"File" ,"name":"file2","list":"false"},{"type":"Text" ,"name":"1","list":"false"}]}}
+
+
+POST /wavemaker/services/projects/WMPRJff808181596da02c01596da6ae13000a/restservices/invoke HTTP/1.1
+Host: localhost:8080
+Cache-Control: no-cache
+Postman-Token: 68ae3947-dde5-00fc-7fa2-49954329bceb
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="1"
+
+2
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file1"; filename=""
+Content-Type: 
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="wm_data_json"
+
+{"contentType": "multipart/form-data",   "endpointAddress": "http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile",   "headers": {},   "method": "POST",   "requestBody": {"multipartParamInfoList":[{"type":"File" ,"name":"file1","list":"false"},{"type":"File" ,"name":"file2","list":"false"},{"type":"Text" ,"name":"1","list":"false"}],"category":"MultiPartFormData"}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+--------------------------------------------------------------------------------------------------------------------------
+
+	TestCall:
+	---------	
+		
+	{"contentType": "multipart/form-data",   "endpointAddress": "http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile",   "headers": {},   "method": "POST",   "requestBody": {"multipartParamInfoList":[{"type":"File" ,"name":"file1","list":"false"},{"type":"File" ,"name":"file2","list":"false"},{"type":"Text" ,"name":"1","list":"false"}],"category":"MultiPartFormData"}}
+
+
+	Settings:
+	---------
+		{"contentType": "multipart/form-data",   "endpointAddress": "http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile",   "headers": {},   "method": "POST",   "requestBody": {"multipartParamInfoList":[{"type":"File" ,"name":"file1","list":"false"},{"type":"File" ,"name":"file2","list":"false"},{"type":"Text" ,"name":"1","list":"false"}],"category":"MultiPartFormData"},"sampleRestResponse":{"responseBody":"[{\"path\":\"http://localhost:10080/run-gvg44x89yh/app2/services/file/downloadFile?file=studio-dev-terminals.sh&returnName=studio-dev-terminals.sh\",\"fileName\":\"studio-dev-terminals.sh\",\"length\":1488,\"success\":true,\"errorMessage\":\"\"}]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Wed, 11 Jan 2017 09:06:05 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]}}
+
+
+
+
+	generate:
+	---------
+
+
+	{"serviceId":"localhost4","swagger":{"swagger":"2.0","info":{"version":"2.0","x-WM-SERVICE_TYPE":"RestService","x-WM-API_ID":"da76d658-310c-4c1a-9c27-511460151f37","x-WM-SERVICE_ID":"localhost4"},"host":"localhost:10080","basePath":"","tags":[{"name":"RestServiceVirtualController","description":"Rest service swagger documentation"}],"schemes":["http"],"paths":{"/run-gvg44x89yh/app2/services/file/uploadFile":{"post":{"tags":["RestServiceVirtualController"],"operationId":"RestServiceVirtualController-invoke","consumes":["multipart/form-data"],"produces":["application/json"],"parameters":[{"name":"file1","in":"formData","required":false,"type":"File","x-WM-FULLY_QUALIFIED_TYPE":"org.springframework.web.multipart.MultipartFile","x-WM-EDITABLE":true},{"name":"file2","in":"formData","required":false,"type":"File","x-WM-FULLY_QUALIFIED_TYPE":"org.springframework.web.multipart.MultipartFile","x-WM-EDITABLE":true},{"name":"1","in":"formData","required":false,"type":"string","x-WM-FULLY_QUALIFIED_TYPE":"java.lang.String","x-WM-EDITABLE":true}],"responses":{"200":{"description":"Success","schema":{"type":"array","items":{"$ref":"#/definitions/RootResponseROOTEntryItem"},"x-WM-IS_LIST":true}}},"x-WM-METHOD_NAME":"invoke","x-WM-ACCESS_SPECIFIER":"APP_ONLY"},"x-WM-BASE_PATH":"/run-gvg44x89yh/app2/services/file/uploadFile","x-WM-TAG":"RestServiceVirtualController","x-WM-RELATIVE_PATH":""}},"definitions":{"RootResponse":{"required":["RootResponseROOT"],"properties":{"RootResponseROOT":{"type":"array","items":{"$ref":"#/definitions/RootResponseROOTEntryItem"},"x-WM-IS_LIST":true}},"x-WM-FULLY_QUALIFIED_NAME":"RootResponse","x-WM-TAGS":["RestServiceVirtualController"]},"RootResponseROOTEntryItem":{"required":["errorMessage","fileName","length","path","success"],"properties":{"errorMessage":{"type":"string"},"path":{"type":"string"},"fileName":{"type":"string"},"length":{"type":"integer","format":"int32"},"success":{"type":"boolean"}},"x-WM-FULLY_QUALIFIED_NAME":"RootResponseROOTEntryItem","x-WM-TAGS":["RestServiceVirtualController"]}}},"filteredOperationId":null,"filteredEndPointId":null,"prependServiceIdInModelsFullyQualifiedType":true,"proxySettings":null,"restRequestInfo":{"endpointAddress":"http://localhost:10080/run-gvg44x89yh/app2/services/file/uploadFile","method":"POST","contentType":"multipart/form-data","requestBody":{"category":"MultiPartFormData","multipartParamInfoList":[{"type":"File","name":"file1","list":false},{"type":"File","name":"file2","list":false},{"type":"string","name":"1","list":false}]},"authType":"NONE","headers":{},"queryParams":null,"sampleRestResponse":{"responseBody":"[{\"path\":\"http://localhost:10080/run-gvg44x89yh/app2/services/file/downloadFile?file=studio-dev-terminals.sh&returnName=studio-dev-terminals.sh\",\"fileName\":\"studio-dev-terminals.sh\",\"length\":1488,\"success\":true,\"errorMessage\":\"\"}]","convertedResponse":null,"statusCode":200,"responseHeaders":{"Date":["Wed, 11 Jan 2017 09:06:05 GMT"],"Transfer-Encoding":["chunked"],"X-XSS-Protection":["1"],"Content-Type":["application/json;charset=UTF-8"],"Server":["Apache-Coyote/1.1"],"mode":["block"]},"contentType":"application/json","cookies":[]},"redirectEnabled":true,"proxy":null}}
+
+
+
+
+

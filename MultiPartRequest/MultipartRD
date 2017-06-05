@@ -1,0 +1,28 @@
+1) FormData
+	parameterMap
+	multipartFiles
+
+2)application/x-www-formurl-encoded
+	parameterMap
+
+3)rawData
+	inputStream -> byteArrayOutputStream
+
+JsonParser
+JsonTree
+JsonNode
+ObjectNode
+
+
+
+****From now requestInfo should be sent as application/form-url-encoded or multipart/form-data format with key "wm_data_json". Its not valid to send raw data.
+
+
+
+
+
+Submit callableObjects to ExecutorService threadPool.
+
+
+future.get() -> callable Call method
+

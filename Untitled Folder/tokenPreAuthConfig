@@ -1,0 +1,21 @@
+TokenPreAuthConfig tokenPreAuthConfig = new TokenPreAuthConfig();
+tokenPreAuthConfig.setType("tokenPreAuthConfig");
+tokenPreAuthConfig.setEnabled(true);
+tokenPreAuthConfig.setParameter(null);
+tokenPreAuthConfig.setTokenValiditySeconds(1000);
+generalOptions.setPreAuthConfig(tokenPreAuthConfig);
+
+
+CustomPreAuthConfig customPreAuthConfig = new CustomPreAuthConfig();
+customPreAuthConfig.setFqCustomPreAuthManagerClassName("com.custompreauthfilter.myauthmanager.MyAuthManagerLatest");
+customPreAuthConfig.setType("customPreAuthConfig");
+customPreAuthConfig.setEnabled(true);
+preAuthConfig=customPreAuthConfig;
+
+TokenPreAuthConfig tokenPreAuthConfig = new TokenPreAuthConfig();
+tokenPreAuthConfig.setType("tokenPreAuthConfig");
+tokenPreAuthConfig.setEnabled(true);
+tokenPreAuthConfig.setParameter(null);
+tokenPreAuthConfig.setTokenValiditySeconds(1000);
+preAuthConfig=customPreAuthConfig;
+

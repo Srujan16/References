@@ -1,0 +1,108 @@
+package com.wavemaker.runtime.rest.processor.request;
+
+import java.net.HttpCookie;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpHeaders;
+
+import com.wavemaker.commons.WMRuntimeException;
+import com.wavemaker.runtime.rest.model.HttpCookieStore;
+import com.wavemaker.runtime.rest.model.HttpRequestData;
+import com.wavemaker.runtime.rest.model.HttpRequestDetails;
+
+/**
+ * Created by srujant on 5/6/17.
+ */
+public class HttpCookieRequestProcessor extends AbstractHttpRequestProcessor implements InitializingBean {
+
+    private String contextFilteringType;
+
+    private static final String COOKIE = "Cookie";
+
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (!("GLOBAL".equals(contextFilteringType) || ("SERVICE_ID_BASED").equals(contextFilteringType))) {
+            throw new WMRuntimeException("Unknown contextFilteringType");
+        }
+    }
+
+
+    @Override
+    protected void doProcess(HttpRequestProcessorContext httpRequestProcessorContext) {
+        HttpServletRequest httpServletRequest = httpRequestProcessorContext.getHttpServletRequest();
+        HttpSession httpSession = httpServletRequest.getSession(false);
+        if (httpSession != null) {
+            HttpCookieStore httpCookieStore = (HttpCookieStore) httpSession.getAttribute("wm.cookieStore");
+            URL url = null;
+            try {
+                url = new URL(httpRequestProcessorContext.getHttpRequestDetails().getEndpointAddress());
+            } catch (MalformedURLException e) {
+                throw new WMRuntimeException(e);
+            }
+            String host = url.getHost();
+            Map<String, List<HttpCookie>> httpCookiesMap = httpCookieStore.getCookies(host);
+            if (httpCookiesMap != null) {
+                String path = url.getPath();
+                addCookieHeader(httpCookiesMap, path, httpRequestProcessorContext);
+            }
+        }
+
+    }
+
+
+    private void addCookieHeader(Map<String, List<HttpCookie>> httpCookiesMap, String path, HttpRequestProcessorContext httpRequestProcessorContext) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if ("GLOBAL".equals(contextFilteringType)) {
+            for (Map.Entry<String, List<HttpCookie>> entry : httpCookiesMap.entrySet()) {
+                addCookie(entry.getValue(), stringBuilder, path);
+            }
+        } else {
+            addCookie(httpCookiesMap.get(httpRequestProcessorContext.getHttpRequestData().getServiceId()), stringBuilder, path);
+        }
+
+
+        HttpRequestData httpRequestData = httpRequestProcessorContext.getHttpRequestData();
+        HttpHeaders httpHeaders = httpRequestData.getHttpHeaders();
+
+        List<String> cookies = httpHeaders.get(COOKIE);
+
+        if (cookies != null) {
+            for (String cookie : cookies) {
+                stringBuilder.append(cookie).append("; ");
+            }
+        }
+        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(";"));
+
+        HttpRequestDetails httpRequestDetails = httpRequestProcessorContext.getHttpRequestDetails();
+        httpRequestDetails.getHeaders().add(COOKIE, stringBuilder.toString());
+
+    }
+
+    private void addCookie(List<HttpCookie> httpCookieList, StringBuilder stringBuilder, String path) {
+        for (HttpCookie httpCookie : httpCookieList) {
+            if (path.startsWith(httpCookie.getPath())) {
+                stringBuilder.append(httpCookie.getName()).append("=").append(httpCookie.getValue()).append("; ");
+            }
+        }
+    }
+
+
+    public String getContextFilteringType() {
+        return contextFilteringType;
+    }
+
+    public void setContextFilteringType(String contextFilteringType) {
+        this.contextFilteringType = contextFilteringType;
+    }
+
+}
+
