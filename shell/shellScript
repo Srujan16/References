@@ -1,1 +1,16 @@
-Variables : a symbolic name for a chunk of memory to which we can assign values, read and manipulate its contents
+Variables : a symbolic name for a chunk of memory to which we can assign values, read manipulate and its contents
+
+
+**It is possible to have bash show you what it is doing when you run your script. To do this, add a "-x" to the first line of your script, like this:
+
+#!/bin/bash -x
+  
+
+case word in
+    patterns ) commands ;;
+esac
+            
+
+
+Start From:
+http://linuxcommand.org/lc3_wss0130.php

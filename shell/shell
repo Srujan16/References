@@ -1,0 +1,8 @@
+Introduction:
+
+Shell:
+  Piece of programm that takes input from the keyboard and forward it to kernel.Act as intermediate between operating system and user.
+
+Terminal:
+  It provides GUI to interact with the shell. Example : gnome-terminal,emac etc. Each terminal gives access to shell session.
+

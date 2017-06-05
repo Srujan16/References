@@ -1,8 +1,10 @@
 **http://nfarina.com/post/9868516270/git-is-simpler
 **https://maryrosecook.com/blog/post/git-from-the-inside-out
 **http://gitlet.maryrosecook.com/docs/gitlet.html
+**http://stackoverflow.com/questions/4084921/what-does-the-git-index-contain-exactly
 
  git cat-file -p 81c545efebe5f57d4cab2ba9ec294c4b0cadf672
+ git ls-files --stage to view content of index file.
 
 
 https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control

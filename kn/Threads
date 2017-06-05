@@ -1,0 +1,22 @@
+Advantages of using threads over process.
+Thread life cycle
+Thread implementation either implementing Runnable or extending Thread.
+MultiThreading
+
+Thread synchronization.
+Communication between threads acting on same object using wait and notify.
+Monitor lock of the object.
+
+Synchronization involves acquiring monitor lock of the corresponding object. Any other thread that is required to act on the object has to wait, until the first thread release the monitor lock of the object. 
+
+
+Thread priority
+Thread scheduler
+Future and callBacks
+ExecutorService.ThreadPool
+
+
+
+
+
+

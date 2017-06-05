@@ -13,4 +13,12 @@ MultiPart:
 	 With this method of transmitting name/value pairs, each pair is represented as a "part" in a MIME message.
 
 
+{"contentType":"application/json","endpointAddress":"http://localhost:10080/run-gvg44x89yh/customJavaService/services/myJava/sampleJavaOperation","headers":{"Content-Type":"application/json","skipSecurity":"true"},"method":"POST","requestBody":{"age":"1","name":"srujan"}}
 
+{"endpointAddress":"http://localhost:10080/run-gvg44x89yh/customJavaService/services/myJava/sampleJavaOperation","method":"POST","contentType":"application/json","requestBody":"{\"name\":\"srujan\",\"age\":1}","headers":{},"authType":"NONE"}
+
+
+
+{"age":"1","name":"srujan"}
+
+{\"name\":\"srujan\",\"age\":1}

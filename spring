@@ -1,0 +1,16 @@
+
+RootApplicationContext and WebApplicationContext.
+	 A web application can define any number of DispatcherServlets.
+	 Each servlet will operate in its own namespace, loading its own application context with mappings, handlers, etc.
+ 	 Only the root application context as loaded by {@link org.springframework.web.context.ContextLoaderListener}, if any, will be shared.
+
+
+	request -> HandlerMapping Object -> Handler adapter Object -> InternalResourceViewResolver
+
+	
+	DefaultRequestToViewNameTranslator
+	
+
+
+
+Spring frameworkd internally make use of DocumentBuillderFactory to parse xml document.

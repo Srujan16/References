@@ -1,0 +1,9 @@
+https://www.quora.com/How-does-Apache-Tomcat-work-internally
+http://java-latte.blogspot.in/2014/10/introduction-to-architecture-of-apache-tomcat-with-server.xml.html
+
+
+Tomcat, on the other hand, is specifically designed from the ground-up to serve as a Java Servlet engine.
+
+Catalina is
+
+

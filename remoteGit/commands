@@ -1,0 +1,14 @@
+creating local branch to connect to remote branch
+	
+	git branch localBranchName nameOfremote/nameOfBranch
+	git branch validationBranch wmgit/validations
+
+
+push to remoteBranch
+	git push remoteServer HEAD:refs/for/branchName
+	git push wmgit HEAD:refs/for/validations
+
+
+pull 
+
+	git pull --rebase wmgit validations

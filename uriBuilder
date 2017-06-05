@@ -1,0 +1,47 @@
+Pattern customPattern = Pattern.compile("([^&=]+)(=?)(.+)");
+
+
+String tempQuery="query=ab&&&name=srujan";
+Pattern pattern = Pattern.compile("([^&=]+)(=?)([^&]+)?");
+Matcher matcher = pattern.matcher(tempQuery);
+matcher.groupCount();
+if(matcher.find()){
+    matcher.group(1);
+    matcher.group(2);
+    matcher.group(3);
+}
+
+if(matcher.find()){
+    matcher.group(1);
+    matcher.group(2);
+    matcher.group(3);
+}
+
+
+String tempQuery="query=ab&&&name=srujan&x=y";
+Pattern pattern = Pattern.compile("([^&=]+)(=?)([^&]+)?");
+Matcher matcher = pattern.matcher(tempQuery);
+matcher.groupCount();
+
+if(matcher.find()){
+    matcher.group(1);
+    matcher.group(2);
+    matcher.group(3);
+}
+
+if(matcher.find()){
+    matcher.group(1);
+    matcher.group(2);
+    matcher.group(3);
+}
+
+if(matcher.find()){
+    matcher.group(1);
+    matcher.group(2);
+    matcher.group(3);
+}
+
+
+
+
+

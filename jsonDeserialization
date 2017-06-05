@@ -1,0 +1,9 @@
+JsonParser and JsonGenerator
+ObjectMapper extends ObjectCodecson
+
+
+
+----------------------------------
+@JsonDesrialization and @JsonSerialization
+	at property level 
+	at interface level

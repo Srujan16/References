@@ -1,0 +1,22 @@
+http://www.javaworld.com/article/3000781/development-tools/open-source-java-projects-docker.html
+
+http://www.javaworld.com/article/3000781/development-tools/open-source-java-projects-docker.html?page=2
+
+
+
+
+
+
+docker info
+docker stats
+docker inspect
+docker stop 
+docker rm containerId
+docker rmi imageId
+docker ps -a
+docker run -d  -p 8080:8080 tomcat->running a daemon on hostMachine.
+
+
+Docker file
+
+

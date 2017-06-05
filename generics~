@@ -1,3 +1,7 @@
+
+. For static generic methods, the type parameter section must appear before the method's return type.
+
+
 TypeInference:
 --------------
 This feature, known as type inference, allows you to invoke a generic method as an ordinary method, without specifying a type between angle brackets
@@ -12,12 +16,6 @@ You cannot use the > operator to compare objects. To fix the problem, use a type
 	    return count;
 	}
 ----------------------------------------
-
-
-
-
-
-	
 
 
 Generics doesn't work on primitives.

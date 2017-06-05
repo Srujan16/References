@@ -1,0 +1,24 @@
+Automate build and deployment using apache AnotherNiceTool(ant)
+
+
+
+project
+default
+target
+property
+<property file="build.properties">
+
+	Project name,target
+	target,lisf of tasks
+
+	declaring variable using property
+	accesing it using ${} inside the task
+
+
+Ant DataTypes:
+--------------
+
+	<fileset> include and exclude patternset ref
+	<patternset>
+	<filelist> file
+	<filterset> filter

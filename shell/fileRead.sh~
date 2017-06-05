@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/sh 
 
 while read line
 do
 	echo $line
-done</home/srujant/Desktop/toDO
+done</home/srujant/Desktop/migrator

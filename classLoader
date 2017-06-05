@@ -1,0 +1,24 @@
+http://www.onjava.com/pub/a/onjava/2005/01/26/classloading.html
+http://docs.oracle.com/javase/tutorial/ext/basics/load.html
+https://anturis.com/blog/java-virtual-machine-the-essential-guide/
+http://stackoverflow.com/questions/18394560/when-multiple-java-programs-run-on-the-same-machine
+
+
+
+ClassLoaders
+Gc 
+Heap
+Stack
+
+
+JVM
+
+Java Virtual Machine (JVM) is an execution environment for Java applications. \
+
+The JVM is an abstract computing machine defined by a specification, which is designed to interpret bytecode that is compiled from Java source code.
+
+More commonly, the JVM refers to the concrete implementation of this specification with a strict instruction set and a comprehensive memory model.
+
+It can also refer to the runtime instance of the software implementation. 
+
+The primary reference implementation of the JVM is HotSpot.

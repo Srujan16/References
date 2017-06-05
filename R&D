@@ -1,0 +1,174 @@
+ <!-- <property name="version" type="timestamp" generated="always" insert="false" update="false">
+            <column name="version" sql-type="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </property>
+-->
+
+
+
+Implementing Row Version Verification for Persistence Middleware using SQL Access Patterns:  -416
+
+	http://dblab.reutlingen-university.de/tl_files/das_team/papers/RVV_Middleware5_Softv3_n34.pdf
+	https://books.google.co.in/books?id=SYQjDAAAQBAJ&pg=PT168&lpg=PT168&dq=sql+server+rowversion+mapping+in+hibernate&source=bl&ots=TaStgUpQJJ&sig=SNIiSndQgPNl_rz2kDkpeNBRqJM&hl=en&sa=X&ved=0ahUKEwiw3tq16ObOAhWMOY8KHQSzBHkQ6AEIRDAF#v=onepage&q=sql%
+20server%20rowversion%20mapping%20in%20hibernate&f=false
+
+	
+  <version type="timestamp"> /<timestamp name="version" source="db">
+  
+ Drawback : Not all Dialects are known to support the retrieval of the database’s current timestamp.
+
+-------------------
+MsSql
+
+generated = always
+rowversion:
+	hibernate type - binary 
+	java type -byte[]
+	sql-type   -rowversion
+
+timestamp : [ synonym for rowversion, works similar to rowversion. Supports auto_update ]
+	hibernate type -timestamp
+	javatype - TIMESTAMP
+	sql-type -TIMESTAMP
+	
+-------------------------------------------------------------------------------------------
+Mysql
+generate = always
+timestamp : 
+	hibernate type -timestamp
+	javatype - TIMESTAMP
+	sql-type -TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-------------------------------------------------------------------------------------------
+Oracle 
+generate = always
+timestamp :
+	
+
+
+
+
+rowversion :
+
+SQL Server's Timestamp column is not datetime as you might think, but an 8 byte binary that is changed any time that the row is updated.
+ 
+    Rowversion is a datatype which exposes an eight byte binary number, unique within a database. It is generally used for version stamping a table row. 
+    When a new insertion is made in the table the rowversion datatype column automatically gets populated with a unique value.It's read only column.
+
+   For the tables you want to implement an optimistic record locking strategy on, simply add a rowversion column.  When updating the records add the rowversion column as a term in the Where clause along with the primary key.  If another user has modified the row the update statement will update zero rows.  If this occurs you can inform your user that another user has modified or delete the record.  Hopefully that will be unlikely, after all we are being optimistic.
+
+Drawback of row-version :
+
+  **  The value of rowversion gets changed even for false updates, this gives small implication that it doesn't compare old and new data.
+
+    if a row in tableB is identical to the row in tableA and UPDATE statement change nothing, timestamp/rowversion column of tableB changes.
+ When a new insertion is made in the table the rowversion datatype column automatically gets populated with a unique value.
+
+  This counter gets incremented for each insert or update operation that is performed on a table that contains a rowversion column within the database and this value is inserted or updated in the rowversion column of the table.
+
+
+  ** if no data is modified in the row, MySQL doesn't change timestamp column.
+
+  ** hibernate increments version column, eventhough update statement changes nothing.
+-----------------------------
+
+Sql -rowVersion
+Oracle - ORA_ROWSCN
+PostgreSql -sequence
+Mysql - TimeStamp [isn't accurate solution ] & triggers
+
+	Fails for queries that update multiple rows simultaneously and take longer then the resolution of the timestamp as the value assigned is based upon the start of the change and not the end of the change.
+	
+
+Methods to auto-generate by Db :
+
+	1) Using triggers -http://learningviacode.blogspot.in/2011/09/using-db-generated-values.html
+
+      	   create trigger creation_audit_trail before insert on pet for each row set new.created_date := now(),new.modified_date := now();
+		
+	   create trigger modification_audit_trail before update on pet for each row set new.modified_date := now();
+-----------------------------------------------------------------------------------------------
+generated="always"
+insert="false"
+update="false"
+
+** mssql type TimeStamp is mapped with Binary in Hibernate.But in other databases like Postgres,oracle,mysql...timestamp is mapped to hibernate timestamp type
+
+------------------------------------------------------------------
+Oracle :
+
+oracle
+
+
+SCN :
+------------------
+
+https://orainternals.wordpress.com/2012/01/19/scn-what-why-and-how/
+
+SCN is a huge number with two components to it: Base and wrap. Wrap is a 16 bit number and base is a 32 bit number. 
+It is of the format wrap.base. When the base exceeds 4 billion, then the wrap is incremented by 1.
+
+
+
+
+SCN is System Change Number. It is an unique incremental number in the database (as your clock time). The SCN number is incremented every 3 seconds. This number is very useful while recovering the database or instance. All the datafile headers will have the same scn number when the instance is shutdown normally. You can get the current scn number from dbms_flashback.get_system_change_number or if you are using 10g your can query v$database
+
+
+--------------
+
+the system change number (SCN) is Oracle's clock - every time we commit, the clock increments. The SCN just marks a consistent point in time in the database.
+
+System Change number in oracle - ORA_ROWSCN
+http://www.orafaq.com/papers/locking.pdf
+http://dbmsdirect.blogspot.in/2008/05/row-level-dependency-tracking.html
+https://orainternals.wordpress.com/2012/01/19/scn-what-why-and-how/
+
+
+RoWDependencie :
+
+CREATE TABLE TESTTAB
+(COL1 NUMBER(5),
+COL2 VARCHAR2(30),
+COL3 DATE)
+ROWDEPENDENCIES;
+
+Adding rowdependencie to table :
+-------------------------------
+
+create table empdpd ROWDEPENDENCIES as select * from emp;
+
+select table_name,dependencies from user_tables;
+
+
+
+
+LogWriter process writes records from redo log  buffers in the System Global Area (SGA) to the online redo logs on disk.
+
+
+
+
+
+
+That is, the ORA_ROWSCN of a row is not always guaranteed to be the exact commit SCN of the transaction that last modified that row. 
+
+However with fineGrained ora_rowscan,
+
+ if two transactions T1 and T2 modified the same row R, one after another, and committed, a query on the ORA_ROWSCN of row R after the commit of T1 will return a value lower than the value returned after the commit of T2. 
+
+
+** If a block is queried twice, then it is possible for the value of ORA_ROWSCN to change between the queries even though rows have not been updated in the time between the queries. 
+
+
+By default, Oracle 10g tables are created with the clause NOROWDEPENDENCIES. This means that Block-level Dependency Tracking is used.
+
+scn_to_timestamp(ora_rowscn)
+
+
+
+CURRENT_TIMESTAMP and SYSTIMESTAMP are Oracle reserved words for this purpose. They are the timestamp analog of SYSDATE.
+
+ The Oracle CURRENT_TIMESTAMP function is similar to the Oracle SYSTIMESTAMP function. 
+ 10-JUL-04 19.11.12.686 +01:00
+
+
+http://stackoverflow.com/questions/9520995/understanding-the-ora-rowscn-behavior-in-oracle
+
+

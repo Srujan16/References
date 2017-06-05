@@ -1,0 +1,84 @@
+Hibernate does not offer its own API for direct execution of UPDATE or DELETE statements. Hibernate is a state management service, you do not have to think in statements to use it. JDBC is a perfect API for executing SQL statements, you can get a JDBC Connection at any time by calling session.connection(). Furthermore, the notion of mass operations conflicts with object/relational mapping for online transaction processing-oriented applications. Future versions of Hibernate can, however, provide special mass operation functions. See Chapter 13, Batch processing for some possible batch operation tricks.
+
+object states relation with locking
+
+
+https://www.intertech.com/Blog/versioning-optimistic-locking-in-hibernate/
+Optimistic Concurrency Control :
+------------------------------
+optimist : Only Version checks
+Pessimist : usese shared read Locks and exclusive write locks.
+
+
+implicit and explicit locking mechanism :
+
+
+optimistic-Locking :
+-------------------
+ 	At commit time, the transaction manager uses the two-phase XA protocol when communicating with the recoverable resource to ensure transactional integrity when more than one recoverable resource is involved in the transaction being committed. Transactional databases and message brokers like JBossMQ are examples of recoverable resources. A recoverable resource is represented using the javax.transaction.xa.XAResource interface in JTA.
+
+	Heuristic Decision :
+		In a distributed environment communications failures can happen. If communication between the transaction manager and a recoverable resource is not possible for an extended period of time, the recoverable resource may decide to unilaterally commit or rollback changes done in the context of a transaction. Such a decision is called a heuristic decision.
+
+
+	OCC Layer :
+		Some database management systems offer OCC natively - without requiring special application code. For others, the application can implement an OCC layer outside of the database, and avoid waiting or silently overwriting records. In such cases, the form includes a hidden field with the record's original content, a timestamp, a sequence number, or an opaque token. On submit, this is compared against the database. If it differs, the conflict resolution algorithm is invoked.
+ 
+
+	
+	**The point is that Optimistic Locking is not a database feature, not for MySQL nor for others: optimistic locking is a practice that is applied using the DB with standard instructions.
+
+
+	The pessimistic approach might hinder scalability.
+
+	Lightweight locking techniques, such as multiversion concurrency control.
+
+	Implicit database locking is hidden behind the transaction isolation level configuration.
+
+	READ COMMITTED uses query-level shared locks and exclusive locks for the current transaction modified data.
+
+** a conversation-level repeatable read storage
+
+hibernate optimistic Locking :
+-------------------------------
+
+  1) <version> tag
+  -------------
+	<hibernate-mapping package=”com.intertech.domain”> 
+	  <class name=”Product”> 
+	          <id name=”id”> 
+	            <generator class=”native” /> 
+	        </id> 
+	        <version name=”version” type=”long” generated=”always”/> 
+	        <property name=”name” not-null=”true” /> 
+	        <property name=”model” not-null=”true” /> 
+	        <property name=”cost” type=”double”/> 
+	  </class> 
+	</hibernate-mapping>
+
+  2)<timestamp> timestamp for version
+
+     <hibernate-mapping package="x.y.z">
+     <class name="Demo">
+                   <timestamp name=”version” source=”db”/> 
+     		   <property name=”name” not-null=”true” /> 
+     		   <property name=”model” not-null=”true” /> 
+	     	   <property name=”cost” type=”double”/> 
+     </class>
+     </hibernate>	
+
+
+  3)hibernate vs database managing version
+	<version name=”version” type=”long” generated=”always”/> 
+        <property name=”name” not-null=”true” /> 
+        <property name=”model” not-null=”true” /> 
+        <property name=”cost” type=”double”/> 
+
+  4)optimistic locking without version
+
+	<class>
+		<optimistic-lock="All"/>
+		<dynamic-update= "true/>
+	</class>
+
+

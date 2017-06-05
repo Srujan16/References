@@ -1,0 +1,93 @@
+1) Install apache server from either of the below links
+		http://www.apachelounge.com/download/
+		https://www.apachefriends.org/index.html
+		http://www.wampserver.com/
+
+
+2) If your apache version is 2.4 then download mod_jk connector from http://archive.apache.org/dist/tomcat/tomcat-connectors/jk/binaries/windows/tomcat-connectors-1.2.40-windows-x86_64-httpd-2.4.x.zip.
+
+   If your apache version is 2.2 then download mod_jk from http://archive.apache.org/dist/tomcat/tomcat-connectors/jk/binaries/windows/tomcat-connectors-1.2.40-windows-i386-httpd-2.2.x.zip 
+
+3) extract the  above zip and place mod_jk.so file  under APACHE_HOME/modules.
+
+4) Add below lines in APACHE_HOME/conf/httpd.conf file.
+
+	    #Load mod_jk module
+	    LoadModule jk_module modules/mod_jk.so
+	    JkWorkersFile conf/workers.properties
+	    JkLogFile logs/mod_jk.log
+	    JkShmFile logs/mod_jk.shm
+	    JkLogLevel debug
+
+	    <Location /jk-manager>
+	        # Inside Location we can omit the URL in JkMount
+	        JkMount jkstatus
+        	Order deny,allow
+       		Deny from all
+        	Allow from 127.0.0.1
+    	   </Location>
+
+
+
+5) create new file  'workers.properties' and add  below data to workers.properties file. Move workers.properties file to APACHE_HOME/conf.
+	worker.list=worker1
+	worker.worker1.type=ajp13
+	worker.worker1.host=localhost
+	worker.worker1.port=8009
+
+	worker.list=worker2
+	worker.worker2.type=ajp13
+	worker.worker2.host=localhost
+	worker.worker2.port=10009
+
+	# Declare Tomcat server workers 1 through n
+	worker.list=worker3
+	worker.worker3.type=ajp13
+	worker.worker3.host=localhost
+	worker.worker3.port=9009
+
+	worker.list=jkstatus
+	worker.jkstatus.type=status
+
+
+6) Once this is done , move to APACHE_HOME/bin . Enter httpd -t command to make sure configuration has been done successfully.
+	
+
+7) Add the below line in APACHE_HOME/cong/httpd.conf  just after the JkLogLevel line.
+
+
+	JkMount *wm-desktop-app* worker1 
+	JkMount /wavemaker worker1
+ 	JkMount /static-files* worker2
+        JkMount /run-* worker2
+	JkMount /run-*/wavemaker worker2
+	JkMount /studio* worker3
+        JkMount /remote-studio* worker3	
+        JkMount /edn-services* worker3
+	JkMount /studio*/wavemaker worker3
+	JkMount /remote-studio/*/wavemaker worker3
+	JkMount /edn-services*/*/wavemaker worker3 
+        JkMount /login*	worker3
+
+8) Navigate to APACHE_HOME/bin in command line and enter 'httpd -t' command to validate the configuration changes. 
+
+9) Now, restart apache httpd, make sure that Tomcat is running and then open below URL depending upon setup:
+
+	for desktop-setup open localhost/wavemaker
+	for saas-setup open localhost/studio	 
+  If you are able to access login page then everything is done.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
